@@ -71,6 +71,27 @@
             font-weight: 600;
         }
 
+        .btn-white {
+            background-color: #fff !important;
+            color: #000 !important;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-white:hover {
+            background-color: #f8f9fa !important;
+            transform: scale(1.1);
+        }
+
+        .rounded-circle {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Forms */
         .form-control,
         .form-select {
