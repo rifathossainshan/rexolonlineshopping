@@ -48,6 +48,40 @@ class AdminController extends Controller
             $salesData->push($daySales);
         }
 
+        // 4. Top Selling Products (Top 5)
+        // Group order_items by product_id, sum quantity
+        $topProducts = \App\Models\OrderItem::select('product_id', DB::raw('sum(quantity) as total_sold'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_sold')
+            ->with([
+                'product' => function ($q) {
+                    // Ensure we get images too if needed for display
+                    $q->with('images');
+                }
+            ])
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                if ($item->product) {
+                    $item->product->total_sold = $item->total_sold;
+                    return $item->product;
+                }
+                return null;
+            })
+            ->filter();
+
+        // 5. Order Status Distribution
+        $statusCounts = Order::select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status');
+
+        // Ensure all statuses have a value for the chart
+        $allStatuses = ['pending', 'processing', 'shipped', 'completed', 'cancelled'];
+        $pieData = [];
+        foreach ($allStatuses as $status) {
+            $pieData[] = $statusCounts->get($status, 0);
+        }
+
         return view('admin.dashboard', compact(
             'totalOrders',
             'totalProducts',
@@ -58,7 +92,10 @@ class AdminController extends Controller
             'recentOrders',
             'recentUsers',
             'dates',
-            'salesData'
+            'salesData',
+            'topProducts',
+            'pieData',
+            'allStatuses'
         ));
     }
 }
