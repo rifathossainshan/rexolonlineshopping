@@ -1,63 +1,327 @@
 @extends('layouts.frontend')
 
 @section('content')
-<div class="container">
-    <!-- Slider -->
-    <div id="mainCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="https://images.unsplash.com/photo-1556906781-9a412961d28c?q=80&w=1200&auto=format&fit=crop" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sneaker Banner 1">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 class="bg-dark d-inline-block px-3 py-1 rounded">New Season Arrivals</h3>
-                    <p class="bg-dark d-inline-block px-2 rounded">Check out the latest drops from Nike & Jordan.</p>
+    <style>
+        /* Hypebeast / Sneaker Shop Styles */
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #f8f9fa;
+            --accent-color: #FF4400;
+            /* Vibrant Orange for callouts */
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            /* Cleaner, modern font */
+            background-color: #fcfcfc;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .btn {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            margin-top: -1.5rem;
+        }
+
+        .carousel-item img {
+            height: 70vh;
+            min-height: 500px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .carousel-caption {
+            bottom: 35%;
+            text-align: left;
+        }
+
+        .carousel-caption h2 {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-hero {
+            padding: 15px 40px;
+            border-radius: 0;
+            font-weight: 700;
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .btn-hero:hover {
+            background: black;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Gender Section */
+        .gender-card {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .gender-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gender-card:hover .gender-bg {
+            transform: scale(1.1);
+        }
+
+        .gender-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+
+        .gender-overlay h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0;
+        }
+
+        /* Product Cards */
+        .product-card {
+            border: 1px solid #eee;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .product-card:hover {
+            border-color: black;
+            transform: translateY(-5px);
+        }
+
+        .product-img-wrapper {
+            position: relative;
+            height: 300px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-img-wrapper img {
+            max-width: 90%;
+            max-height: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-img-wrapper img {
+            transform: rotate(-5deg) scale(1.1);
+        }
+
+        /* Brand Ticker */
+        .brand-section {
+            background: black;
+            padding: 3rem 0;
+            color: white;
+        }
+
+        .brand-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 2rem;
+            transition: color 0.3s;
+        }
+
+        .brand-link:hover {
+            color: white;
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <div class="hero-section mb-5">
+        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1920&auto=format&fit=crop"
+                        class="d-block w-100" alt="Sneaker Culture">
+                    <div class="carousel-caption container">
+                        <h2>THE FUTURE<br>OF SNEAKERS</h2>
+                        <p class="fs-4 mb-4">Verification runner for the streets.</p>
+                        <a href="{{ route('products.index') }}" class="btn btn-hero">SHOP LATEST</a>
+                    </div>
                 </div>
-            </div>
-            <div class="carousel-item">
-                <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=1200&auto=format&fit=crop" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Sneaker Banner 2">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 class="bg-dark d-inline-block px-3 py-1 rounded">Exclusive Collection</h3>
-                    <p class="bg-dark d-inline-block px-2 rounded">Limited edition sneakers available now.</p>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=1920&auto=format&fit=crop"
+                        class="d-block w-100" alt="New Drops">
+                    <div class="carousel-caption container">
+                        <h2>ICONIC<br>DROPS ONLY</h2>
+                        <p class="fs-4 mb-4">Limited edition releases available now.</p>
+                        <a href="{{ route('products.index') }}" class="btn btn-hero">VIEW COLLECTION</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
     </div>
 
-    <!-- Categories -->
-    <h2 class="mb-4">Shop by Brand</h2>
-    <div class="row mb-5">
-        @foreach($categories as $category)
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $category->name }}</h5>
-                    <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="btn btn-sm btn-outline-primary">View Collection</a>
+    <!-- Shop by Gender -->
+    <div class="container-fluid px-4 mb-5">
+        <div class="row g-4">
+            @foreach($genderCategories as $category)
+                <div class="col-md-4">
+                    <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="text-decoration-none">
+                        <div class="gender-card">
+                            @php
+                                $bgImage = match ($category->name) {
+                                    'Men' => 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800',
+                                    'Women' => 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800',
+                                    default => 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=800'
+                                };
+                            @endphp
+                            <img src="{{ $bgImage }}" class="gender-bg" alt="{{ $category->name }}">
+                            <div class="gender-overlay">
+                                <h3>SHOP {{ strtoupper($category->name) }}</h3>
+                                <span>View All <i class="fas fa-arrow-right ms-2"></i></span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
+            @endforeach
+            @if($genderCategories->isEmpty())
+                <!-- Fallback if seeder hasn't run yet or failed -->
+                <div class="col-md-4">
+                    <div class="gender-card">
+                        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800" class="gender-bg">
+                        <div class="gender-overlay">
+                            <h3>SHOP MEN</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gender-card">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800" class="gender-bg">
+                        <div class="gender-overlay">
+                            <h3>SHOP WOMEN</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gender-card">
+                        <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=800" class="gender-bg">
+                        <div class="gender-overlay">
+                            <h3>SHOP KIDS</h3>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
-        @endforeach
     </div>
 
-    <!-- New Arrivals -->
-    <h2 class="mb-4">Fresh Drops</h2>
-    <div class="row">
-        @foreach($newArrivals as $product)
-        <div class="col-md-3 mb-4">
-            <div class="card h-100">
-                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}" class="card-img-top" alt="{{ $product->title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $product->title }}</h5>
-                    <p class="card-text text-danger fw-bold">৳{{ $product->price }}</p>
-                    <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary w-100">View Details</a>
+    <!-- Brand Ticker -->
+    <div class="brand-section mb-5 text-center">
+        <div class="container d-flex justify-content-center flex-wrap">
+            @foreach($brandCategories as $brand)
+                <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
+                    class="brand-link">{{ strtoupper($brand->name) }}</a>
+            @endforeach
+            <a href="#" class="brand-link">YEEZY</a>
+            <a href="#" class="brand-link">OFF-WHITE</a>
+            <a href="#" class="brand-link">BALENCIAGA</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Best Sellers -->
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <h2 class="section-title mb-0">BEST SELLERS</h2>
+            <a href="{{ route('products.index') }}" class="text-dark fw-bold text-decoration-none">VIEW ALL</a>
+        </div>
+
+        <div class="row mb-5">
+            @foreach($bestSellers as $product)
+                <div class="col-md-3 mb-4">
+                    <div class="product-card h-100 position-relative">
+                        <div class="product-img-wrapper">
+                            @if($loop->index < 2)
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">HOT</span>
+                            @endif
+                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                alt="{{ $product->title }}">
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted small mb-1 text-uppercase">{{ $product->category->name ?? 'Sneakers' }}</p>
+                            <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                <a href="{{ route('products.show', $product->slug) }}"
+                                    class="btn btn-sm btn-outline-dark rounded-0"><i class="fas fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- Fresh Drops / New Arrivals -->
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <h2 class="section-title mb-0">FRESH DROPS</h2>
+        </div>
+        <div class="row mb-5">
+            @foreach($newArrivals->take(4) as $product)
+                <div class="col-md-3 mb-4">
+                    <div class="product-card h-100 position-relative">
+                        <div class="product-img-wrapper">
+                            <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">NEW</span>
+                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                alt="{{ $product->title }}">
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted small mb-1 text-uppercase">{{ $product->category->name ?? 'Sneakers' }}</p>
+                            <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                <a href="{{ route('products.show', $product->slug) }}"
+                                    class="btn btn-sm btn-outline-dark rounded-0"><i class="fas fa-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-light py-5 mt-5">
+        <div class="container text-center">
+            <h2 class="mb-3">NEVER MISS A DROP</h2>
+            <p class="text-muted mb-4">Sign up for updates on new releases and exclusive access.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="email" class="form-control rounded-0 p-3" placeholder="ENTER EMAIL ADDRESS">
+                        <button class="btn btn-dark rounded-0 px-5 fw-bold" type="button">JOIN</button>
+                    </div>
                 </div>
             </div>
         </div>
-        @endforeach
     </div>
-</div>
 @endsection
