@@ -143,6 +143,15 @@
         }
     </style>
 
+
+    <div class="row mb-3">
+        <div class="col-12 text-right">
+            <a href="{{ route('admin.products.create') }}" class="btn btn-primary btn-lg shadow-sm">
+                <i class="fas fa-plus-circle mr-2"></i> Create New Product
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <!-- New Orders -->
         <div class="col-lg-3 col-6">

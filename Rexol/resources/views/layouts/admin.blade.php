@@ -60,7 +60,34 @@
                             </a>
                         </li>
 
-                        <!-- Add more menu items here -->
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tags"></i>
+                                <p>Categories</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-box"></i>
+                                <p>Products</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.orders.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-shopping-cart"></i>
+                                <p>Orders</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.coupons.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-ticket-alt"></i>
+                                <p>Coupons</p>
+                            </a>
+                        </li>
 
                     </ul>
                 </nav>
