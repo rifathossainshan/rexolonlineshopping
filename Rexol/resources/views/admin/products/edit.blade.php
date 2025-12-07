@@ -30,6 +30,15 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label>Gender</label>
+                                <select name="gender" class="form-control">
+                                    <option value="">Select Gender</option>
+                                    @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
+                                        <option value="{{ $g }}" {{ $product->gender == $g ? 'selected' : '' }}>{{ $g }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Price</label>
                                 <input type="number" step="0.01" name="price" class="form-control"
                                     value="{{ $product->price }}" required>

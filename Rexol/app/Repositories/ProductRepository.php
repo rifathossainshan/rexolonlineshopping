@@ -35,6 +35,16 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $query = Product::with(['category', 'images', 'sizes']);
 
+        if (isset($filters['category'])) {
+            $query->whereHas('category', function ($q) use ($filters) {
+                $q->where('slug', $filters['category']);
+            });
+        }
+
+        if (isset($filters['gender'])) {
+            $query->where('gender', $filters['gender']);
+        }
+
         if (isset($filters['sort'])) {
             if ($filters['sort'] == 'price_asc') {
                 $query->orderBy('price', 'asc');

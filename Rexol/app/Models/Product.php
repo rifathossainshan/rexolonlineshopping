@@ -15,6 +15,7 @@ class Product extends Model
         'description',
         'stock',
         'status',
+        'gender',
         // 'sizes' removed
     ];
 

@@ -177,151 +177,100 @@
                         <h2>ICONIC<br>DROPS ONLY</h2>
                         <p class="fs-4 mb-4">Limited edition releases available now.</p>
                         <a href="{{ route('products.index') }}" class="btn btn-hero">VIEW COLLECTION</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Shop by Gender -->
-    <div class="container-fluid px-4 mb-5">
-        <div class="row g-4">
-            @foreach($genderCategories as $category)
-                <div class="col-md-4">
-                    <a href="{{ route('products.index', ['category' => $category->slug]) }}" class="text-decoration-none">
-                        <div class="gender-card">
-                            @php
-                                $bgImage = match ($category->name) {
-                                    'Men' => 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800',
-                                    'Women' => 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800',
-                                    default => 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=800'
-                                };
-                            @endphp
-                            <img src="{{ $bgImage }}" class="gender-bg" alt="{{ $category->name }}">
-                            <div class="gender-overlay">
-                                <h3>SHOP {{ strtoupper($category->name) }}</h3>
-                                <span>View All <i class="fas fa-arrow-right ms-2"></i></span>
+                        <!-- Brand Ticker -->
+                        <div class="brand-section mb-5 text-center">
+                            <div class="container d-flex justify-content-center flex-wrap">
+                                @foreach($brandCategories as $brand)
+                                    <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
+                                        class="brand-link">{{ strtoupper($brand->name) }}</a>
+                                @endforeach
+                                <a href="#" class="brand-link">YEEZY</a>
+                                <a href="#" class="brand-link">OFF-WHITE</a>
+                                <a href="#" class="brand-link">BALENCIAGA</a>
                             </div>
                         </div>
-                    </a>
-                </div>
-            @endforeach
-            @if($genderCategories->isEmpty())
-                <!-- Fallback if seeder hasn't run yet or failed -->
-                <div class="col-md-4">
-                    <div class="gender-card">
-                        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=800" class="gender-bg">
-                        <div class="gender-overlay">
-                            <h3>SHOP MEN</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gender-card">
-                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?q=80&w=800" class="gender-bg">
-                        <div class="gender-overlay">
-                            <h3>SHOP WOMEN</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="gender-card">
-                        <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=800" class="gender-bg">
-                        <div class="gender-overlay">
-                            <h3>SHOP KIDS</h3>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
 
-    <!-- Brand Ticker -->
-    <div class="brand-section mb-5 text-center">
-        <div class="container d-flex justify-content-center flex-wrap">
-            @foreach($brandCategories as $brand)
-                <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
-                    class="brand-link">{{ strtoupper($brand->name) }}</a>
-            @endforeach
-            <a href="#" class="brand-link">YEEZY</a>
-            <a href="#" class="brand-link">OFF-WHITE</a>
-            <a href="#" class="brand-link">BALENCIAGA</a>
-        </div>
-    </div>
+                        <div class="container">
+                            <!-- Best Sellers -->
+                            <div class="d-flex justify-content-between align-items-end mb-4">
+                                <h2 class="section-title mb-0">BEST SELLERS</h2>
+                                <a href="{{ route('products.index') }}" class="text-dark fw-bold text-decoration-none">VIEW
+                                    ALL</a>
+                            </div>
 
-    <div class="container">
-        <!-- Best Sellers -->
-        <div class="d-flex justify-content-between align-items-end mb-4">
-            <h2 class="section-title mb-0">BEST SELLERS</h2>
-            <a href="{{ route('products.index') }}" class="text-dark fw-bold text-decoration-none">VIEW ALL</a>
-        </div>
+                            <div class="row mb-5">
+                                @foreach($bestSellers as $product)
+                                    <div class="col-md-3 mb-4">
+                                        <div class="product-card h-100 position-relative">
+                                            <div class="product-img-wrapper">
+                                                @if($loop->index < 2)
+                                                    <span
+                                                        class="badge bg-danger position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">HOT</span>
+                                                @endif
+                                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                                    alt="{{ $product->title }}">
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="text-muted small mb-1 text-uppercase">
+                                                    {{ $product->category->name ?? 'Sneakers' }}</p>
+                                                <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    <a href="{{ route('products.show', $product->slug) }}"
+                                                        class="btn btn-sm btn-outline-dark rounded-0"><i
+                                                            class="fas fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
 
-        <div class="row mb-5">
-            @foreach($bestSellers as $product)
-                <div class="col-md-3 mb-4">
-                    <div class="product-card h-100 position-relative">
-                        <div class="product-img-wrapper">
-                            @if($loop->index < 2)
-                                <span class="badge bg-danger position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">HOT</span>
-                            @endif
-                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                alt="{{ $product->title }}">
-                        </div>
-                        <div class="card-body">
-                            <p class="text-muted small mb-1 text-uppercase">{{ $product->category->name ?? 'Sneakers' }}</p>
-                            <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
-                                <a href="{{ route('products.show', $product->slug) }}"
-                                    class="btn btn-sm btn-outline-dark rounded-0"><i class="fas fa-plus"></i></a>
+                            <!-- Fresh Drops / New Arrivals -->
+                            <div class="d-flex justify-content-between align-items-end mb-4">
+                                <h2 class="section-title mb-0">FRESH DROPS</h2>
+                            </div>
+                            <div class="row mb-5">
+                                @foreach($newArrivals->take(4) as $product)
+                                    <div class="col-md-3 mb-4">
+                                        <div class="product-card h-100 position-relative">
+                                            <div class="product-img-wrapper">
+                                                <span
+                                                    class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">NEW</span>
+                                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                                    alt="{{ $product->title }}">
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="text-muted small mb-1 text-uppercase">
+                                                    {{ $product->category->name ?? 'Sneakers' }}</p>
+                                                <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    <a href="{{ route('products.show', $product->slug) }}"
+                                                        class="btn btn-sm btn-outline-dark rounded-0"><i
+                                                            class="fas fa-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
 
-        <!-- Fresh Drops / New Arrivals -->
-        <div class="d-flex justify-content-between align-items-end mb-4">
-            <h2 class="section-title mb-0">FRESH DROPS</h2>
-        </div>
-        <div class="row mb-5">
-            @foreach($newArrivals->take(4) as $product)
-                <div class="col-md-3 mb-4">
-                    <div class="product-card h-100 position-relative">
-                        <div class="product-img-wrapper">
-                            <span class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">NEW</span>
-                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                alt="{{ $product->title }}">
-                        </div>
-                        <div class="card-body">
-                            <p class="text-muted small mb-1 text-uppercase">{{ $product->category->name ?? 'Sneakers' }}</p>
-                            <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
-                                <a href="{{ route('products.show', $product->slug) }}"
-                                    class="btn btn-sm btn-outline-dark rounded-0"><i class="fas fa-plus"></i></a>
+                        <!-- Newsletter -->
+                        <div class="bg-light py-5 mt-5">
+                            <div class="container text-center">
+                                <h2 class="mb-3">NEVER MISS A DROP</h2>
+                                <p class="text-muted mb-4">Sign up for updates on new releases and exclusive access.</p>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="email" class="form-control rounded-0 p-3"
+                                                placeholder="ENTER EMAIL ADDRESS">
+                                            <button class="btn btn-dark rounded-0 px-5 fw-bold" type="button">JOIN</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- Newsletter -->
-    <div class="bg-light py-5 mt-5">
-        <div class="container text-center">
-            <h2 class="mb-3">NEVER MISS A DROP</h2>
-            <p class="text-muted mb-4">Sign up for updates on new releases and exclusive access.</p>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="email" class="form-control rounded-0 p-3" placeholder="ENTER EMAIL ADDRESS">
-                        <button class="btn btn-dark rounded-0 px-5 fw-bold" type="button">JOIN</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

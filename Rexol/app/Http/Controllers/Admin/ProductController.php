@@ -32,6 +32,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
+            'gender' => 'nullable|string|in:Men,Women,Boys,Girls,Kids,Unisex',
             'price' => 'required|numeric',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',
@@ -42,6 +43,7 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
+            'gender' => $request->gender,
             'price' => $request->price,
             'discount_price' => $request->discount_price,
             'description' => $request->description,
@@ -80,6 +82,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
+            'gender' => 'nullable|string|in:Men,Women,Boys,Girls,Kids,Unisex',
             'price' => 'required|numeric',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',
@@ -90,6 +93,7 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
+            'gender' => $request->gender,
             'price' => $request->price,
             'discount_price' => $request->discount_price,
             'description' => $request->description,

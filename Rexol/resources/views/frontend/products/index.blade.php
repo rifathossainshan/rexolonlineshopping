@@ -20,6 +20,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Gender</label>
+                                <select name="gender" class="form-select" onchange="this.form.submit()">
+                                    <option value="">All Genders</option>
+                                    @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
+                                        <option value="{{ $g }}" {{ request('gender') == $g ? 'selected' : '' }}>
+                                            {{ $g }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Price Range</label>
@@ -44,6 +56,7 @@
                     <h2>Products</h2>
                     <form action="{{ route('products.index') }}" method="GET" class="d-flex align-items-center">
                         @if(request('category')) <input type="hidden" name="category" value="{{ request('category') }}"> @endif
+                        @if(request('gender')) <input type="hidden" name="gender" value="{{ request('gender') }}"> @endif
                         @if(request('min_price')) <input type="hidden" name="min_price" value="{{ request('min_price') }}"> @endif
                         @if(request('max_price')) <input type="hidden" name="max_price" value="{{ request('max_price') }}"> @endif
                         
