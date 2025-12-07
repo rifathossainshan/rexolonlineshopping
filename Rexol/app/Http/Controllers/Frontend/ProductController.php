@@ -22,7 +22,12 @@ class ProductController extends Controller
     {
         $filters = $request->all();
         $products = $this->productService->filterProducts($filters);
-        $categories = Category::where('status', true)->get();
+
+        // Exclude gender categories from the category filter
+        $excludedCategories = ['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'];
+        $categories = Category::where('status', true)
+            ->whereNotIn('name', $excludedCategories)
+            ->get();
 
         return view('frontend.products.index', compact('products', 'categories'));
     }
