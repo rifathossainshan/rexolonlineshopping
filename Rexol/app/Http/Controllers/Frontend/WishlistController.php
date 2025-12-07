@@ -21,6 +21,14 @@ class WishlistController extends Controller
         $wishlist = Session::get('wishlist', []);
 
         if (isset($wishlist[$id])) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Product is already in your wishlist!',
+                    'count' => count($wishlist),
+                    'status' => 'exists'
+                ]);
+            }
             return redirect()->back()->with('info', 'Product is already in your wishlist!');
         }
 
@@ -35,6 +43,15 @@ class WishlistController extends Controller
 
         Session::put('wishlist', $wishlist);
 
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Product added to wishlist!',
+                'count' => count($wishlist),
+                'status' => 'added'
+            ]);
+        }
+
         return redirect()->back()->with('success', 'Product added to wishlist!');
     }
 
@@ -45,6 +62,15 @@ class WishlistController extends Controller
         if (isset($wishlist[$id])) {
             unset($wishlist[$id]);
             Session::put('wishlist', $wishlist);
+        }
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Product removed from wishlist!',
+                'count' => count($wishlist),
+                'status' => 'removed'
+            ]);
         }
 
         return redirect()->back()->with('success', 'Product removed from wishlist!');

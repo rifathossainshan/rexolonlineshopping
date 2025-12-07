@@ -208,7 +208,8 @@
                                                     alt="{{ $product->title }}">
                                                 <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
                                                     class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle z-2"
-                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}"
+                                                    onclick="toggleWishlist(event, {{ $product->id }})">
                                                     @if(session('wishlist') && isset(session('wishlist')[$product->id]))
                                                         <i class="fas fa-heart text-danger"></i>
                                                     @else
@@ -257,7 +258,8 @@
                                                     alt="{{ $product->title }}">
                                                 <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
                                                     class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle z-2"
-                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
+                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}"
+                                                    onclick="toggleWishlist(event, {{ $product->id }})">
                                                     @if(session('wishlist') && isset(session('wishlist')[$product->id]))
                                                         <i class="fas fa-heart text-danger"></i>
                                                     @else
