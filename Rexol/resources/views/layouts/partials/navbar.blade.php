@@ -26,9 +26,15 @@
                             class="fas fa-search fs-5"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#"
-                        onclick="alert('Wishlist feature coming soon!'); return false;"><i
-                            class="fas fa-heart fs-5"></i></a>
+                    <a class="nav-link position-relative text-white" href="{{ route('wishlist.index') }}">
+                        <i class="fas fa-heart fs-5"></i>
+                        @if(session('wishlist') && count(session('wishlist')) > 0)
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                style="font-size: 0.6rem;">
+                                {{ count(session('wishlist')) }}
+                            </span>
+                        @endif
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="{{ route('cart.index') }}">
@@ -98,6 +104,6 @@
             } else {
                 searchBar.style.display = 'none';
             }
-        }
+    }
     </script>
 </nav>
