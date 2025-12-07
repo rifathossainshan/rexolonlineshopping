@@ -47,6 +47,38 @@
                         @endif
                     </a>
                 </li>
+
+                <!-- Notifications -->
+                @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative text-white" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell fs-5"></i>
+                            @if(Auth::user()->unreadNotifications->count() > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                    style="font-size: 0.6rem;">
+                                    {{ Auth::user()->unreadNotifications->count() }}
+                                </span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-0 mt-3 p-0"
+                            style="width: 300px; max-height: 400px; overflow-y: auto;">
+                            <li class="p-2 border-bottom fw-bold">Notifications</li>
+                            @forelse(Auth::user()->unreadNotifications as $notification)
+                                <li>
+                                    <a class="dropdown-item py-3 border-bottom text-wrap"
+                                        href="{{ $notification->data['action_url'] ?? '#' }}" style="font-size: 0.9rem;">
+                                        {{ $notification->data['message'] }}
+                                        <br>
+                                        <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                    </a>
+                                </li>
+                            @empty
+                                <li class="p-3 text-center text-muted small">No new notifications</li>
+                            @endforelse
+                        </ul>
+                    </li>
+                @endauth
+
                 @auth
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase fw-bold text-white" href="#" role="button"
@@ -104,6 +136,6 @@
             } else {
                 searchBar.style.display = 'none';
             }
-    }
+        }
     </script>
 </nav>

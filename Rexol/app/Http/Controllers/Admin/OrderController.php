@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
+use App\Notifications\OrderStatusUpdated;
+
 class OrderController extends Controller
 {
     public function index()
@@ -22,6 +24,12 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $order->update(['status' => $request->status]);
+
+        // Notify the user
+        if ($order->user) {
+            $order->user->notify(new OrderStatusUpdated($order));
+        }
+
         return redirect()->back()->with('success', 'Order status updated');
     }
 }
