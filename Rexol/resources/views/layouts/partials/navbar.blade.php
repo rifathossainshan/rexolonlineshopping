@@ -20,7 +20,13 @@
                 </li>
             </ul>
 
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-3">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-4">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#"><i class="fas fa-search fs-5"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#"><i class="fas fa-heart fs-5"></i></a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="{{ route('cart.index') }}">
                         <i class="fas fa-shopping-bag fs-5 text-white"></i>
