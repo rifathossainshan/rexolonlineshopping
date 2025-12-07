@@ -14,19 +14,20 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin User
-        \App\Models\User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@gmail.com',
-            'password' => 'password',
-            'role' => 'admin',
-        ]);
+        // Admin User creation moved to DatabaseSeeder or handled by firstOrCreate
+        // \App\Models\User::firstOrCreate([
+        //     'email' => 'admin@gmail.com',
+        // ], [
+        //     'name' => 'Admin User',
+        //     'password' => 'password',
+        //     'role' => 'admin',
+        // ]);
 
         // Create Categories
-        $nike = Category::create(['name' => 'Nike', 'slug' => 'nike']);
-        $adidas = Category::create(['name' => 'Adidas', 'slug' => 'adidas']);
-        $jordan = Category::create(['name' => 'Air Jordan', 'slug' => 'air-jordan']);
-        $puma = Category::create(['name' => 'Puma', 'slug' => 'puma']);
+        $nike = Category::create(['name' => 'Nike', 'slug' => 'nike', 'status' => true]);
+        $adidas = Category::create(['name' => 'Adidas', 'slug' => 'adidas', 'status' => true]);
+        $jordan = Category::create(['name' => 'Air Jordan', 'slug' => 'air-jordan', 'status' => true]);
+        $puma = Category::create(['name' => 'Puma', 'slug' => 'puma', 'status' => true]);
 
         // Create Sizes
         $sizes = ['US 6', 'US 7', 'US 8', 'US 9', 'US 10', 'US 11'];

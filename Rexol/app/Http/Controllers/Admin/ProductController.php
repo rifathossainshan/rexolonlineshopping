@@ -9,6 +9,8 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Models\Size;
+
 class ProductController extends Controller
 {
     public function index()
@@ -20,7 +22,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('status', true)->get();
-        return view('admin.products.create', compact('categories'));
+        $sizes = Size::all();
+        // dd($categories, $sizes); // Uncomment to debug
+        return view('admin.products.create', compact('categories', 'sizes'));
     }
 
     public function store(Request $request)
@@ -29,7 +33,9 @@ class ProductController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|image',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'exists:sizes,id',
         ]);
 
         $product = Product::create([
@@ -38,30 +44,24 @@ class ProductController extends Controller
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
             'price' => $request->price,
             'discount_price' => $request->discount_price,
+            'description' => $request->description,
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
+            'featured' => $request->has('featured'),
         ]);
 
-        if ($request->sizes) {
-            $sizeNames = explode(',', $request->sizes);
-            $sizeIds = [];
-            foreach ($sizeNames as $name) {
-                $name = trim($name);
-                $size = \App\Models\Size::firstOrCreate(
-                    ['name' => $name],
-                    ['slug' => \Illuminate\Support\Str::slug($name)]
-                );
-                $sizeIds[] = $size->id;
-            }
-            $product->sizes()->sync($sizeIds);
+        if ($request->has('sizes')) {
+            $product->sizes()->sync($request->sizes);
         }
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image' => '/storage/' . $path,
-            ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => '/storage/' . $path,
+                ]);
+            }
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
@@ -71,7 +71,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::where('status', true)->get();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $sizes = Size::all();
+        return view('admin.products.edit', compact('product', 'categories', 'sizes'));
     }
 
     public function update(Request $request, Product $product)
@@ -80,6 +81,9 @@ class ProductController extends Controller
             'title' => 'required',
             'category_id' => 'required',
             'price' => 'required|numeric',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'exists:sizes,id',
         ]);
 
         $product->update([
@@ -88,33 +92,26 @@ class ProductController extends Controller
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
             'price' => $request->price,
             'discount_price' => $request->discount_price,
+            'description' => $request->description,
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
+            'featured' => $request->has('featured'),
         ]);
 
-        if ($request->sizes) {
-            $sizeNames = explode(',', $request->sizes);
-            $sizeIds = [];
-            foreach ($sizeNames as $name) {
-                $name = trim($name);
-                $size = \App\Models\Size::firstOrCreate(
-                    ['name' => $name],
-                    ['slug' => \Illuminate\Support\Str::slug($name)]
-                );
-                $sizeIds[] = $size->id;
-            }
-            $product->sizes()->sync($sizeIds);
+        if ($request->has('sizes')) {
+            $product->sizes()->sync($request->sizes);
         } else {
             $product->sizes()->detach();
         }
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            // Remove old image logic could be here
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image' => '/storage/' . $path,
-            ]);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image' => '/storage/' . $path,
+                ]);
+            }
         }
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
