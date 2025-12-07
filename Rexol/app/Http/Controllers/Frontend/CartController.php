@@ -29,7 +29,7 @@ class CartController extends Controller
         } else {
             $cart[$cartId] = [
                 'name' => $product->title,
-                'price' => $product->price,
+                'price' => ($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price,
                 'quantity' => $request->quantity,
                 'image' => $product->images->first()->image ?? 'https://via.placeholder.com/100',
                 'id' => $product->id,

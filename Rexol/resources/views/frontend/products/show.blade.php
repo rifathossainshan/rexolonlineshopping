@@ -35,7 +35,15 @@
             <div class="col-md-6">
                 <h1>{{ $product->title }}</h1>
                 <p class="text-muted">Category: {{ $product->category->name }}</p>
-                <h3 class="text-danger mb-3">৳{{ $product->price }}</h3>
+                @if($product->discount_price && $product->discount_price > 0)
+                    <h3 class="text-danger mb-3">
+                        ৳{{ number_format($product->discount_price) }}
+                        <small
+                            class="text-muted text-decoration-line-through fs-6">৳{{ number_format($product->price) }}</small>
+                    </h3>
+                @else
+                    <h3 class="text-danger mb-3">৳{{ number_format($product->price) }}</h3>
+                @endif
 
                 <p>{{ $product->description }}</p>
 
