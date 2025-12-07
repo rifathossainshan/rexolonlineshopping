@@ -19,20 +19,24 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create Admin
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@gmail.com',
-            'password' => 'password',
-            'role' => 'admin',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin User',
+                'password' => 'password', // Password hashing is handled by model cast/mutator usually? Or should I hash? User model has 'password' => 'hashed' cast
+                'role' => 'admin',
+            ]
+        );
 
         // Create User
-        User::create([
-            'name' => 'Sneaker Head',
-            'email' => 'user@gmail.com',
-            'password' => 'password',
-            'role' => 'user',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'user@gmail.com'],
+            [
+                'name' => 'Sneaker Head',
+                'password' => 'password',
+                'role' => 'user',
+            ]
+        );
 
         $this->call([
             ProductSeeder::class,
