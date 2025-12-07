@@ -74,9 +74,16 @@
                         <div class="col-md-4 mb-4">
                             <div class="card h-100 product-card border-0 shadow-sm">
                                 <div class="position-relative overflow-hidden">
-                                     <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                    <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
                                         class="card-img-top" alt="{{ $product->title }}"
                                         style="height: 250px; object-fit: cover; transition: transform 0.5s ease;">
+                                     <a href="{{ route('wishlist.add', $product->id) }}" class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle" title="Add to Wishlist">
+                                        @if(session('wishlist') && isset(session('wishlist')[$product->id]))
+                                            <i class="fas fa-heart text-danger"></i>
+                                        @else
+                                            <i class="far fa-heart"></i>
+                                        @endif
+                                     </a>
                                 </div>
                                 <div class="card-body text-center">
                                     <h5 class="card-title fw-bold mb-1">{{ $product->title }}</h5>
