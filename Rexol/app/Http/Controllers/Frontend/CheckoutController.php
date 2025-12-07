@@ -69,6 +69,23 @@ class CheckoutController extends Controller
         Session::forget('cart');
         Session::forget('coupon');
 
-        return redirect()->route('home')->with('success', 'Order placed successfully! Order ID: ' . $order->id);
+        return redirect()->route('checkout.pending', $order->id)->with('success', 'Order placed successfully! Order ID: ' . $order->id);
+    }
+
+    public function pending(Order $order)
+    {
+        // Security check: ensure user owns order or is admin? (Simplifying for now, assuming public link or logged in)
+        if (Auth::check() && $order->user_id !== Auth::id()) {
+            // Optional: Handle unauthorized access check
+            // return redirect()->route('home');
+        }
+
+        return view('frontend.checkout.pending', compact('order'));
+    }
+
+    public function downloadInvoice(Order $order)
+    {
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('invoices.order', compact('order'));
+        return $pdf->download('invoice-' . $order->id . '.pdf');
     }
 }

@@ -21,6 +21,8 @@ Route::delete('/cart/coupon', [CartController::class, 'removeCoupon'])->name('ca
 use App\Http\Controllers\Frontend\CheckoutController;
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/pending/{order}', [CheckoutController::class, 'pending'])->name('checkout.pending');
+Route::get('/invoice/download/{order}', [CheckoutController::class, 'downloadInvoice'])->name('invoice.download');
 
 use App\Http\Controllers\Frontend\DashboardController;
 
