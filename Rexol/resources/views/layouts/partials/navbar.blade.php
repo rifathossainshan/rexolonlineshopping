@@ -22,10 +22,13 @@
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-4">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i class="fas fa-search fs-5"></i></a>
+                    <a class="nav-link text-white" href="#" onclick="toggleSearch(event)"><i
+                            class="fas fa-search fs-5"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><i class="fas fa-heart fs-5"></i></a>
+                    <a class="nav-link text-white" href="#"
+                        onclick="alert('Wishlist feature coming soon!'); return false;"><i
+                            class="fas fa-heart fs-5"></i></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="{{ route('cart.index') }}">
@@ -72,4 +75,29 @@
             </ul>
         </div>
     </div>
+
+    <!-- Search Overlay -->
+    <div id="search-bar" class="w-100 bg-white py-3 border-bottom position-absolute start-0 top-100 shadow-sm"
+        style="display: none; z-index: 1000;">
+        <div class="container">
+            <form action="{{ route('products.index') }}" method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control border-0 form-control-lg"
+                    placeholder="SEARCH PRODUCTS..." autofocus>
+                <button type="submit" class="btn btn-white"><i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function toggleSearch(e) {
+            e.preventDefault();
+            const searchBar = document.getElementById('search-bar');
+            if (searchBar.style.display === 'none') {
+                searchBar.style.display = 'block';
+                searchBar.querySelector('input').focus();
+            } else {
+                searchBar.style.display = 'none';
+            }
+        }
+    </script>
 </nav>

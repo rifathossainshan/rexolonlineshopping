@@ -45,6 +45,10 @@ class ProductRepository implements ProductRepositoryInterface
             $query->where('gender', $filters['gender']);
         }
 
+        if (isset($filters['search'])) {
+            $query->where('title', 'like', '%' . $filters['search'] . '%');
+        }
+
         if (isset($filters['sort'])) {
             if ($filters['sort'] == 'price_asc') {
                 $query->orderBy('price', 'asc');
