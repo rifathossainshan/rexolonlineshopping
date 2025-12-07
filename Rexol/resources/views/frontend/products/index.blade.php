@@ -77,7 +77,7 @@
                                     <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
                                         class="card-img-top" alt="{{ $product->title }}"
                                         style="height: 250px; object-fit: cover; transition: transform 0.5s ease;">
-                                     <a href="{{ route('wishlist.add', $product->id) }}" class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle" title="Add to Wishlist">
+                                     <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}" class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle" title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}">
                                         @if(session('wishlist') && isset(session('wishlist')[$product->id]))
                                             <i class="fas fa-heart text-danger"></i>
                                         @else
