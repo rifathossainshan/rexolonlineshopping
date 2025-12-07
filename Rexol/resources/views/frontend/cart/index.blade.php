@@ -1,55 +1,60 @@
 @extends('layouts.frontend')
 
 @section('content')
-    <div class="container">
-        <h2 class="mb-4">Shopping Cart</h2>
+    <div class="container py-5">
+        <h2 class="mb-5 display-5 fw-bold text-uppercase">Shopping Cart</h2>
 
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success rounded-0 mb-4">{{ session('success') }}</div>
         @endif
         @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+            <div class="alert alert-danger rounded-0 mb-4">{{ session('error') }}</div>
         @endif
 
         @if(count($cart) > 0)
-            <div class="row">
-                <div class="col-md-9">
+            <div class="row g-5">
+                <div class="col-lg-8">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
+                        <table class="table align-middle">
+                            <thead class="text-uppercase small fw-bold text-muted border-bottom-0">
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Product</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
+                                    <th class="border-0 pb-3 ps-0">Product</th>
+                                    <th class="border-0 pb-3">Price</th>
+                                    <th class="border-0 pb-3">Quantity</th>
+                                    <th class="border-0 pb-3 text-end pe-0">Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border-top-0">
                                 @php $total = 0; @endphp
                                 @foreach($cart as $id => $details)
                                     @php $total += $details['price'] * $details['quantity']; @endphp
-                                    <tr>
-                                        <td style="width: 100px;">
-                                            <img src="{{ $details['image'] }}" class="img-fluid" alt="{{ $details['name'] }}">
+                                    <tr class="border-bottom">
+                                        <td class="py-4 ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{ $details['image'] }}" class="img-fluid me-4"
+                                                    alt="{{ $details['name'] }}"
+                                                    style="width: 80px; height: 80px; object-fit: cover;">
+                                                <div>
+                                                    <h6 class="mb-1 text-uppercase fw-bold">{{ $details['name'] }}</h6>
+                                                    @if(isset($details['size']))
+                                                        <small class="text-muted d-block mb-2">Size: {{ $details['size'] }}</small>
+                                                    @endif
+                                                    <a href="{{ route('cart.remove', $id) }}"
+                                                        class="text-danger small text-decoration-none fw-bold text-uppercase">Remove</a>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td>{{ $details['name'] }}</td>
-                                        <td>{{ $details['size'] ?? '-' }}</td>
-                                        <td>৳{{ $details['price'] }}</td>
-                                        <td style="width: 150px;">
-                                            <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex gap-2">
+                                        <td class="py-4 fw-bold">৳{{ number_format($details['price']) }}</td>
+                                        <td class="py-4" style="width: 150px;">
+                                            <form action="{{ route('cart.update', $id) }}" method="POST" class="cart-update-form">
                                                 @csrf
                                                 <input type="number" name="quantity" value="{{ $details['quantity'] }}"
-                                                    class="form-control" min="1">
-                                                <button type="submit" class="btn btn-sm btn-secondary">Update</button>
+                                                    class="form-control text-center border-0 bg-light fw-bold" min="1"
+                                                    onchange="this.form.submit()">
                                             </form>
                                         </td>
-                                        <td>৳{{ $details['price'] * $details['quantity'] }}</td>
-                                        <td>
-                                            <a href="{{ route('cart.remove', $id) }}" class="btn btn-sm btn-danger">Remove</a>
-                                        </td>
+                                        <td class="py-4 text-end pe-0 fw-bold">
+                                            ৳{{ number_format($details['price'] * $details['quantity']) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -57,63 +62,186 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">Cart Summary</div>
-                        <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between mb-3">
-                                <span>Subtotal:</span>
-                                <span class="fw-bold">৳{{ $total }}</span>
-                            </h5>
+                <div class="col-lg-4">
+                    <div class="bg-light p-4">
+                        <h4 class="text-uppercase fw-bold mb-4">Summary</h4>
 
-                            @if(session()->has('coupon'))
-                                @php
-                                    $coupon = session()->get('coupon');
-                                    $discount = 0;
-                                    if ($coupon['type'] == 'fixed') {
-                                        $discount = $coupon['value'];
-                                    } else {
-                                        $discount = ($total * $coupon['value']) / 100;
-                                    }
-                                @endphp
-                                <h5 class="card-title d-flex justify-content-between text-success mb-3">
-                                    <span>Discount ({{ $coupon['code'] }}):</span>
-                                    <span>-৳{{ number_format($discount, 0) }}</span>
-                                </h5>
-                                <form action="{{ route('cart.coupon.remove') }}" method="POST" class="mb-3">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">Remove Coupon</button>
-                                </form>
-                                <hr>
-                                <h5 class="card-title d-flex justify-content-between mb-3">
-                                    <span>Grand Total:</span>
-                                    <span class="fw-bold">৳{{ max(0, $total - $discount) }}</span>
-                                </h5>
-                            @else
-                                <form action="{{ route('cart.coupon.apply') }}" method="POST" class="mb-3">
-                                    @csrf
-                                    <div class="input-group">
-                                        <input type="text" name="code" class="form-control" placeholder="Coupon Code">
-                                        <button class="btn btn-outline-secondary" type="submit">Apply</button>
-                                    </div>
-                                </form>
-                                <hr>
-                                <h5 class="card-title d-flex justify-content-between mb-3">
-                                    <span>Grand Total:</span>
-                                    <span class="fw-bold">৳{{ $total }}</span>
-                                </h5>
-                            @endif
-
-                            <a href="{{ route('checkout.index') }}" class="btn btn-success w-100 mt-3">Proceed to Checkout</a>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-uppercase fw-bold small">Subtotal</span>
+                            <span class="fw-bold">৳{{ number_format($total) }}</span>
                         </div>
+
+                        @if(session()->has('coupon'))
+                            @php
+                                $coupon = session()->get('coupon');
+                                $discount = 0;
+                                if ($coupon['type'] == 'fixed') {
+                                    $discount = $coupon['value'];
+                                } else {
+                                    $discount = ($total * $coupon['value']) / 100;
+                                }
+                            @endphp
+                            <div class="d-flex justify-content-between mb-3 text-success">
+                                <span class="text-uppercase fw-bold small">Discount</span>
+                                <span>-৳{{ number_format($discount) }}</span>
+                            </div>
+                            <form action="{{ route('cart.coupon.remove') }}" method="POST" class="mb-4">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="btn btn-link px-0 text-danger text-decoration-none small text-uppercase fw-bold">Remove
+                                    Coupon</button>
+                            </form>
+                            <hr class="my-4">
+                            <div class="d-flex justify-content-between mb-4">
+                                <span class="text-uppercase fw-bold">Total</span>
+                                <span class="fw-bold fs-4">৳{{ number_format(max(0, $total - $discount)) }}</span>
+                            </div>
+                        @else
+                            <form action="{{ route('cart.coupon.apply') }}" method="POST" class="mb-4">
+                                @csrf
+                                <label class="form-label text-uppercase small fw-bold text-muted">Coupon Code</label>
+                                <div class="input-group">
+                                    <input type="text" name="code" class="form-control border-secondary rounded-0"
+                                        placeholder="ENTER CODE">
+                                    <button class="btn btn-dark rounded-0 px-3" type="submit">APPLY</button>
+                                </div>
+                            </form>
+                            <hr class="my-4">
+                            <div class="d-flex justify-content-between mb-4">
+                                <span class="text-uppercase fw-bold">Total</span>
+                                <span class="fw-bold fs-4">৳{{ number_format($total) }}</span>
+                            </div>
+                        @endif
+
+                        <a href="{{ route('checkout.index') }}"
+                            class="btn btn-dark w-100 py-3 fw-bold rounded-0 text-uppercase">Proceed to Checkout</a>
+                        <a href="{{ route('products.index') }}"
+                            class="btn btn-outline-dark w-100 py-3 fw-bold rounded-0 text-uppercase mt-2">Continue Shopping</a>
                     </div>
                 </div>
             </div>
         @else
-            <div class="alert alert-info">
-                Your cart is empty. <a href="{{ route('products.index') }}">Start Shopping</a>
+            <div class="text-center py-5">
+                <i class="fas fa-shopping-bag display-1 text-muted mb-4 opacity-25"></i>
+                <h3 class="text-uppercase fw-bold mb-3">Your Cart is Empty</h3>
+                <p class="text-muted mb-4">Looks like you haven't added anything to your cart yet.</p>
+                <a href="{{ route('products.index') }}" class="btn btn-dark px-5 py-3 rounded-0 text-uppercase fw-bold">Start
+                    Shopping</a>
             </div>
         @endif
     </div>
+@endsection
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
+@if(count($cart) > 0)
+    <div class="row">
+        <div class="col-md-9">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $total = 0; @endphp
+                        @foreach($cart as $id => $details)
+                            @php $total += $details['price'] * $details['quantity']; @endphp
+                            <tr>
+                                <td style="width: 100px;">
+                                    <img src="{{ $details['image'] }}" class="img-fluid" alt="{{ $details['name'] }}">
+                                </td>
+                                <td>{{ $details['name'] }}</td>
+                                <td>{{ $details['size'] ?? '-' }}</td>
+                                <td>৳{{ $details['price'] }}</td>
+                                <td style="width: 150px;">
+                                    <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex gap-2">
+                                        @csrf
+                                        <input type="number" name="quantity" value="{{ $details['quantity'] }}"
+                                            class="form-control" min="1">
+                                        <button type="submit" class="btn btn-sm btn-secondary">Update</button>
+                                    </form>
+                                </td>
+                                <td>৳{{ $details['price'] * $details['quantity'] }}</td>
+                                <td>
+                                    <a href="{{ route('cart.remove', $id) }}" class="btn btn-sm btn-danger">Remove</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">Cart Summary</div>
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between mb-3">
+                        <span>Subtotal:</span>
+                        <span class="fw-bold">৳{{ $total }}</span>
+                    </h5>
+
+                    @if(session()->has('coupon'))
+                        @php
+                            $coupon = session()->get('coupon');
+                            $discount = 0;
+                            if ($coupon['type'] == 'fixed') {
+                                $discount = $coupon['value'];
+                            } else {
+                                $discount = ($total * $coupon['value']) / 100;
+                            }
+                        @endphp
+                        <h5 class="card-title d-flex justify-content-between text-success mb-3">
+                            <span>Discount ({{ $coupon['code'] }}):</span>
+                            <span>-৳{{ number_format($discount, 0) }}</span>
+                        </h5>
+                        <form action="{{ route('cart.coupon.remove') }}" method="POST" class="mb-3">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger w-100">Remove Coupon</button>
+                        </form>
+                        <hr>
+                        <h5 class="card-title d-flex justify-content-between mb-3">
+                            <span>Grand Total:</span>
+                            <span class="fw-bold">৳{{ max(0, $total - $discount) }}</span>
+                        </h5>
+                    @else
+                        <form action="{{ route('cart.coupon.apply') }}" method="POST" class="mb-3">
+                            @csrf
+                            <div class="input-group">
+                                <input type="text" name="code" class="form-control" placeholder="Coupon Code">
+                                <button class="btn btn-outline-secondary" type="submit">Apply</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <h5 class="card-title d-flex justify-content-between mb-3">
+                            <span>Grand Total:</span>
+                            <span class="fw-bold">৳{{ $total }}</span>
+                        </h5>
+                    @endif
+
+                    <a href="{{ route('checkout.index') }}" class="btn btn-success w-100 mt-3">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="alert alert-info">
+        Your cart is empty. <a href="{{ route('products.index') }}">Start Shopping</a>
+    </div>
+@endif
+</div>
 @endsection
