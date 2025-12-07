@@ -56,8 +56,8 @@
                             <div class="d-flex gap-2 flex-wrap">
                                 @foreach($product->sizes as $size)
                                     <input type="radio" class="btn-check" name="size" id="size_{{ $loop->index }}"
-                                        value="{{ $size }}" required>
-                                    <label class="btn btn-outline-dark" for="size_{{ $loop->index }}">{{ $size }}</label>
+                                        value="{{ $size->name }}" required>
+                                    <label class="btn btn-outline-dark" for="size_{{ $loop->index }}">{{ $size->name }}</label>
                                 @endforeach
                             </div>
                         </div>

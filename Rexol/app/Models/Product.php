@@ -15,12 +15,10 @@ class Product extends Model
         'description',
         'stock',
         'status',
-        'sizes',
+        // 'sizes' removed
     ];
 
-    protected $casts = [
-        'sizes' => 'array',
-    ];
+    // Removed sizes casting
 
     public function category()
     {
@@ -30,5 +28,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_size');
     }
 }

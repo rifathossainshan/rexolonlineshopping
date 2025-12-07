@@ -7,43 +7,21 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use App\Services\ProductService;
+
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     public function index(Request $request)
     {
-        $query = Product::where('status', true);
-
-        // Filter by Category
-        if ($request->has('category')) {
-            $slug = $request->category;
-            $category = Category::where('slug', $slug)->first();
-            if ($category) {
-                $query->where('category_id', $category->id);
-            }
-        }
-
-        // Filter by Price
-        if ($request->has('min_price') && $request->min_price != '') {
-            $query->where('price', '>=', $request->min_price);
-        }
-        if ($request->has('max_price') && $request->max_price != '') {
-            $query->where('price', '<=', $request->max_price);
-        }
-
-        // Sorting
-        if ($request->has('sort')) {
-            if ($request->sort == 'price_asc') {
-                $query->orderBy('price', 'asc');
-            } elseif ($request->sort == 'price_desc') {
-                $query->orderBy('price', 'desc');
-            } elseif ($request->sort == 'newest') {
-                $query->orderBy('created_at', 'desc');
-            }
-        } else {
-            $query->latest();
-        }
-
-        $products = $query->paginate(12);
+        $filters = $request->all();
+        $products = $this->productService->filterProducts($filters);
         $categories = Category::where('status', true)->get();
 
         return view('frontend.products.index', compact('products', 'categories'));
@@ -51,7 +29,7 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where('slug', $slug)->where('status', true)->firstOrFail();
+        $product = $this->productService->getProductBySlug($slug);
         return view('frontend.products.show', compact('product'));
     }
 }

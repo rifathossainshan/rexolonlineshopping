@@ -38,11 +38,23 @@ class ProductController extends Controller
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
             'price' => $request->price,
             'discount_price' => $request->discount_price,
-            'description' => $request->description,
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
-            'sizes' => $request->sizes ? explode(',', $request->sizes) : [],
         ]);
+
+        if ($request->sizes) {
+            $sizeNames = explode(',', $request->sizes);
+            $sizeIds = [];
+            foreach ($sizeNames as $name) {
+                $name = trim($name);
+                $size = \App\Models\Size::firstOrCreate(
+                    ['name' => $name],
+                    ['slug' => \Illuminate\Support\Str::slug($name)]
+                );
+                $sizeIds[] = $size->id;
+            }
+            $product->sizes()->sync($sizeIds);
+        }
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
@@ -76,11 +88,25 @@ class ProductController extends Controller
             'slug' => Str::slug($request->title) . '-' . Str::random(5),
             'price' => $request->price,
             'discount_price' => $request->discount_price,
-            'description' => $request->description,
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
-            'sizes' => $request->sizes ? explode(',', $request->sizes) : [],
         ]);
+
+        if ($request->sizes) {
+            $sizeNames = explode(',', $request->sizes);
+            $sizeIds = [];
+            foreach ($sizeNames as $name) {
+                $name = trim($name);
+                $size = \App\Models\Size::firstOrCreate(
+                    ['name' => $name],
+                    ['slug' => \Illuminate\Support\Str::slug($name)]
+                );
+                $sizeIds[] = $size->id;
+            }
+            $product->sizes()->sync($sizeIds);
+        } else {
+            $product->sizes()->detach();
+        }
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');

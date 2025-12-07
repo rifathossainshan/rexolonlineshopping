@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label>Sizes (Comma separated)</label>
                             <input type="text" name="sizes" class="form-control"
-                                value="{{ $product->sizes ? implode(',', $product->sizes) : '' }}"
+                                value="{{ $product->sizes->isNotEmpty() ? $product->sizes->pluck('name')->implode(',') : '' }}"
                                 placeholder="US 7,US 8,US 9">
                         </div>
                         <div class="form-group">
