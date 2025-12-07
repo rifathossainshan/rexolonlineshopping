@@ -18,7 +18,7 @@ class ProductSeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('password'),
+            'password' => 'password',
             'role' => 'admin',
         ]);
 
