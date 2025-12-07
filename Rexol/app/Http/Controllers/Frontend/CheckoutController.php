@@ -35,6 +35,17 @@ class CheckoutController extends Controller
             $totalAmount += $details['price'] * $details['quantity'];
         }
 
+        // Apply Coupon Discount
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+            if ($coupon['type'] == 'fixed') {
+                $totalAmount -= $coupon['value'];
+            } else {
+                $totalAmount -= ($totalAmount * $coupon['value']) / 100;
+            }
+        }
+        $totalAmount = max(0, $totalAmount);
+
         $order = Order::create([
             'user_id' => Auth::id(), // Nullable allowed in schema
             'name' => $request->name,
@@ -56,6 +67,7 @@ class CheckoutController extends Controller
         }
 
         Session::forget('cart');
+        Session::forget('coupon');
 
         return redirect()->route('home')->with('success', 'Order placed successfully! Order ID: ' . $order->id);
     }

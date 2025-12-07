@@ -7,6 +7,9 @@
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
 
         @if(count($cart) > 0)
             <div class="row">
@@ -58,10 +61,50 @@
                     <div class="card">
                         <div class="card-header">Cart Summary</div>
                         <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between">
-                                <span>Total:</span>
+                            <h5 class="card-title d-flex justify-content-between mb-3">
+                                <span>Subtotal:</span>
                                 <span class="fw-bold">৳{{ $total }}</span>
                             </h5>
+
+                            @if(session()->has('coupon'))
+                                @php
+                                    $coupon = session()->get('coupon');
+                                    $discount = 0;
+                                    if ($coupon['type'] == 'fixed') {
+                                        $discount = $coupon['value'];
+                                    } else {
+                                        $discount = ($total * $coupon['value']) / 100;
+                                    }
+                                @endphp
+                                <h5 class="card-title d-flex justify-content-between text-success mb-3">
+                                    <span>Discount ({{ $coupon['code'] }}):</span>
+                                    <span>-৳{{ number_format($discount, 0) }}</span>
+                                </h5>
+                                <form action="{{ route('cart.coupon.remove') }}" method="POST" class="mb-3">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">Remove Coupon</button>
+                                </form>
+                                <hr>
+                                <h5 class="card-title d-flex justify-content-between mb-3">
+                                    <span>Grand Total:</span>
+                                    <span class="fw-bold">৳{{ max(0, $total - $discount) }}</span>
+                                </h5>
+                            @else
+                                <form action="{{ route('cart.coupon.apply') }}" method="POST" class="mb-3">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" name="code" class="form-control" placeholder="Coupon Code">
+                                        <button class="btn btn-outline-secondary" type="submit">Apply</button>
+                                    </div>
+                                </form>
+                                <hr>
+                                <h5 class="card-title d-flex justify-content-between mb-3">
+                                    <span>Grand Total:</span>
+                                    <span class="fw-bold">৳{{ $total }}</span>
+                                </h5>
+                            @endif
+
                             <a href="{{ route('checkout.index') }}" class="btn btn-success w-100 mt-3">Proceed to Checkout</a>
                         </div>
                     </div>

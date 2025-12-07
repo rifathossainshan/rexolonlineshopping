@@ -69,4 +69,39 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Product removed from cart!');
     }
+
+    public function applyCoupon(Request $request)
+    {
+        $code = $request->code;
+        $coupon = \App\Models\Coupon::where('code', $code)->where('status', true)->first();
+
+        if (!$coupon) {
+            return redirect()->back()->with('error', 'Invalid or inactive coupon code.');
+        }
+
+        // Calculate total cart value
+        $cart = Session::get('cart', []);
+        $total = 0;
+        foreach ($cart as $details) {
+            $total += $details['price'] * $details['quantity'];
+        }
+
+        if ($coupon->min_amount && $total < $coupon->min_amount) {
+            return redirect()->back()->with('error', 'Minimum order amount for this coupon is ' . $coupon->min_amount);
+        }
+
+        Session::put('coupon', [
+            'code' => $coupon->code,
+            'type' => $coupon->discount_type,
+            'value' => $coupon->discount_value,
+        ]);
+
+        return redirect()->back()->with('success', 'Coupon applied successfully!');
+    }
+
+    public function removeCoupon()
+    {
+        Session::forget('coupon');
+        return redirect()->back()->with('success', 'Coupon removed successfully!');
+    }
 }
