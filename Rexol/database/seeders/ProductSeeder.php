@@ -14,6 +14,14 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin User
+        \App\Models\User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
+
         // Create Categories
         $nike = Category::create(['name' => 'Nike', 'slug' => 'nike']);
         $adidas = Category::create(['name' => 'Adidas', 'slug' => 'adidas']);

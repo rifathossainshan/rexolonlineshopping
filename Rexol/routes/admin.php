@@ -4,17 +4,23 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
-    Route::resource('categories', CategoryController::class)->names('admin.categories');
-    Route::resource('products', ProductController::class)->names('admin.products');
+    // Categories
+    Route::resource('categories', CategoryController::class);
 
-    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
-    Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+    // Products
+    Route::resource('products', ProductController::class);
 
-    Route::resource('coupons', \App\Http\Controllers\Admin\CouponController::class)->names('admin.coupons');
+    // Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+    // Coupons
+    Route::resource('coupons', CouponController::class);
 });
