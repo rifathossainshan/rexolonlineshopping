@@ -14,7 +14,7 @@ class HomeController extends Controller
         // Separate categories for Gender and Brands (Mocking separation by name for now as we don't have a 'type' column)
         $allCategories = Category::where('status', true)->get();
 
-        $genderNames = ['Men', 'Women', 'Boys', 'Girls', 'Kids'];
+        $genderNames = ['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'];
         $genderCategories = $allCategories->whereIn('name', $genderNames);
         $brandCategories = $allCategories->whereNotIn('name', $genderNames);
 

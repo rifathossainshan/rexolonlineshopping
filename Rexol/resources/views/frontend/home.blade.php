@@ -190,6 +190,25 @@
                             </div>
                         </div>
 
+                        <!-- Gender Section -->
+                        <div class="container mb-5">
+                            <h2 class="section-title mb-4">SHOP BY GENDER</h2>
+                            <div class="row">
+                                @foreach($genderCategories as $gender)
+                                    <div class="col-md-4 mb-4">
+                                        <div class="gender-card" onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
+                                            <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}" 
+                                                 class="gender-bg" alt="{{ $gender->name }}">
+                                            <div class="gender-overlay">
+                                                <h3>{{ strtoupper($gender->name) }}</h3>
+                                                <p>View Collection <i class="fas fa-arrow-right ms-2"></i></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="container">
                             <!-- Best Sellers -->
                             <div class="d-flex justify-content-between align-items-end mb-4">
