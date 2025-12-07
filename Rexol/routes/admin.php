@@ -23,4 +23,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Coupons
     Route::resource('coupons', CouponController::class);
+
+    // Users
+    Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
 });
