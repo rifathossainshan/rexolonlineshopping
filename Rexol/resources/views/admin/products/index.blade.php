@@ -38,13 +38,16 @@
                             <td>৳{{ $product->price }}</td>
                             <td>{{ $product->stock }}</td>
                             <td class="project-actions">
-                                <!-- Edit button omitted for brevity but link should exist -->
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+                                <a class="btn btn-info btn-sm" href="{{ route('admin.products.edit', $product->id) }}">
+                                    <i class="fas fa-pencil-alt"></i> Edit
+                                </a>
+                                <form id="delete-form-{{ $product->id }}"
+                                    action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
                                     style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure?')">
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="deleteProduct({{ $product->id }})">
                                         <i class="fas fa-trash"></i> Delete
                                     </button>
                                 </form>
@@ -55,4 +58,12 @@
             </table>
         </div>
     </div>
+
+    <script>
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        }
+    </script>
 @endsection
