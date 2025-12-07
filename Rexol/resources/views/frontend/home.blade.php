@@ -2,30 +2,7 @@
 
 @section('content')
     <style>
-        /* Hypebeast / Sneaker Shop Styles */
-        :root {
-            --primary-color: #000000;
-            --secondary-color: #f8f9fa;
-            --accent-color: #FF4400;
-            /* Vibrant Orange for callouts */
-        }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            /* Cleaner, modern font */
-            background-color: #fcfcfc;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        .btn {
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-        }
+        /* Hypebeast / Sneaker Shop Specific Styles */
 
         /* Hero Section */
         .hero-section {
@@ -196,9 +173,10 @@
                             <div class="row">
                                 @foreach($genderCategories as $gender)
                                     <div class="col-md-4 mb-4">
-                                        <div class="gender-card" onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
-                                            <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}" 
-                                                 class="gender-bg" alt="{{ $gender->name }}">
+                                        <div class="gender-card"
+                                            onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
+                                            <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}"
+                                                class="gender-bg" alt="{{ $gender->name }}">
                                             <div class="gender-overlay">
                                                 <h3>{{ strtoupper($gender->name) }}</h3>
                                                 <p>View Collection <i class="fas fa-arrow-right ms-2"></i></p>
@@ -231,10 +209,20 @@
                                             </div>
                                             <div class="card-body">
                                                 <p class="text-muted small mb-1 text-uppercase">
-                                                    {{ $product->category->name ?? 'Sneakers' }}</p>
+                                                    {{ $product->category->name ?? 'Sneakers' }}
+                                                </p>
                                                 <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    @if($product->discount_price && $product->discount_price > 0)
+                                                        <div>
+                                                            <h5 class="fw-bold mb-0 text-danger">
+                                                                ৳{{ number_format($product->discount_price) }}</h5>
+                                                            <small class="text-muted text-decoration-line-through"
+                                                                style="font-size: 0.8rem;">৳{{ number_format($product->price) }}</small>
+                                                        </div>
+                                                    @else
+                                                        <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    @endif
                                                     <a href="{{ route('products.show', $product->slug) }}"
                                                         class="btn btn-sm btn-outline-dark rounded-0"><i
                                                             class="fas fa-plus"></i></a>
@@ -261,10 +249,20 @@
                                             </div>
                                             <div class="card-body">
                                                 <p class="text-muted small mb-1 text-uppercase">
-                                                    {{ $product->category->name ?? 'Sneakers' }}</p>
+                                                    {{ $product->category->name ?? 'Sneakers' }}
+                                                </p>
                                                 <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    @if($product->discount_price && $product->discount_price > 0)
+                                                        <div>
+                                                            <h5 class="fw-bold mb-0 text-danger">
+                                                                ৳{{ number_format($product->discount_price) }}</h5>
+                                                            <small class="text-muted text-decoration-line-through"
+                                                                style="font-size: 0.8rem;">৳{{ number_format($product->price) }}</small>
+                                                        </div>
+                                                    @else
+                                                        <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
+                                                    @endif
                                                     <a href="{{ route('products.show', $product->slug) }}"
                                                         class="btn btn-sm btn-outline-dark rounded-0"><i
                                                             class="fas fa-plus"></i></a>

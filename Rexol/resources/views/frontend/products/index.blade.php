@@ -5,13 +5,13 @@
         <div class="row">
             <!-- Sidebar Filters -->
             <div class="col-md-3 mb-4">
-                <div class="card">
-                    <div class="card-header">Filters</div>
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white fw-bold text-uppercase py-3">Filter Products</div>
                     <div class="card-body">
                         <form action="{{ route('products.index') }}" method="GET">
-                            <div class="mb-3">
-                                <label class="form-label">Category</label>
-                                <select name="category" class="form-select" onchange="this.form.submit()">
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Category</label>
+                                <select name="category" class="form-select border-0 bg-light" onchange="this.form.submit()">
                                     <option value="">All Categories</option>
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat->slug }}" {{ request('category') == $cat->slug ? 'selected' : '' }}>
@@ -21,9 +21,9 @@
                                 </select>
                             </div>
                             
-                            <div class="mb-3">
-                                <label class="form-label">Gender</label>
-                                <select name="gender" class="form-select" onchange="this.form.submit()">
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Gender</label>
+                                <select name="gender" class="form-select border-0 bg-light" onchange="this.form.submit()">
                                     <option value="">All Genders</option>
                                     @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
                                         <option value="{{ $g }}" {{ request('gender') == $g ? 'selected' : '' }}>
@@ -33,18 +33,18 @@
                                 </select>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Price Range</label>
+                            <div class="mb-4">
+                                <label class="form-label text-muted small fw-bold text-uppercase">Price Range</label>
                                 <div class="d-flex gap-2">
-                                    <input type="number" name="min_price" class="form-control" placeholder="Min"
+                                    <input type="number" name="min_price" class="form-control border-0 bg-light" placeholder="Min"
                                         value="{{ request('min_price') }}">
-                                    <input type="number" name="max_price" class="form-control" placeholder="Max"
+                                    <input type="number" name="max_price" class="form-control border-0 bg-light" placeholder="Max"
                                         value="{{ request('max_price') }}">
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
-                            <a href="{{ route('products.index') }}" class="btn btn-outline-secondary w-100 mt-2">Clear</a>
+                            <button type="submit" class="btn btn-dark w-100 mb-2">Apply Filters</button>
+                            <a href="{{ route('products.index') }}" class="btn btn-outline-secondary w-100">Clear</a>
                         </form>
                     </div>
                 </div>
@@ -72,23 +72,47 @@
                 <div class="row">
                     @forelse($products as $product)
                         <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                    class="card-img-top" alt="{{ $product->title }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $product->title }}</h5>
-                                    <p class="card-text text-danger fw-bold">৳{{ $product->price }}</p>
-                                    <a href="{{ route('products.show', $product->slug) }}" class="btn btn-primary w-100">View
-                                        Details</a>
+                            <div class="card h-100 product-card border-0 shadow-sm">
+                                <div class="position-relative overflow-hidden">
+                                     <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                        class="card-img-top" alt="{{ $product->title }}"
+                                        style="height: 250px; object-fit: cover; transition: transform 0.5s ease;">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title fw-bold mb-1">{{ $product->title }}</h5>
+                                    @if($product->discount_price && $product->discount_price > 0)
+                                        <p class="card-text text-danger fw-bold mb-3">
+                                            ৳{{ number_format($product->discount_price) }}
+                                            <small class="text-muted text-decoration-line-through fw-normal ms-1">৳{{ number_format($product->price) }}</small>
+                                        </p>
+                                    @else
+                                        <p class="card-text text-danger fw-bold mb-3">৳{{ number_format($product->price) }}</p>
+                                    @endif
+                                    <a href="{{ route('products.show', $product->slug) }}" class="btn btn-outline-dark w-100">View Details</a>
                                 </div>
                             </div>
                         </div>
                     @empty
                         <div class="col-12">
-                            <div class="alert alert-info">No products found.</div>
+                            <div class="alert alert-info rounded-0 border-0 bg-light p-4 text-center">
+                                <h5>No products found.</h5>
+                                <p class="text-muted">Try adjusting your filters.</p>
+                            </div>
                         </div>
                     @endforelse
                 </div>
+                
+                <style>
+                    .product-card:hover img {
+                        transform: scale(1.05);
+                    }
+                    .product-card {
+                        transition: box-shadow 0.3s ease;
+                    }
+                    .product-card:hover {
+                        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+                    }
+                </style>
 
                 <!-- Pagination -->
                 <div class="d-flex justify-content-center">

@@ -9,15 +9,87 @@
     <title>{{ config('app.name', 'Rexol') }}</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #f8f9fa;
+            --accent-color: #FF4400;
+            --text-color: #333;
+            --bg-color: #fcfcfc;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .h1,
+        .h2,
+        .h3,
+        .h4,
+        .h5 {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 0;
+            padding: 10px 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #333;
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-dark {
+            border-radius: 0;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Forms */
+        .form-control,
+        .form-select {
+            border-radius: 0;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: none;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 0;
+            background-color: white;
         }
     </style>
 </head>
