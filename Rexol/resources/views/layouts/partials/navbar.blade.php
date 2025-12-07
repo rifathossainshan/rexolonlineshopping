@@ -11,10 +11,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase fw-bold px-3 text-white" href="{{ url('/') }}">Home</a>
+                    <a class="nav-link text-uppercase fw-bold px-3 {{ request()->is('/') ? 'text-white' : 'text-white-50' }}"
+                        href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase fw-bold px-3 text-white-50"
+                    <a class="nav-link text-uppercase fw-bold px-3 {{ request()->routeIs('products.*') ? 'text-white' : 'text-white-50' }}"
                         href="{{ route('products.index') }}">Shop</a>
                 </li>
             </ul>
