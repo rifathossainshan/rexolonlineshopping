@@ -9,15 +9,56 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 class AdminController extends Controller
 {
     public function dashboard()
     {
+        // 1. Key Metrics
         $totalOrders = Order::count();
         $totalProducts = Product::count();
         $totalUsers = User::where('role', 'user')->count();
+
+        // Revenue: Sum of total_amount where status is not 'cancelled' (adjust status logic as needed)
+        // Assuming 'delivered' or 'processing' implies money in. For simplicity, any non-cancelled.
+        $totalRevenue = Order::where('status', '!=', 'cancelled')->sum('total_amount');
+
         $pendingOrders = Order::where('status', 'pending')->count();
 
-        return view('admin.dashboard', compact('totalOrders', 'totalProducts', 'totalUsers', 'pendingOrders'));
+        // Low Stock: Products with stock below 5
+        $lowStockCount = Product::where('stock', '<', 5)->count();
+
+        // 2. Recent Activity
+        $recentOrders = Order::with('user')->latest()->take(5)->get();
+        $recentUsers = User::where('role', 'user')->latest()->take(5)->get();
+
+        // 3. Chart Data (Last 7 Days Sales)
+        $dates = collect();
+        $salesData = collect();
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $dates->push($date->format('M d'));
+
+            $daySales = Order::whereDate('created_at', $date->format('Y-m-d'))
+                ->where('status', '!=', 'cancelled')
+                ->sum('total_amount');
+            $salesData->push($daySales);
+        }
+
+        return view('admin.dashboard', compact(
+            'totalOrders',
+            'totalProducts',
+            'totalUsers',
+            'totalRevenue',
+            'pendingOrders',
+            'lowStockCount',
+            'recentOrders',
+            'recentUsers',
+            'dates',
+            'salesData'
+        ));
     }
 }
