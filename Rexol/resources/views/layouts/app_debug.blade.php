@@ -31,7 +31,9 @@
 
         <!-- Page Content -->
         <main>
+            DEBUG_START
             {{ $slot }}
+            DEBUG_END
         </main>
     </div>
 </body>
