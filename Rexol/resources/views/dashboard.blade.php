@@ -16,23 +16,23 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
             <!-- Welcome Banner -->
-            <!-- Welcome Banner -->
-            <div class="relative overflow-hidden bg-indigo-600 rounded-2xl shadow-xl">
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600"
-                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                <div class="absolute inset-0 bg-white opacity-10"
+            <div class="relative overflow-hidden rounded-2xl shadow-xl" style="background-color: #4f46e5;">
+                <div class="absolute inset-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                </div>
+                <div class="absolute inset-0 opacity-10"
                     style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;">
                 </div>
                 <div class="relative p-8 md:p-12 text-white">
-                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2" style="color: white;">
                         Welcome back, {{ $user->name }}!
                     </h1>
-                    <p class="text-indigo-100 text-lg md:w-2/3">
+                    <p class="text-lg md:w-2/3" style="color: #e0e7ff;">
                         Track your orders, manage your account details, and explore our latest collections.
                     </p>
                     <div class="mt-8 flex flex-wrap gap-4">
                         <a href="{{ route('products.index') }}"
-                            class="px-6 py-3 bg-white text-indigo-700 font-bold rounded-full shadow-lg hover:bg-gray-50 hover:scale-105 transition transform duration-200 inline-flex items-center">
+                            class="px-6 py-3 font-bold rounded-full shadow-lg hover:scale-105 transition transform duration-200 inline-flex items-center"
+                            style="background-color: white; color: #4f46e5;">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -40,7 +40,8 @@
                             Start Shopping
                         </a>
                         <a href="{{ route('profile.edit') }}"
-                            class="px-6 py-3 bg-indigo-800 text-white font-medium rounded-full hover:bg-indigo-900 transition duration-200 border border-indigo-400 inline-flex items-center">
+                            class="px-6 py-3 font-medium rounded-full transition duration-200 border inline-flex items-center"
+                            style="background-color: #3730a3; color: white; border-color: #6366f1;">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
