@@ -52,9 +52,9 @@
                     <div class="card-header">Order Summary</div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush mb-3">
-                            @php $total = 0; @endphp
+                            @php $subtotal = 0; @endphp
                             @foreach($cart as $details)
-                                @php $total += $details['price'] * $details['quantity']; @endphp
+                                @php $subtotal += $details['price'] * $details['quantity']; @endphp
                                 <li class="list-group-item d-flex justify-content-between lh-sm">
                                     <div>
                                         <h6 class="my-0">{{ $details['name'] }}</h6>
@@ -63,11 +63,58 @@
                                     <span class="text-muted">৳{{ $details['price'] * $details['quantity'] }}</span>
                                 </li>
                             @endforeach
+
+                            @php
+                                $discount = 0;
+                                if (session()->has('coupon')) {
+                                    $coupon = session()->get('coupon');
+                                    if ($coupon['type'] == 'fixed') {
+                                        $discount = $coupon['value'];
+                                    } else {
+                                        $discount = ($subtotal * $coupon['value']) / 100;
+                                    }
+                                }
+                                $total = max(0, $subtotal - $discount);
+                            @endphp
+
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Subtotal</span>
+                                <span>৳{{ $subtotal }}</span>
+                            </li>
+
+                            @if(session()->has('coupon'))
+                                <li class="list-group-item d-flex justify-content-between text-success">
+                                    <span>Discount ({{ session()->get('coupon')['code'] }})</span>
+                                    <span>-৳{{ $discount }}</span>
+                                </li>
+                            @endif
+
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>Total (BDT)</span>
                                 <strong>৳{{ $total }}</strong>
                             </li>
                         </ul>
+
+                        <!-- Coupon Input -->
+                        @if(!session()->has('coupon'))
+                            <form action="{{ route('cart.coupon.apply') }}" method="POST" class="mt-3">
+                                @csrf
+                                <div class="input-group">
+                                    <input type="text" name="code" class="form-control" placeholder="Promo code">
+                                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                                </div>
+                            </form>
+                        @else
+                            <form action="{{ route('cart.coupon.remove') }}" method="POST" class="mt-3">
+                                @csrf
+                                @method('DELETE')
+                                <div class="alert alert-success d-flex justify-content-between align-items-center mb-0 p-2">
+                                    <small>Coupon applied</small>
+                                    <button type="submit" class="btn btn-sm btn-link text-danger p-0"
+                                        style="text-decoration: none;">Remove</button>
+                                </div>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
