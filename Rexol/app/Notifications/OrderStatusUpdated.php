@@ -7,16 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
+use App\Models\Order;
+
 class OrderStatusUpdated extends Notification
 {
     use Queueable;
 
+    public $order;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -35,9 +39,11 @@ class OrderStatusUpdated extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Order #' . $this->order->id . ' Status Update')
+            ->greeting('Hello ' . $notifiable->name . ',')
+            ->line('Your order status has been updated to: ' . ucfirst($this->order->status))
+            ->action('View Order', url('/user/orders/' . $this->order->id))
+            ->line('Thank you for shopping with us!');
     }
 
     /**
