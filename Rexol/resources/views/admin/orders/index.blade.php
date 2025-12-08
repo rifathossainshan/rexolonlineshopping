@@ -30,7 +30,7 @@
                             <td>৳{{ $order->total_amount }}</td>
                             <td>
                                 <span
-                                    class="badge badge-{{ $order->status == 'completed' ? 'success' : ($order->status == 'pending' ? 'warning' : 'info') }}">
+                                    class="badge badge-{{ $order->status == 'completed' ? 'success' : ($order->status == 'pending' ? 'warning' : ($order->status == 'rejected' || $order->status == 'cancelled' ? 'danger' : ($order->status == 'accepted' ? 'primary' : 'info'))) }}">
                                     {{ ucfirst($order->status) }}
                                 </span>
                             </td>

@@ -48,6 +48,10 @@
                             <label>Update Status</label>
                             <select name="status" class="form-control">
                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="accepted" {{ $order->status == 'accepted' ? 'selected' : '' }}>Accepted
+                                </option>
+                                <option value="rejected" {{ $order->status == 'rejected' ? 'selected' : '' }}>Rejected
+                                </option>
                                 <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing
                                 </option>
                                 <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed
