@@ -51,7 +51,8 @@
                 <!-- Notifications -->
                 @auth
                     <li class="nav-item dropdown">
-                        <a class="nav-link position-relative text-white" href="#" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link position-relative text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            onclick="markNotificationsRead(this)">
                             <i class="fas fa-bell fs-5"></i>
                             @if(Auth::user()->unreadNotifications->count() > 0)
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -135,6 +136,27 @@
                 searchBar.querySelector('input').focus();
             } else {
                 searchBar.style.display = 'none';
+            }
+        }
+
+        async function markNotificationsRead(element) {
+            const badge = element.querySelector('.badge');
+            if (!badge) return; // No unread notifications
+
+            try {
+                await fetch('{{ route("notifications.markRead") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                // Remove badge immediately for better UX
+                badge.remove();
+            } catch (error) {
+                console.error('Error marking notifications read:', error);
             }
         }
     </script>
