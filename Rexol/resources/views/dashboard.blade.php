@@ -16,8 +16,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
             <!-- Welcome Banner -->
-            <div class="relative overflow-hidden rounded-2xl shadow-xl"
-                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <!-- Welcome Banner -->
+            <div class="relative overflow-hidden bg-indigo-600 rounded-2xl shadow-xl">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600"
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
                 <div class="absolute inset-0 bg-white opacity-10"
                     style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;">
                 </div>
@@ -25,7 +27,7 @@
                     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">
                         Welcome back, {{ $user->name }}!
                     </h1>
-                    <p class="text-blue-100 text-lg md:w-2/3">
+                    <p class="text-indigo-100 text-lg md:w-2/3">
                         Track your orders, manage your account details, and explore our latest collections.
                     </p>
                     <div class="mt-8 flex flex-wrap gap-4">
@@ -38,7 +40,7 @@
                             Start Shopping
                         </a>
                         <a href="{{ route('profile.edit') }}"
-                            class="px-6 py-3 bg-indigo-900 bg-opacity-30 text-white font-medium rounded-full hover:bg-opacity-50 backdrop-blur-sm transition duration-200 border border-indigo-300 border-opacity-30 inline-flex items-center">
+                            class="px-6 py-3 bg-indigo-800 text-white font-medium rounded-full hover:bg-indigo-900 transition duration-200 border border-indigo-400 inline-flex items-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -148,59 +150,59 @@
                                         </thead>
                                         <tbody class="divide-y divide-gray-100">
                                             @foreach($orders as $order)
-                                                                                    <tr class="hover:bg-gray-50/80 transition duration-150 group">
-                                                                                        <td class="px-6 py-4 whitespace-nowrap">
-                                                                                            <div class="flex items-center">
-                                                                                                <div
-                                                                                                    class="p-2 bg-indigo-50 text-indigo-600 rounded-lg mr-3 group-hover:bg-indigo-100 transition">
-                                                                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                                                                        viewBox="0 0 24 24">
-                                                                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                            stroke-width="2"
-                                                                                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                                                                                    </svg>
-                                                                                                </div>
-                                                                                                <span class="font-bold text-gray-900">#{{ $order->id }}</span>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                                                            {{ $order->created_at->format('M d, Y') }}
-                                                                                            <span
-                                                                                                class="block text-xs text-gray-400">{{ $order->created_at->format('h:i A') }}</span>
-                                                                                        </td>
-                                                                                        <td class="px-6 py-4 whitespace-nowrap">
-                                                                                            <span
-                                                                                                class="text-sm font-bold text-gray-900">৳{{ number_format($order->total_amount, 2) }}</span>
-                                                                                        </td>
-                                                                                        <td class="px-6 py-4 whitespace-nowrap">
-                                                                                            @php
-                                                                                                $statusClasses = [
-                                                                                                    'completed' => 'bg-emerald-100 text-emerald-700 border-emerald-200',
-                                                                                                    'pending' => 'bg-amber-100 text-amber-700 border-amber-200',
-                                                                                                    'processing' => 'bg-sky-100 text-sky-700 border-sky-200',
-                                                                                                    'cancelled' => 'bg-rose-100 text-rose-700 border-rose-200',
-                                                                                                ];
-                                                                                                $statusClass = $statusClasses[$order->status] ?? 'bg-gray-100 text-gray-700 border-gray-200';
-                                                                                            @endphp
-                                                 <span
-                                                                                                class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border {{ $statusClass }}">
-                                                                                                {{ ucfirst($order->status) }}
-                                                                                            </span>
-                                                                                        </td>
-                                                                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                                            <a href="{{ route('invoice.download', $order->id) }}"
-                                                                                                class="text-gray-400 hover:text-indigo-600 transition-colors inline-flex items-center gap-1">
-                                                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                                                                    viewBox="0 0 24 24">
-                                                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                                                        stroke-width="2"
-                                                                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
-                                                                                                    </path>
-                                                                                                </svg>
-                                                                                                Download
-                                                                                            </a>
-                                                                                        </td>
-                                                                                    </tr>
+                                                <tr class="hover:bg-gray-50/80 transition duration-150 group">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div
+                                                                class="p-2 bg-indigo-50 text-indigo-600 rounded-lg mr-3 group-hover:bg-indigo-100 transition">
+                                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                                                </svg>
+                                                            </div>
+                                                            <span class="font-bold text-gray-900">#{{ $order->id }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {{ $order->created_at->format('M d, Y') }}
+                                                        <span
+                                                            class="block text-xs text-gray-400">{{ $order->created_at->format('h:i A') }}</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span
+                                                            class="text-sm font-bold text-gray-900">৳{{ number_format($order->total_amount, 2) }}</span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        @php
+                                                            $statusClasses = [
+                                                                'completed' => 'bg-emerald-100 text-emerald-700 border-emerald-200',
+                                                                'pending' => 'bg-amber-100 text-amber-700 border-amber-200',
+                                                                'processing' => 'bg-sky-100 text-sky-700 border-sky-200',
+                                                                'cancelled' => 'bg-rose-100 text-rose-700 border-rose-200',
+                                                            ];
+                                                            $statusClass = $statusClasses[$order->status] ?? 'bg-gray-100 text-gray-700 border-gray-200';
+                                                        @endphp
+                                                        <span
+                                                            class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border {{ $statusClass }}">
+                                                            {{ ucfirst($order->status) }}
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <a href="{{ route('invoice.download', $order->id) }}"
+                                                            class="text-gray-400 hover:text-indigo-600 transition-colors inline-flex items-center gap-1">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4">
+                                                                </path>
+                                                            </svg>
+                                                            Download
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
