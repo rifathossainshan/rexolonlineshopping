@@ -99,17 +99,17 @@
                     <tr>
                         <td>{{ $item->product->title ?? 'Product' }}</td>
                         <td>{{ $item->size ?? 'N/A' }}</td>
-                        <td>৳{{ number_format($item->price) }}</td>
+                        <td>Tk. {{ number_format($item->price) }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td class="text-right">৳{{ number_format($item->price * $item->quantity) }}</td>
+                        <td class="text-right">Tk. {{ number_format($item->price * $item->quantity) }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
         <div class="total-section">
-            <p>Subtotal: ৳{{ number_format($order->total_amount) }}</p>
-            <p class="fw-bold" style="font-size: 1.2rem;">Total: ৳{{ number_format($order->total_amount) }}</p>
+            <p>Subtotal: Tk. {{ number_format($order->total_amount) }}</p>
+            <p class="fw-bold" style="font-size: 1.2rem;">Total: Tk. {{ number_format($order->total_amount) }}</p>
         </div>
 
         <div style="margin-top: 50px; text-align: center; color: #777; font-size: 0.8rem;">
