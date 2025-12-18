@@ -12,10 +12,18 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Outfit', 'Figtree', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primary: '#000000',
+                secondary: '#f8f9fa',
+                accent: '#FF4400',
             },
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        require('@tailwindcss/typography'),
+    ],
 };

@@ -1,12 +1,12 @@
-<footer class="bg-dark text-white py-4 mt-auto">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h5>Rexol Online Shopping</h5>
-                <p>Your one-stop shop for everything.</p>
+<footer class="bg-black text-white py-12 mt-auto border-t border-gray-800">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <h5 class="text-xl font-bold uppercase tracking-wide">Rexol</h5>
+                <p class="text-gray-400 mt-2">The verification runner for the streets.</p>
             </div>
-            <div class="col-md-6 text-md-end">
-                <p>&copy; {{ date('Y') }} Rexol. All rights reserved.</p>
+            <div class="text-center md:text-right">
+                <p class="text-gray-500 font-medium">&copy; {{ date('Y') }} Rexol. All rights reserved.</p>
             </div>
         </div>
     </div>

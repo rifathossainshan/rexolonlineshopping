@@ -1,313 +1,209 @@
 @extends('layouts.frontend')
 
 @section('content')
-    <style>
-        /* Hypebeast / Sneaker Shop Specific Styles */
-
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            overflow: hidden;
-            margin-top: -1.5rem;
-        }
-
-        .carousel-item img {
-            height: 70vh;
-            min-height: 500px;
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-
-        .carousel-caption {
-            bottom: 35%;
-            text-align: left;
-        }
-
-        .carousel-caption h2 {
-            font-size: 4rem;
-            line-height: 1;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
-        }
-
-        .btn-hero {
-            padding: 15px 40px;
-            border-radius: 0;
-            font-weight: 700;
-            background: var(--accent-color);
-            border: none;
-            color: white;
-            transition: transform 0.2s;
-        }
-
-        .btn-hero:hover {
-            background: black;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Gender Section */
-        .gender-card {
-            position: relative;
-            height: 600px;
-            overflow: hidden;
-            margin-bottom: 2rem;
-            cursor: pointer;
-        }
-
-        .gender-bg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gender-card:hover .gender-bg {
-            transform: scale(1.1);
-        }
-
-        .gender-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 3rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            color: white;
-        }
-
-        .gender-overlay h3 {
-            font-size: 2.5rem;
-            margin-bottom: 0;
-        }
-
-        /* Product Cards */
-        .product-card {
-            border: 1px solid #eee;
-            border-radius: 0;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .product-card:hover {
-            border-color: black;
-            transform: translateY(-5px);
-        }
-
-        .product-img-wrapper {
-            position: relative;
-            height: 300px;
-            background: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-img-wrapper img {
-            max-width: 90%;
-            max-height: 90%;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover .product-img-wrapper img {
-            transform: rotate(-5deg) scale(1.1);
-        }
-
-        /* Brand Ticker */
-        .brand-section {
-            background: black;
-            padding: 3rem 0;
-            color: white;
-        }
-
-        .brand-link {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 2rem;
-            transition: color 0.3s;
-        }
-
-        .brand-link:hover {
-            color: white;
-        }
-    </style>
-
     <!-- Hero Section -->
-    <div class="hero-section mb-5">
-        <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1920&auto=format&fit=crop"
-                        class="d-block w-100" alt="Sneaker Culture">
-                    <div class="carousel-caption container">
-                        <h2>THE FUTURE<br>OF SNEAKERS</h2>
-                        <p class="fs-4 mb-4">Verification runner for the streets.</p>
-                        <a href="{{ route('products.index') }}" class="btn btn-hero">SHOP LATEST</a>
+    <div class="relative w-full h-[85vh] overflow-hidden bg-black">
+        <!-- Slides -->
+        <div id="hero-slider" class="relative w-full h-full">
+            <!-- Slide 1 -->
+            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-100 z-10" data-slide="0">
+                <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1920&auto=format&fit=crop" 
+                     alt="Sneaker Culture" 
+                     class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 flex flex-col justify-center items-start px-6 md:px-24">
+                    <h2 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-lg" style="text-shadow: 2px 2px 0 #000;">
+                        The Future<br>of Sneakers
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-200 mb-8 font-light tracking-wide">Verification runner for the streets.</p>
+                    <a href="{{ route('products.index') }}" class="px-10 py-4 bg-accent text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all transform hover:scale-105">
+                        Shop Latest
+                    </a>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out opacity-0 z-0" data-slide="1">
+                <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=1920&auto=format&fit=crop" 
+                     alt="New Drops" 
+                     class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 flex flex-col justify-center items-start px-6 md:px-24">
+                    <h2 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-lg" style="text-shadow: 2px 2px 0 #000;">
+                        Iconic<br>Drops Only
+                    </h2>
+                    <p class="text-xl md:text-2xl text-gray-200 mb-8 font-light tracking-wide">Limited edition releases available now.</p>
+                    <a href="{{ route('products.index') }}" class="px-10 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-all transform hover:scale-105">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Indicators -->
+        <div class="absolute bottom-10 left-6 md:left-24 flex space-x-4 z-20">
+            <button onclick="goToSlide(0)" class="w-12 h-1 bg-white transition-opacity duration-300 opacity-100"></button>
+            <button onclick="goToSlide(1)" class="w-12 h-1 bg-white transition-opacity duration-300 opacity-50"></button>
+        </div>
+    </div>
+
+    <!-- Brand Ticker -->
+    <div class="bg-black py-8 border-t border-gray-800 overflow-hidden">
+        <div class="flex whitespace-nowrap animate-marquee">
+            <div class="flex space-x-12 mx-6">
+                @foreach($brandCategories as $brand)
+                    <a href="{{ route('products.index', ['category' => $brand->slug]) }}" class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">
+                        {{ $brand->name }}
+                    </a>
+                @endforeach
+                <a href="#" class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">YEEZY</a>
+                <a href="#" class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">OFF-WHITE</a>
+                <a href="#" class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">BALENCIAGA</a>
+            </div>
+            <!-- Duplicate for infinite scroll effect (simplified) -->
+            <div class="flex space-x-12 mx-6 md:hidden">
+                 @foreach($brandCategories as $brand)
+                    <span class="text-2xl font-black text-gray-700">{{ $brand->name }}</span>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Gender Section -->
+    <div class="container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-black uppercase mb-12 text-center tracking-tighter">Shop By Gender</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            @foreach($genderCategories as $gender)
+                <div class="group relative h-[600px] overflow-hidden cursor-pointer" onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
+                    <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}" 
+                         alt="{{ $gender->name }}" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                    <div class="absolute bottom-0 left-0 p-10">
+                        <h3 class="text-5xl font-black text-white uppercase italic mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{{ $gender->name }}</h3>
+                        <p class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
+                            View Collection <i class="fas fa-arrow-right ml-2"></i>
+                        </p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?q=80&w=1920&auto=format&fit=crop"
-                        class="d-block w-100" alt="New Drops">
-                    <div class="carousel-caption container">
-                        <h2>ICONIC<br>DROPS ONLY</h2>
-                        <p class="fs-4 mb-4">Limited edition releases available now.</p>
-                        <a href="{{ route('products.index') }}" class="btn btn-hero">VIEW COLLECTION</a>
-                        <!-- Brand Ticker -->
-                        <div class="brand-section mb-5 text-center">
-                            <div class="container d-flex justify-content-center flex-wrap">
-                                @foreach($brandCategories as $brand)
-                                    <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
-                                        class="brand-link">{{ strtoupper($brand->name) }}</a>
-                                @endforeach
-                                <a href="#" class="brand-link">YEEZY</a>
-                                <a href="#" class="brand-link">OFF-WHITE</a>
-                                <a href="#" class="brand-link">BALENCIAGA</a>
-                            </div>
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Best Sellers -->
+    <div class="container mx-auto px-4 py-16 border-t border-gray-200">
+        <div class="flex justify-between items-end mb-10">
+            <h2 class="text-4xl font-black uppercase tracking-tighter">Best Sellers</h2>
+            <a href="{{ route('products.index') }}" class="text-sm font-bold uppercase underline decoration-2 underline-offset-4 hover:text-accent">View All</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            @foreach($bestSellers as $product)
+                <div class="group relative bg-white border border-gray-100 hover:border-black transition-colors duration-300">
+                    <div class="relative h-[350px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
+                        @if($loop->index < 2)
+                            <span class="absolute top-0 left-0 bg-red-600 text-white text-xs font-bold uppercase px-3 py-1.5 z-20">Hot</span>
+                        @endif
+
+                        <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}" 
+                             alt="{{ $product->title }}" 
+                             class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:rotate-[-5deg] group-hover:scale-110 mix-blend-multiply">
+
+                        <!-- Wishlist Button -->
+                        <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
+                           class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md z-20 hover:bg-gray-100 transition"
+                           onclick="toggleWishlist(event, {{ $product->id }})">
+                            <i class="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'fas fa-heart text-red-600' : 'far fa-heart text-black' }}"></i>
+                        </a>
+
+                        <!-- Quick Add Overlay (Mobile safe by checking group-hover) -->
+                        <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                            <a href="{{ route('products.show', $product->slug) }}" class="block w-full bg-black text-white text-center py-3 font-bold uppercase text-sm hover:bg-accent transition-colors">
+                                Add to Cart - {{ $product->discount_price > 0 ? '৳' . number_format($product->discount_price) : '৳' . number_format($product->price) }}
+                            </a>
                         </div>
+                    </div>
 
-                        <!-- Gender Section -->
-                        <div class="container mb-5">
-                            <h2 class="section-title mb-4">SHOP BY GENDER</h2>
-                            <div class="row">
-                                @foreach($genderCategories as $gender)
-                                    <div class="col-md-4 mb-4">
-                                        <div class="gender-card"
-                                            onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
-                                            <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}"
-                                                class="gender-bg" alt="{{ $gender->name }}">
-                                            <div class="gender-overlay">
-                                                <h3>{{ strtoupper($gender->name) }}</h3>
-                                                <p>View Collection <i class="fas fa-arrow-right ms-2"></i></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                    <div class="p-6">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-1">{{ $product->category->name ?? 'Sneakers' }}</p>
+                        <h3 class="text-lg font-bold text-black uppercase leading-tight mb-2 truncate group-hover:text-accent transition-colors">{{ $product->title }}</h3>
+                        <div class="flex items-center space-x-2">
+                            @if($product->discount_price && $product->discount_price > 0)
+                                <span class="text-lg font-black text-red-600">৳{{ number_format($product->discount_price) }}</span>
+                                <span class="text-sm text-gray-400 line-through">৳{{ number_format($product->price) }}</span>
+                            @else
+                                <span class="text-lg font-black text-black">৳{{ number_format($product->price) }}</span>
+                            @endif
                         </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 
-                        <div class="container">
-                            <!-- Best Sellers -->
-                            <div class="d-flex justify-content-between align-items-end mb-4">
-                                <h2 class="section-title mb-0">BEST SELLERS</h2>
-                                <a href="{{ route('products.index') }}" class="text-dark fw-bold text-decoration-none">VIEW
-                                    ALL</a>
-                            </div>
+    <!-- Fresh Drops -->
+    <div class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+             <div class="flex justify-between items-end mb-10">
+                <h2 class="text-4xl font-black uppercase tracking-tighter">Fresh Drops</h2>
+            </div>
 
-                            <div class="row mb-5">
-                                @foreach($bestSellers as $product)
-                                    <div class="col-md-3 mb-4">
-                                        <div class="product-card h-100 position-relative">
-                                            <div class="product-img-wrapper">
-                                                @if($loop->index < 2)
-                                                    <span
-                                                        class="badge bg-danger position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">HOT</span>
-                                                @endif
-                                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                                    alt="{{ $product->title }}">
-                                                <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
-                                                    class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle z-2"
-                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}"
-                                                    onclick="toggleWishlist(event, {{ $product->id }})">
-                                                    @if(session('wishlist') && isset(session('wishlist')[$product->id]))
-                                                        <i class="fas fa-heart text-danger"></i>
-                                                    @else
-                                                        <i class="far fa-heart"></i>
-                                                    @endif
-                                                </a>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="text-muted small mb-1 text-uppercase">
-                                                    {{ $product->category->name ?? 'Sneakers' }}
-                                                </p>
-                                                <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    @if($product->discount_price && $product->discount_price > 0)
-                                                        <div>
-                                                            <h5 class="fw-bold mb-0 text-danger">
-                                                                ৳{{ number_format($product->discount_price) }}</h5>
-                                                            <small class="text-muted text-decoration-line-through"
-                                                                style="font-size: 0.8rem;">৳{{ number_format($product->price) }}</small>
-                                                        </div>
-                                                    @else
-                                                        <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
-                                                    @endif
-                                                    <a href="{{ route('products.show', $product->slug) }}"
-                                                        class="btn btn-sm btn-outline-dark rounded-0"><i
-                                                            class="fas fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                @foreach($newArrivals->take(4) as $product)
+                    <div class="group relative bg-white border border-transparent hover:border-black transition-colors duration-300">
+                        <div class="relative h-[350px] overflow-hidden flex items-center justify-center p-4">
+                             <span class="absolute top-0 left-0 bg-black text-white text-xs font-bold uppercase px-3 py-1.5 z-20">New</span>
 
-                            <!-- Fresh Drops / New Arrivals -->
-                            <div class="d-flex justify-content-between align-items-end mb-4">
-                                <h2 class="section-title mb-0">FRESH DROPS</h2>
-                            </div>
-                            <div class="row mb-5">
-                                @foreach($newArrivals->take(4) as $product)
-                                    <div class="col-md-3 mb-4">
-                                        <div class="product-card h-100 position-relative">
-                                            <div class="product-img-wrapper">
-                                                <span
-                                                    class="badge bg-dark position-absolute top-0 start-0 m-3 rounded-0 px-3 py-2">NEW</span>
-                                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                                    alt="{{ $product->title }}">
-                                                <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
-                                                    class="btn btn-sm btn-white position-absolute top-0 end-0 m-3 shadow-sm rounded-circle z-2"
-                                                    title="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'Remove from Wishlist' : 'Add to Wishlist' }}"
-                                                    onclick="toggleWishlist(event, {{ $product->id }})">
-                                                    @if(session('wishlist') && isset(session('wishlist')[$product->id]))
-                                                        <i class="fas fa-heart text-danger"></i>
-                                                    @else
-                                                        <i class="far fa-heart"></i>
-                                                    @endif
-                                                </a>
-                                            </div>
-                                            <div class="card-body">
-                                                <p class="text-muted small mb-1 text-uppercase">
-                                                    {{ $product->category->name ?? 'Sneakers' }}
-                                                </p>
-                                                <h5 class="card-title text-truncate mb-2">{{ $product->title }}</h5>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    @if($product->discount_price && $product->discount_price > 0)
-                                                        <div>
-                                                            <h5 class="fw-bold mb-0 text-danger">
-                                                                ৳{{ number_format($product->discount_price) }}</h5>
-                                                            <small class="text-muted text-decoration-line-through"
-                                                                style="font-size: 0.8rem;">৳{{ number_format($product->price) }}</small>
-                                                        </div>
-                                                    @else
-                                                        <h5 class="fw-bold mb-0">৳{{ number_format($product->price) }}</h5>
-                                                    @endif
-                                                    <a href="{{ route('products.show', $product->slug) }}"
-                                                        class="btn btn-sm btn-outline-dark rounded-0"><i
-                                                            class="fas fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}" 
+                                 alt="{{ $product->title }}" 
+                                 class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:scale-105 mix-blend-multiply">
+
+                             <a href="{{ route('products.show', $product->slug) }}" class="absolute inset-0 z-10"></a>
                         </div>
-
-                        <!-- Newsletter -->
-                        <div class="bg-light py-5 mt-5">
-                            <div class="container text-center">
-                                <h2 class="mb-3">NEVER MISS A DROP</h2>
-                                <p class="text-muted mb-4">Sign up for updates on new releases and exclusive access.</p>
-                                <div class="row justify-content-center">
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <input type="email" class="form-control rounded-0 p-3"
-                                                placeholder="ENTER EMAIL ADDRESS">
-                                            <button class="btn btn-dark rounded-0 px-5 fw-bold" type="button">JOIN</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="p-6 pt-0">
+                            <h3 class="text-lg font-bold uppercase truncate">{{ $product->title }}</h3>
+                            <p class="text-gray-500 text-sm mt-1">৳{{ number_format($product->price) }}</p>
                         </div>
+                    </div>
+                @endforeach
+             </div>
+        </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="bg-accent text-white py-20">
+        <div class="container mx-auto px-4 text-center max-w-2xl">
+            <h2 class="text-4xl md:text-5xl font-black uppercase mb-4">Never Miss A Drop</h2>
+            <p class="text-lg font-medium opacity-90 mb-8">Sign up for updates on new releases, styling tips, and exclusive access.</p>
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="email" placeholder="ENTER EMAIL ADDRESS" class="flex-grow px-6 py-4 bg-white text-black font-bold uppercase placeholder-gray-400 focus:outline-none focus:ring-0 rounded-none border-none">
+                <button class="px-10 py-4 bg-black text-white font-black uppercase hover:bg-gray-900 transition-colors tracking-widest">
+                    Join
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Slider Script -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#hero-slider > div');
+        const indicators = document.querySelectorAll('.bottom-10 button');
+        const totalSlides = slides.length;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('opacity-100', 'z-10');
+            slides[currentSlide].classList.add('opacity-0', 'z-0');
+            indicators[currentSlide].classList.add('opacity-50');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.remove('opacity-0', 'z-0');
+            slides[currentSlide].classList.add('opacity-100', 'z-10');
+            indicators[currentSlide].classList.remove('opacity-50');
+        }
+
+        setInterval(() => {
+            let next = (currentSlide + 1) % totalSlides;
+            goToSlide(next);
+        }, 5000);
+    </script>
 @endsection

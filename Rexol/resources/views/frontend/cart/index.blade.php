@@ -1,14 +1,18 @@
 @extends('layouts.frontend')
 
 @section('content')
-    <div class="container py-5">
-        <h2 class="mb-5 display-5 fw-bold text-uppercase">Shopping Cart</h2>
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-black uppercase tracking-tighter mb-12">Shopping Bag</h1>
 
         @if(session('success'))
-            <div class="alert alert-success rounded-0 mb-4">{{ session('success') }}</div>
+            <div class="bg-green-50 text-green-800 px-4 py-3 rounded mb-8 border border-green-200 flex items-center">
+                <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+            </div>
         @endif
         @if(session('error'))
-            <div class="alert alert-danger rounded-0 mb-4">{{ session('error') }}</div>
+            <div class="bg-red-50 text-red-800 px-4 py-3 rounded mb-8 border border-red-200 flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i> {{ session('error') }}
+            </div>
         @endif
 
         @if(count($cart) > 0)
