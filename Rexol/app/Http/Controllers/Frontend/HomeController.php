@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\OrderItem;
+use App\Models\HeroSlide;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,6 +31,9 @@ class HomeController extends Controller
             ->pluck('product')
             ->filter(); // remove any nulls if product was deleted
 
-        return view('frontend.home', compact('genderCategories', 'brandCategories', 'newArrivals', 'bestSellers'));
+        // Active Hero Slides
+        $heroSlides = HeroSlide::where('status', true)->latest()->get();
+
+        return view('frontend.home', compact('genderCategories', 'brandCategories', 'newArrivals', 'bestSellers', 'heroSlides'));
     }
 }

@@ -89,6 +89,13 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('admin.hero-slides.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-images"></i>
+                                <p>Hero Slides</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
