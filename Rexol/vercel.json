@@ -1,6 +1,8 @@
 {
   "version": 2,
   "buildCommand": "echo 'Skipping build, using local assets'",
+  "installCommand": "echo 'Skipping install'",
+  "framework": null,
   "outputDirectory": ".",
   "functions": {
     "api/index.php": {

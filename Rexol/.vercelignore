@@ -1,0 +1,8 @@
+# Include public build assets
+!public/build
+
+# Ignore everything else that is gitignored (default behavior usually, but explicit is good)
+.env
+node_modules
+vendor
+storage/*.key
