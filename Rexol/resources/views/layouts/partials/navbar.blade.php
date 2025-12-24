@@ -58,22 +58,24 @@
                             @endif
                         </button>
                         <!-- Dropdown Menu -->
-                        <div
-                            class="absolute right-0 mt-2 w-80 bg-white text-black shadow-xl rounded-none hidden group-hover:block border border-gray-100 z-50">
-                            <div
-                                class="p-4 border-b border-gray-100 font-bold uppercase text-xs tracking-wider text-gray-500">
-                                Notifications</div>
-                            <div class="max-h-64 overflow-y-auto">
-                                @forelse(Auth::user()->unreadNotifications as $notification)
-                                    <a href="{{ $notification->data['action_url'] ?? '#' }}"
-                                        class="block p-4 border-b border-gray-50 hover:bg-gray-50 transition">
-                                        <p class="text-sm text-gray-800">{{ $notification->data['message'] }}</p>
-                                        <p class="text-xs text-gray-400 mt-1">{{ $notification->created_at->diffForHumans() }}
-                                        </p>
-                                    </a>
-                                @empty
-                                    <div class="p-4 text-center text-gray-400 text-sm">No new notifications</div>
-                                @endforelse
+                        <div class="absolute right-0 pt-2 w-80 hidden group-hover:block z-50">
+                            <div class="bg-white text-black shadow-xl rounded-none border border-gray-100">
+                                <div
+                                    class="p-4 border-b border-gray-100 font-bold uppercase text-xs tracking-wider text-gray-500">
+                                    Notifications</div>
+                                <div class="max-h-64 overflow-y-auto">
+                                    @forelse(Auth::user()->unreadNotifications as $notification)
+                                        <a href="{{ $notification->data['action_url'] ?? '#' }}"
+                                            class="block p-4 border-b border-gray-50 hover:bg-gray-50 transition">
+                                            <p class="text-sm text-gray-800">{{ $notification->data['message'] }}</p>
+                                            <p class="text-xs text-gray-400 mt-1">
+                                                {{ $notification->created_at->diffForHumans() }}
+                                            </p>
+                                        </a>
+                                    @empty
+                                        <div class="p-4 text-center text-gray-400 text-sm">No new notifications</div>
+                                    @endforelse
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,20 +87,21 @@
                             <span>{{ Auth::user()->name }}</span>
                             <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div
-                            class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl rounded-none hidden group-hover:block border border-gray-100 z-50">
-                            <a href="{{ route('dashboard') }}"
-                                class="block px-4 py-3 hover:bg-gray-50 text-sm hover:text-accent transition">Dashboard</a>
-                            @if(Auth::user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}"
-                                    class="block px-4 py-3 hover:bg-gray-50 text-sm hover:text-accent transition">Admin
-                                    Panel</a>
-                            @endif
-                            <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-100">
-                                @csrf
-                                <button type="submit"
-                                    class="block w-full text-left px-4 py-3 hover:bg-red-50 text-sm text-red-600 hover:text-red-700 transition">Logout</button>
-                            </form>
+                        <div class="absolute right-0 pt-2 w-48 hidden group-hover:block z-50">
+                            <div class="bg-white text-black shadow-xl rounded-none border border-gray-100">
+                                <a href="{{ route('dashboard') }}"
+                                    class="block px-4 py-3 hover:bg-gray-50 text-sm hover:text-accent transition">Dashboard</a>
+                                @if(Auth::user()->role === 'admin')
+                                    <a href="{{ route('admin.dashboard') }}"
+                                        class="block px-4 py-3 hover:bg-gray-50 text-sm hover:text-accent transition">Admin
+                                        Panel</a>
+                                @endif
+                                <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-100">
+                                    @csrf
+                                    <button type="submit"
+                                        class="block w-full text-left px-4 py-3 hover:bg-red-50 text-sm text-red-600 hover:text-red-700 transition">Logout</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @else
