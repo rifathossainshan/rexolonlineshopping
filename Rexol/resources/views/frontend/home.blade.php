@@ -64,19 +64,13 @@
 
     <!-- Brand Ticker -->
     <div class="bg-black py-8 border-t border-gray-800 overflow-hidden">
-        <div class="flex whitespace-nowrap animate-marquee">
-            <div class="flex space-x-12 mx-6">
+        <div class="flex whitespace-nowrap justify-center w-full px-4 overflow-x-auto no-scrollbar">
+            <div class="flex space-x-12">
                 @foreach($brandCategories as $brand)
                     <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
                         class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">
                         {{ $brand->name }}
                     </a>
-                @endforeach
-            </div>
-            <!-- Duplicate for infinite scroll effect (simplified) -->
-            <div class="flex space-x-12 mx-6 md:hidden">
-                @foreach($brandCategories as $brand)
-                    <span class="text-2xl font-black text-gray-700">{{ $brand->name }}</span>
                 @endforeach
             </div>
         </div>
