@@ -72,12 +72,6 @@
                         {{ $brand->name }}
                     </a>
                 @endforeach
-                <a href="#"
-                    class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">YEEZY</a>
-                <a href="#"
-                    class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">OFF-WHITE</a>
-                <a href="#"
-                    class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">BALENCIAGA</a>
             </div>
             <!-- Duplicate for infinite scroll effect (simplified) -->
             <div class="flex space-x-12 mx-6 md:hidden">
