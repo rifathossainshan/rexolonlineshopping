@@ -30,6 +30,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/dashboard/orders', [DashboardController::class, 'orders'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.orders');
+
 // Wishlist Routes
 Route::get('/wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'index'])->name('wishlist.index');
 Route::get('/wishlist/add/{id}', [App\Http\Controllers\Frontend\WishlistController::class, 'add'])->name('wishlist.add');

@@ -10,6 +10,17 @@ class DashboardController extends Controller
     public function index()
     {
         $orders = Auth::user()->orders()->latest()->get();
-        return view('dashboard', compact('orders'));
+        // Calculate stats
+        $totalOrders = $orders->count();
+        $totalSpent = $orders->sum('total_amount');
+        $activeOrders = $orders->whereNotIn('status', ['completed', 'cancelled'])->count();
+
+        return view('frontend.dashboard.index', compact('orders', 'totalOrders', 'totalSpent', 'activeOrders'));
+    }
+
+    public function orders()
+    {
+        $orders = Auth::user()->orders()->latest()->paginate(10);
+        return view('frontend.dashboard.orders', compact('orders'));
     }
 }

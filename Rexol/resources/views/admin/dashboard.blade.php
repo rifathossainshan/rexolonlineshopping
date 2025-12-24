@@ -6,23 +6,25 @@
     @vite(['resources/css/admin-custom.css'])
 
     <!-- Quick Actions Toolbar -->
-    <div class="quick-actions-card d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-            <h5 class="mb-0 mr-4 font-weight-bold text-dark"><i class="fas fa-bolt text-warning mr-2"></i> Quick Actions</h5>
-            <a href="{{ route('admin.products.create') }}" class="quick-action-btn btn-action-primary">
-                <i class="fas fa-plus mr-2"></i> Add Product
-            </a>
-            <a href="{{ route('admin.categories.index') }}" class="quick-action-btn btn-action-success">
-                <i class="fas fa-tags mr-2"></i> Add Category
-            </a>
-            <a href="{{ route('admin.orders.index') }}" class="quick-action-btn btn-action-info">
-                <i class="fas fa-list mr-2"></i> View Orders
-            </a>
-            <a href="{{ route('admin.hero-slides.index') }}" class="quick-action-btn btn-action-primary" style="background-color: #f3e5f5; color: #7b1fa2;">
-                <i class="fas fa-images mr-2"></i> Manage Slides
-            </a>
+    <div class="quick-actions-card d-flex flex-column flex-md-row align-items-center justify-content-between">
+        <div class="d-flex flex-column flex-md-row align-items-center mb-2 mb-md-0 w-100 w-md-auto">
+            <h5 class="mb-3 mb-md-0 mr-md-4 font-weight-bold text-dark text-nowrap"><i class="fas fa-bolt text-warning mr-2"></i> Quick Actions</h5>
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="{{ route('admin.products.create') }}" class="quick-action-btn btn-action-primary mb-2 mb-md-0">
+                    <i class="fas fa-plus mr-2"></i> Add Product
+                </a>
+                <a href="{{ route('admin.categories.index') }}" class="quick-action-btn btn-action-success mb-2 mb-md-0">
+                    <i class="fas fa-tags mr-2"></i> Add Category
+                </a>
+                <a href="{{ route('admin.orders.index') }}" class="quick-action-btn btn-action-info mb-2 mb-md-0">
+                    <i class="fas fa-list mr-2"></i> View Orders
+                </a>
+                <a href="{{ route('admin.hero-slides.index') }}" class="quick-action-btn btn-action-primary mb-2 mb-md-0" style="background-color: #f3e5f5; color: #7b1fa2;">
+                    <i class="fas fa-images mr-2"></i> Manage Slides
+                </a>
+            </div>
         </div>
-        <div class="text-muted text-sm">
+        <div class="text-muted text-sm text-center text-md-right w-100 w-md-auto mt-2 mt-md-0">
             <i class="far fa-clock mr-1"></i> {{ date('l, F j, Y') }}
         </div>
     </div>
