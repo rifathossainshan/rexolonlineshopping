@@ -50,7 +50,7 @@
         <div class="col-lg-3 col-6">
             <div class="small-box bg-gradient-success-custom">
                 <div class="inner">
-                    <h3>${{ number_format($totalRevenue, 2) }}</h3>
+                    <h3>৳{{ number_format($totalRevenue, 2) }}</h3>
                     <p>Total Revenue</p>
                 </div>
                 <div class="icon">
@@ -125,12 +125,12 @@
                                                 <span class="font-weight-bold">{{ Str::limit($product->title, 40) }}</span>
                                             </div>
                                         </td>
-                                        <td>${{ number_format($product->price, 2) }}</td>
+                                        <td>৳{{ number_format($product->price, 2) }}</td>
                                         <td class="text-center">
                                             <span class="badge badge-success" style="font-size: 0.9em;">{{ $product->total_sold }}</span>
                                         </td>
                                         <td class="text-right font-weight-bold">
-                                            ${{ number_format($product->price * $product->total_sold, 2) }}
+                                            ৳{{ number_format($product->price * $product->total_sold, 2) }}
                                         </td>
                                     </tr>
                                 @empty
@@ -204,7 +204,7 @@
                                                 {{ ucfirst($order->status) }}
                                             </span>
                                         </td>
-                                        <td class="text-right font-weight-bold">${{ number_format($order->total_amount, 2) }}</td>
+                                        <td class="text-right font-weight-bold">৳{{ number_format($order->total_amount, 2) }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -293,7 +293,7 @@
                             backgroundColor: 'rgba(0,0,0,0.8)',
                             callbacks: {
                                 label: function(context) {
-                                    return context.dataset.label + ': ' + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    return context.dataset.label + ': ৳' + new Intl.NumberFormat('en-US').format(context.parsed.y);
                                 }
                             }
                         }
@@ -304,7 +304,7 @@
                             grid: { color: '#f4f6f9', borderDash: [5, 5], drawBorder: false },
                             ticks: {
                                 color: '#6c757d',
-                                callback: function(value) { return '$' + value; }
+                                callback: function(value) { return '৳' + value; }
                             },
                             beginAtZero: true
                         }

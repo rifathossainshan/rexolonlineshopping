@@ -54,7 +54,15 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                            <a href="{{ url('/') }}" class="nav-link mb-2">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>Home</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.dashboard') }}"
+                                class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -62,35 +70,40 @@
 
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                            <a href="{{ route('admin.categories.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tags"></i>
                                 <p>Categories</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.index') }}" class="nav-link">
+                            <a href="{{ route('admin.products.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-box"></i>
                                 <p>Products</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.orders.index') }}" class="nav-link">
+                            <a href="{{ route('admin.orders.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
                                 <p>Orders</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.coupons.index') }}" class="nav-link">
+                            <a href="{{ route('admin.coupons.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.coupons.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-ticket-alt"></i>
                                 <p>Coupons</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.hero-slides.index') }}" class="nav-link">
+                            <a href="{{ route('admin.hero-slides.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.hero-slides.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>Hero Slides</p>
                             </a>
