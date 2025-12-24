@@ -63,12 +63,12 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="bg-black py-8 border-t border-gray-800 overflow-hidden">
-        <div class="flex whitespace-nowrap animate-marquee">
-            <div class="flex space-x-12 mx-6">
+    <div class="bg-black py-10 border-t border-gray-800 overflow-hidden">
+        <div class="flex whitespace-nowrap justify-center w-full items-center">
+            <div class="flex space-x-16 mx-6">
                 @foreach($brandCategories as $brand)
                     <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
-                        class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">
+                        class="text-3xl md:text-5xl font-black text-gray-500 hover:text-white uppercase transition-colors duration-300 tracking-widest">
                         {{ $brand->name }}
                     </a>
                 @endforeach
