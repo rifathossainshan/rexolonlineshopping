@@ -14,7 +14,8 @@
                     <!-- Content -->
                     <div class="relative z-10 h-full flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto">
                         <p class="text-accent font-bold tracking-[0.2em] uppercase mb-4 animate-fade-in-up">
-                            {{ $slide->sub_title }}</p>
+                            {{ $slide->sub_title }}
+                        </p>
                         <h1
                             class="text-5xl md:text-8xl font-black uppercase leading-none mb-8 tracking-tighter animate-fade-in-up delay-100">
                             {!! nl2br(e($slide->title)) !!}
@@ -22,7 +23,7 @@
                         @if($slide->link)
                             <a href="{{ $slide->link }}"
                                 class="inline-block border-2 border-white text-white px-10 py-4 font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 animate-fade-in-up delay-200">
-                                Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                                Shop Collection <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                         @endif
                     </div>
@@ -63,148 +64,185 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="bg-black py-8 border-t border-gray-800 overflow-hidden">
-        <div class="flex whitespace-nowrap justify-center w-full px-4 overflow-x-auto no-scrollbar">
-            <div class="flex space-x-12">
-                @foreach($brandCategories as $brand)
-                    <a href="{{ route('products.index', ['category' => $brand->slug]) }}"
-                        class="text-2xl md:text-4xl font-black text-gray-700 hover:text-white uppercase transition-colors duration-300">
-                        {{ $brand->name }}
-                    </a>
-                @endforeach
+    <div class="bg-black py-6 border-t border-gray-800 overflow-hidden">
+        <div
+            class="flex justify-center items-center space-x-8 md:space-x-16 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
+            <span>Nike</span>
+            <span>Adidas</span>
+            <span>Air Jordan</span>
+            <span>Puma</span>
+        </div>
+    </div>
+
+    <!-- Shop By Gender -->
+    <div class="bg-white py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl font-black uppercase tracking-tight">Shop By Gender</h2>
+        </div>
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Boy -->
+                <a href="{{ route('products.index', ['gender' => 'Boys']) }}"
+                    class="group relative h-[400px] bg-teal-800 flex items-center justify-center overflow-hidden">
+                    <h3 class="text-6xl font-serif text-white z-10 transition-transform duration-500 group-hover:scale-110">
+                        BOY</h3>
+                    <p
+                        class="absolute bottom-8 text-white text-xs font-bold uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
+                        Tops Tier</p>
+                </a>
+                <!-- Girl -->
+                <a href="{{ route('products.index', ['gender' => 'Girls']) }}"
+                    class="group relative h-[400px] bg-teal-800 flex items-center justify-center overflow-hidden">
+                    <h3 class="text-6xl font-serif text-white z-10 transition-transform duration-500 group-hover:scale-110">
+                        Girl</h3>
+                    <p
+                        class="absolute bottom-8 text-white text-xs font-bold uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
+                        Tops Tier</p>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Gender Section -->
-    <div class="container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-black uppercase mb-12 text-center tracking-tighter">Shop By Gender</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            @foreach($genderCategories as $gender)
-                <div class="group relative h-[600px] overflow-hidden cursor-pointer"
-                    onclick="window.location.href='{{ route('products.index', ['gender' => $gender->name]) }}'">
-                    <img src="{{ $gender->image ? asset('storage/' . $gender->image) : 'https://via.placeholder.com/600x800' }}"
-                        alt="{{ $gender->name }}"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-                    <div class="absolute bottom-0 left-0 p-10">
-                        <h3
-                            class="text-5xl font-black text-white uppercase italic mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            {{ $gender->name }}</h3>
-                        <p
-                            class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center">
-                            View Collection <i class="fas fa-arrow-right ml-2"></i>
-                        </p>
+    <!-- Main Content Area (Sidebar + Shop All) -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar Filters (Visible on Desktop) -->
+            <div class="hidden md:block w-1/4 space-y-8">
+                <div>
+                    <h3 class="text-sm font-bold uppercase mb-4">Filter Products</h3>
+
+                    <!-- Category -->
+                    <div class="mb-6">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-2">Category</p>
+                        <ul class="space-y-2">
+                            @foreach($categories->take(5) as $cat)
+                                <li>
+                                    <a href="{{ route('products.index', ['category' => $cat->slug]) }}"
+                                        class="text-sm text-gray-600 hover:text-black flex items-center">
+                                        <span class="w-3 h-3 border border-gray-300 mr-2"></span>
+                                        {{ $cat->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="mb-6">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-2">Gender</p>
+                        <ul class="space-y-2">
+                            @foreach(['Men', 'Women', 'Juniors'] as $g)
+                                <li>
+                                    <a href="{{ route('products.index', ['gender' => $g]) }}"
+                                        class="text-sm text-gray-600 hover:text-black flex items-center">
+                                        <span class="w-3 h-3 border border-gray-300 mr-2"></span>
+                                        {{ $g }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="{{ route('products.index') }}"
+                            class="block w-full bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors">Apply
+                            Filters</a>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
+            </div>
 
-    <!-- Best Sellers -->
-    <div class="container mx-auto px-4 py-16 border-t border-gray-200">
-        <div class="flex justify-between items-end mb-10">
-            <h2 class="text-4xl font-black uppercase tracking-tighter">Best Sellers</h2>
-            <a href="{{ route('products.index') }}"
-                class="text-sm font-bold uppercase underline decoration-2 underline-offset-4 hover:text-accent">View All</a>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            @foreach($bestSellers as $product)
-                <div class="group relative bg-white border border-gray-100 hover:border-black transition-colors duration-300">
-                    <div class="relative h-[350px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
-                        @if($loop->index < 2)
-                            <span
-                                class="absolute top-0 left-0 bg-red-600 text-white text-xs font-bold uppercase px-3 py-1.5 z-20">Hot</span>
-                        @endif
-
-                        <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                            alt="{{ $product->title }}"
-                            class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:rotate-[-5deg] group-hover:scale-110 mix-blend-multiply">
-
-                        <!-- Wishlist Button -->
-                        <a href="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? route('wishlist.remove', $product->id) : route('wishlist.add', $product->id) }}"
-                            class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md z-20 hover:bg-gray-100 transition"
-                            onclick="toggleWishlist(event, {{ $product->id }})">
-                            <i
-                                class="{{ session('wishlist') && isset(session('wishlist')[$product->id]) ? 'fas fa-heart text-red-600' : 'far fa-heart text-black' }}"></i>
-                        </a>
-
-                        <!-- Quick Add Overlay (Mobile safe by checking group-hover) -->
-                        <div
-                            class="absolute bottom-0 left-0 w-full p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                            <a href="{{ route('products.show', $product->slug) }}"
-                                class="block w-full bg-black text-white text-center py-3 font-bold uppercase text-sm hover:bg-accent transition-colors">
-                                Add to Cart -
-                                {{ $product->discount_price > 0 ? '৳' . number_format($product->discount_price) : '৳' . number_format($product->price) }}
-                            </a>
-                        </div>
+            <!-- Main Shop Area -->
+            <div class="w-full md:w-3/4">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+                    <h2 class="text-2xl font-black uppercase tracking-tight">Shop All</h2>
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('products.index') }}"
+                            class="text-xs font-bold uppercase text-gray-500 hover:text-black">Sort By: <span
+                                class="text-black">Newest Drops</span></a>
                     </div>
+                </div>
 
-                    <div class="p-6">
-                        <p class="text-xs font-bold text-gray-400 uppercase mb-1">{{ $product->category->name ?? 'Sneakers' }}
-                        </p>
-                        <h3
-                            class="text-lg font-bold text-black uppercase leading-tight mb-2 truncate group-hover:text-accent transition-colors">
-                            {{ $product->title }}</h3>
-                        <div class="flex items-center space-x-2">
+                <!-- Product Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($shopAllProducts as $product)
+                        <div class="group relative bg-white">
+                            <!-- Sale Badge -->
                             @if($product->discount_price && $product->discount_price > 0)
-                                <span class="text-lg font-black text-red-600">৳{{ number_format($product->discount_price) }}</span>
-                                <span class="text-sm text-gray-400 line-through">৳{{ number_format($product->price) }}</span>
-                            @else
-                                <span class="text-lg font-black text-black">৳{{ number_format($product->price) }}</span>
+                                <span
+                                    class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold uppercase px-2 py-1 z-20">Sale</span>
                             @endif
+
+                            <!-- Wishlist -->
+                            <button class="absolute top-2 right-2 z-20 text-gray-400 hover:text-black transition">
+                                <i class="far fa-heart"></i>
+                            </button>
+
+                            <!-- Image -->
+                            <div class="relative aspect-square bg-gray-50 overflow-hidden mb-4">
+                                <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                                    alt="{{ $product->title }}"
+                                    class="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105">
+                            </div>
+
+                            <!-- Info -->
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">
+                                    {{ $product->category->name ?? 'Sneakers' }}</p>
+                                <h3 class="text-sm font-bold uppercase truncate mb-1">
+                                    <a href="{{ route('products.show', $product->slug) }}">{{ $product->title }}</a>
+                                </h3>
+                                <div class="flex items-center space-x-2 text-sm font-bold">
+                                    @if($product->discount_price && $product->discount_price > 0)
+                                        <span class="text-red-600">৳{{ number_format($product->discount_price) }}</span>
+                                        <span class="text-gray-300 line-through">৳{{ number_format($product->price) }}</span>
+                                    @else
+                                        <span>৳{{ number_format($product->price) }}</span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
 
     <!-- Fresh Drops -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-end mb-10">
-                <h2 class="text-4xl font-black uppercase tracking-tighter">Fresh Drops</h2>
-            </div>
+    <div class="container mx-auto px-4 py-16">
+        <h2 class="text-2xl font-black uppercase tracking-tight mb-8">Fresh Drops</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($newArrivals as $product)
+                <div class="group relative bg-white">
+                    <span
+                        class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold uppercase px-2 py-1 z-20">New</span>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                @foreach($newArrivals->take(4) as $product)
-                    <div
-                        class="group relative bg-white border border-transparent hover:border-black transition-colors duration-300">
-                        <div class="relative h-[350px] overflow-hidden flex items-center justify-center p-4">
-                            <span
-                                class="absolute top-0 left-0 bg-black text-white text-xs font-bold uppercase px-3 py-1.5 z-20">New</span>
-
-                            <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
-                                alt="{{ $product->title }}"
-                                class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:scale-105 mix-blend-multiply">
-
-                            <a href="{{ route('products.show', $product->slug) }}" class="absolute inset-0 z-10"></a>
-                        </div>
-                        <div class="p-6 pt-0">
-                            <h3 class="text-lg font-bold uppercase truncate">{{ $product->title }}</h3>
-                            <p class="text-gray-500 text-sm mt-1">৳{{ number_format($product->price) }}</p>
-                        </div>
+                    <div class="relative aspect-square bg-gray-50 overflow-hidden mb-4">
+                        <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
+                            alt="{{ $product->title }}"
+                            class="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105">
+                        <a href="{{ route('products.show', $product->slug) }}" class="absolute inset-0 z-10"></a>
                     </div>
-                @endforeach
-            </div>
+
+                    <div>
+                        <h3 class="text-sm font-bold uppercase truncate mb-1">{{ $product->title }}</h3>
+                        <p class="text-sm text-gray-500">৳{{ number_format($product->price) }}</p>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 
-    <!-- Newsletter -->
-    <div class="bg-accent text-white py-20">
-        <div class="container mx-auto px-4 text-center max-w-2xl">
-            <h2 class="text-4xl md:text-5xl font-black uppercase mb-4">Never Miss A Drop</h2>
-            <p class="text-lg font-medium opacity-90 mb-8">Sign up for updates on new releases, styling tips, and exclusive
-                access.</p>
-            <div class="flex flex-col md:flex-row gap-4">
+    <!-- Newsletter / Footer Promo -->
+    <div class="bg-orange-500 text-white py-16 mt-8">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-black uppercase mb-2">Never Miss A Drop</h2>
+            <p class="text-sm mb-8 opacity-90">Sign up for updates on new releases, styling tips, and exclusive access.</p>
+            <div class="flex justify-center max-w-md mx-auto">
                 <input type="email" placeholder="ENTER EMAIL ADDRESS"
-                    class="flex-grow px-6 py-4 bg-white text-black font-bold uppercase placeholder-gray-400 focus:outline-none focus:ring-0 rounded-none border-none">
+                    class="flex-grow px-4 py-3 bg-white text-black text-xs font-bold uppercase focus:outline-none">
                 <button
-                    class="px-10 py-4 bg-black text-white font-black uppercase hover:bg-gray-900 transition-colors tracking-widest">
-                    Join
-                </button>
+                    class="bg-black text-white px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition">Join</button>
             </div>
         </div>
     </div>
@@ -217,20 +255,23 @@
         const totalSlides = slides.length;
 
         function goToSlide(index) {
+            if (slides.length === 0) return;
             slides[currentSlide].classList.remove('opacity-100', 'z-10');
             slides[currentSlide].classList.add('opacity-0', 'z-0');
-            indicators[currentSlide].classList.add('opacity-50');
+            if (indicators.length > currentSlide) indicators[currentSlide].classList.add('opacity-50');
 
             currentSlide = index;
 
             slides[currentSlide].classList.remove('opacity-0', 'z-0');
             slides[currentSlide].classList.add('opacity-100', 'z-10');
-            indicators[currentSlide].classList.remove('opacity-50');
+            if (indicators.length > currentSlide) indicators[currentSlide].classList.remove('opacity-50');
         }
 
-        setInterval(() => {
-            let next = (currentSlide + 1) % totalSlides;
-            goToSlide(next);
-        }, 5000);
+        if (totalSlides > 1) {
+            setInterval(() => {
+                let next = (currentSlide + 1) % totalSlides;
+                goToSlide(next);
+            }, 5000);
+        }
     </script>
 @endsection

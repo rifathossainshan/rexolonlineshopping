@@ -13,27 +13,25 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Separate categories for Gender and Brands (Mocking separation by name for now as we don't have a 'type' column)
-        $allCategories = Category::where('status', true)->get();
+        // Categories for Filter Sidebar
+        $categories = Category::where('status', true)->get();
 
+        // Separate Gender Categories for "Shop By Gender" section
         $genderNames = ['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'];
-        $genderCategories = $allCategories->whereIn('name', $genderNames);
-        $brandCategories = $allCategories->whereNotIn('name', $genderNames);
+        $genderCategories = $categories->whereIn('name', $genderNames);
 
-        $newArrivals = Product::where('status', true)->latest()->take(8)->get();
+        // Brand Categories (if needed for ticker)
+        $brandCategories = $categories->whereNotIn('name', $genderNames);
 
-        $bestSellers = \App\Models\OrderItem::select('product_id', \Illuminate\Support\Facades\DB::raw('SUM(quantity) as total_qty'))
-            ->groupBy('product_id')
-            ->orderByDesc('total_qty')
-            ->take(8)
-            ->with('product')
-            ->get()
-            ->pluck('product')
-            ->filter(); // remove any nulls if product was deleted
+        // Shop All Products (simulating the main grid)
+        $shopAllProducts = Product::where('status', true)->inRandomOrder()->take(12)->get();
+
+        // Fresh Drops
+        $newArrivals = Product::where('status', true)->latest()->take(4)->get();
 
         // Active Hero Slides
         $heroSlides = HeroSlide::where('status', true)->latest()->get();
 
-        return view('frontend.home', compact('genderCategories', 'brandCategories', 'newArrivals', 'bestSellers', 'heroSlides'));
+        return view('frontend.home', compact('categories', 'genderCategories', 'brandCategories', 'shopAllProducts', 'newArrivals', 'heroSlides'));
     }
 }
