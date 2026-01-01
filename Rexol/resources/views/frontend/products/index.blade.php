@@ -4,13 +4,26 @@
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Mobile Filter Toggle -->
-            <button class="md:hidden w-full bg-black text-white py-3 font-bold uppercase mb-4" onclick="document.getElementById('filter-sidebar').classList.toggle('hidden')">
+            <!-- Mobile Filter Toggle -->
+            <button class="md:hidden w-full bg-black text-white py-3 font-bold uppercase mb-4 sticky top-20 z-30 shadow-md" onclick="toggleFilters()">
                 Show Filters <i class="fas fa-filter ml-2"></i>
             </button>
 
-            <!-- Sidebar Filters -->
-            <div id="filter-sidebar" class="hidden md:block w-full md:w-1/4 space-y-8">
-                <div class="sticky top-24 bg-white p-6 border border-gray-100 shadow-sm">
+            <!-- Mobile Filter Overlay -->
+            <div id="filter-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300 md:hidden" onclick="toggleFilters()"></div>
+
+            <!-- Sidebar Filters (Drawer on Mobile) -->
+            <div id="filter-sidebar" class="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-white z-50 transform -translate-x-full transition-transform duration-300 md:relative md:inset-auto md:w-1/4 md:translate-x-0 md:block md:bg-transparent md:z-auto shadow-2xl md:shadow-none overflow-y-auto md:overflow-visible">
+                <div class="p-6 md:p-0">
+                    <!-- Mobile Header -->
+                    <div class="flex justify-between items-center mb-6 md:hidden">
+                        <h3 class="text-xl font-black uppercase tracking-tight">Filters</h3>
+                        <button onclick="toggleFilters()" class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-500 hover:text-black hover:bg-gray-200 transition">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="sticky top-24 bg-white md:p-6 md:border md:border-gray-100 md:shadow-sm">
                     <h3 class="text-xl font-black uppercase mb-6 tracking-tight">Filter Products</h3>
                     
                     <form action="{{ route('products.index') }}" method="GET">
@@ -65,6 +78,8 @@
                         @endif
                     </form>
                 </div>
+                    </div> <!-- End Sticky wrapper -->
+                </div> <!-- End Padding wrapper -->
             </div>
 
             <!-- Product Grid -->
@@ -149,6 +164,24 @@
         function setGender(gender) {
             document.getElementById('genderInput').value = gender;
             document.getElementById('genderInput').form.submit();
+        }
+
+        function toggleFilters() {
+            const sidebar = document.getElementById('filter-sidebar');
+            const overlay = document.getElementById('filter-overlay');
+            const body = document.body;
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                // Open
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                // Close
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                body.style.overflow = '';
+            }
         }
     </script>
 @endsection

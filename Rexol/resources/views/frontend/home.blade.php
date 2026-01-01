@@ -64,13 +64,47 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="bg-black py-6 border-t border-gray-800 overflow-hidden">
-        <div
-            class="flex justify-center items-center space-x-8 md:space-x-16 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
-            <span>Nike</span>
-            <span>Adidas</span>
-            <span>Air Jordan</span>
-            <span>Puma</span>
+    <div class="bg-black py-6 border-t border-gray-800 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none">
+        </div>
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none">
+        </div>
+
+        <div class="flex whitespace-nowrap animate-marquee hover:[animation-play-state:paused]">
+            <!-- Content Group 1 -->
+            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
+                <span>Nike</span>
+                <span>Adidas</span>
+                <span>Air Jordan</span>
+                <span>Puma</span>
+                <span>Reebok</span>
+                <span>New Balance</span>
+                <span>Converse</span>
+                <span>Vans</span>
+                <span>Under Armour</span>
+            </div>
+            <!-- Content Group 2 (Duplicate for loop) -->
+            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
+                <span>Nike</span>
+                <span>Adidas</span>
+                <span>Air Jordan</span>
+                <span>Puma</span>
+                <span>Reebok</span>
+                <span>New Balance</span>
+                <span>Converse</span>
+                <span>Vans</span>
+                <span>Under Armour</span>
+            </div>
+            <!-- Content Group 3 (Extra buffer) -->
+            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
+                <span>Nike</span>
+                <span>Adidas</span>
+                <span>Air Jordan</span>
+                <span>Puma</span>
+                <span>Reebok</span>
+                <span>New Balance</span>
+                <span>Converse</span>
+            </div>
         </div>
     </div>
 
@@ -166,30 +200,39 @@
                 <!-- Product Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($shopAllProducts as $product)
-                        <div class="group relative bg-white">
-                            <!-- Sale Badge -->
-                            @if($product->discount_price && $product->discount_price > 0)
-                                <span
-                                    class="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold uppercase px-2 py-1 z-20">Sale</span>
-                            @endif
+                        <div
+                            class="group relative bg-white border border-transparent hover:border-black transition-colors duration-300">
+                            <!-- Image Container -->
+                            <div class="relative h-[300px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
+                                @if($product->discount_price && $product->discount_price > 0)
+                                    <span
+                                        class="absolute top-0 left-0 bg-red-600 text-white text-[10px] font-bold uppercase px-2 py-1 z-20">Sale</span>
+                                @endif
 
-                            <!-- Wishlist -->
-                            <button class="absolute top-2 right-2 z-20 text-gray-400 hover:text-black transition">
-                                <i class="far fa-heart"></i>
-                            </button>
-
-                            <!-- Image -->
-                            <div class="relative aspect-square bg-gray-50 overflow-hidden mb-4">
                                 <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
                                     alt="{{ $product->title }}"
-                                    class="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105">
+                                    class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:rotate-[-5deg] group-hover:scale-110 mix-blend-multiply">
+
+                                <!-- Wishlist Button -->
+                                <button
+                                    class="absolute top-2 right-2 z-20 text-gray-400 hover:text-black transition transform hover:scale-110"
+                                    onclick="event.preventDefault(); /* Add wishlist logic here if needed */">
+                                    <i class="far fa-heart"></i>
+                                </button>
+
+                                <!-- Quick View / Add -->
+                                <a href="{{ route('products.show', $product->slug) }}"
+                                    class="absolute bottom-0 left-0 w-full bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20 hover:bg-accent">
+                                    View Details
+                                </a>
                             </div>
 
                             <!-- Info -->
-                            <div>
+                            <div class="p-4">
                                 <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">
-                                    {{ $product->category->name ?? 'Sneakers' }}</p>
-                                <h3 class="text-sm font-bold uppercase truncate mb-1">
+                                    {{ $product->category->name ?? 'Sneakers' }}
+                                </p>
+                                <h3 class="text-sm font-bold uppercase truncate mb-1 group-hover:text-accent transition-colors">
                                     <a href="{{ route('products.show', $product->slug) }}">{{ $product->title }}</a>
                                 </h3>
                                 <div class="flex items-center space-x-2 text-sm font-bold">
@@ -213,19 +256,29 @@
         <h2 class="text-2xl font-black uppercase tracking-tight mb-8">Fresh Drops</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($newArrivals as $product)
-                <div class="group relative bg-white">
-                    <span
-                        class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold uppercase px-2 py-1 z-20">New</span>
+                <div
+                    class="group relative bg-white border border-transparent hover:border-black transition-colors duration-300">
+                    <!-- Image Container -->
+                    <div class="relative h-[280px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
+                        <span
+                            class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold uppercase px-2 py-1 z-20">New</span>
 
-                    <div class="relative aspect-square bg-gray-50 overflow-hidden mb-4">
                         <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
                             alt="{{ $product->title }}"
-                            class="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 group-hover:scale-105">
+                            class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:rotate-[-5deg] group-hover:scale-110 mix-blend-multiply">
+
                         <a href="{{ route('products.show', $product->slug) }}" class="absolute inset-0 z-10"></a>
+
+                        <!-- Quick View Slide Up (Decorative for New Arrivals or functional) -->
+                        <div
+                            class="absolute bottom-0 left-0 w-full bg-white/90 backdrop-blur-sm text-black text-center py-2 font-bold uppercase text-[10px] tracking-widest transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                            View
+                        </div>
                     </div>
 
-                    <div>
-                        <h3 class="text-sm font-bold uppercase truncate mb-1">{{ $product->title }}</h3>
+                    <div class="p-4">
+                        <h3 class="text-sm font-bold uppercase truncate mb-1 group-hover:text-accent transition-colors">
+                            {{ $product->title }}</h3>
                         <p class="text-sm text-gray-500">৳{{ number_format($product->price) }}</p>
                     </div>
                 </div>

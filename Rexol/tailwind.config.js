@@ -19,6 +19,20 @@ export default {
                 secondary: '#f8f9fa',
                 accent: '#FF4400',
             },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                },
+                'fade-in-up': {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                }
+            },
+            animation: {
+                marquee: 'marquee 25s linear infinite',
+                'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
+            },
         },
     },
 
