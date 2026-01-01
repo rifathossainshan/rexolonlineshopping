@@ -64,30 +64,30 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="bg-white py-10 border-t border-gray-100 overflow-hidden relative">
-        <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    <div class="bg-white py-12 border-t border-gray-100 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
 
-        <div class="flex items-center space-x-16 animate-marquee hover:[animation-play-state:paused]">
+        <div class="flex items-center space-x-24 animate-marquee hover:[animation-play-state:paused]">
              <!-- Brand Logos Group 1 -->
-             <div class="flex items-center space-x-20 mx-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+             <div class="flex items-center space-x-24 mx-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Puma_Logo.svg" alt="Puma" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Reebok_2019_logo.svg" alt="Reebok" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Puma_logo.svg" alt="Puma" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Reebok_2019_logo.svg" alt="Reebok" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-10 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-10 md:h-12 w-auto object-contain">
              </div>
-             <!-- Brand Logos Group 2 (Duplicate) -->
-             <div class="flex items-center space-x-20 mx-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+             <!-- Brand Logos Group 2 -->
+             <div class="flex items-center space-x-24 mx-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Puma_Logo.svg" alt="Puma" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Reebok_2019_logo.svg" alt="Reebok" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-8 md:h-12 w-auto object-contain">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8b/Puma_logo.svg" alt="Puma" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Reebok_2019_logo.svg" alt="Reebok" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-10 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-10 md:h-14 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-10 md:h-12 w-auto object-contain">
              </div>
         </div>
     </div>
