@@ -64,76 +64,69 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="bg-black py-6 border-t border-gray-800 overflow-hidden relative">
-        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none">
-        </div>
-        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none">
-        </div>
+    <div class="bg-white py-10 border-t border-gray-100 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-        <div class="flex whitespace-nowrap animate-marquee hover:[animation-play-state:paused]">
-            <!-- Content Group 1 -->
-            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
-                <span>Nike</span>
-                <span>Adidas</span>
-                <span>Air Jordan</span>
-                <span>Puma</span>
-                <span>Reebok</span>
-                <span>New Balance</span>
-                <span>Converse</span>
-                <span>Vans</span>
-                <span>Under Armour</span>
-            </div>
-            <!-- Content Group 2 (Duplicate for loop) -->
-            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
-                <span>Nike</span>
-                <span>Adidas</span>
-                <span>Air Jordan</span>
-                <span>Puma</span>
-                <span>Reebok</span>
-                <span>New Balance</span>
-                <span>Converse</span>
-                <span>Vans</span>
-                <span>Under Armour</span>
-            </div>
-            <!-- Content Group 3 (Extra buffer) -->
-            <div class="flex space-x-16 mx-8 text-gray-500 font-bold uppercase tracking-widest text-sm md:text-base">
-                <span>Nike</span>
-                <span>Adidas</span>
-                <span>Air Jordan</span>
-                <span>Puma</span>
-                <span>Reebok</span>
-                <span>New Balance</span>
-                <span>Converse</span>
-            </div>
+        <div class="flex items-center space-x-16 animate-marquee hover:[animation-play-state:paused]">
+             <!-- Brand Logos Group 1 -->
+             <div class="flex items-center space-x-20 mx-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Puma_Logo.svg" alt="Puma" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Reebok_2019_logo.svg" alt="Reebok" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-8 md:h-12 w-auto object-contain">
+             </div>
+             <!-- Brand Logos Group 2 (Duplicate) -->
+             <div class="flex items-center space-x-20 mx-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Puma_Logo.svg" alt="Puma" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Reebok_2019_logo.svg" alt="Reebok" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/New_Balance_logo.svg" alt="New Balance" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" alt="Converse" class="h-8 md:h-12 w-auto object-contain">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Vans-logo.svg" alt="Vans" class="h-8 md:h-12 w-auto object-contain">
+             </div>
         </div>
     </div>
 
     <!-- Shop By Gender -->
-    <div class="bg-white py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl font-black uppercase tracking-tight">Shop By Gender</h2>
-        </div>
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Boy -->
-                <a href="{{ route('products.index', ['gender' => 'Boys']) }}"
-                    class="group relative h-[400px] bg-teal-800 flex items-center justify-center overflow-hidden">
-                    <h3 class="text-6xl font-serif text-white z-10 transition-transform duration-500 group-hover:scale-110">
-                        BOY</h3>
-                    <p
-                        class="absolute bottom-8 text-white text-xs font-bold uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-                        Tops Tier</p>
-                </a>
-                <!-- Girl -->
-                <a href="{{ route('products.index', ['gender' => 'Girls']) }}"
-                    class="group relative h-[400px] bg-teal-800 flex items-center justify-center overflow-hidden">
-                    <h3 class="text-6xl font-serif text-white z-10 transition-transform duration-500 group-hover:scale-110">
-                        Girl</h3>
-                    <p
-                        class="absolute bottom-8 text-white text-xs font-bold uppercase tracking-widest opacity-70 group-hover:opacity-100 transition-opacity">
-                        Tops Tier</p>
-                </a>
-            </div>
+    <div class="container mx-auto px-4 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Men -->
+            <a href="{{ route('products.index', ['gender' => 'Men']) }}" class="group relative h-[500px] overflow-hidden rounded-xl shadow-lg">
+                <img src="{{ asset('frontend/images/men-fashion.png') }}" alt="Men's Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+                
+                <div class="absolute bottom-8 left-8 text-white z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] mb-2 text-gray-300">Streetwear Essentials</p>
+                    <h3 class="text-4xl font-black uppercase tracking-tighter">Men</h3>
+                </div>
+            </a>
+            
+            <!-- Women -->
+            <a href="{{ route('products.index', ['gender' => 'Women']) }}" class="group relative h-[500px] overflow-hidden rounded-xl shadow-lg">
+                 <img src="{{ asset('frontend/images/women-fashion.png') }}" alt="Women's Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+ 
+                 <div class="absolute bottom-8 left-8 text-white z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                     <p class="text-xs font-bold uppercase tracking-[0.2em] mb-2 text-gray-300">New Season Fit</p>
+                     <h3 class="text-4xl font-black uppercase tracking-tighter">Women</h3>
+                 </div>
+            </a>
+ 
+            <!-- Kids -->
+            <a href="{{ route('products.index', ['gender' => 'Juniors']) }}" class="group relative h-[500px] overflow-hidden rounded-xl shadow-lg">
+                 <img src="{{ asset('frontend/images/kids-fashion.png') }}" alt="Kids' Collection" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90"></div>
+ 
+                 <div class="absolute bottom-8 left-8 text-white z-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                     <p class="text-xs font-bold uppercase tracking-[0.2em] mb-2 text-gray-300">Mini Hype</p>
+                     <h3 class="text-4xl font-black uppercase tracking-tighter">Kids</h3>
+                 </div>
+            </a>
         </div>
     </div>
 
@@ -206,7 +199,7 @@
                             <div class="relative h-[300px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
                                 @if($product->discount_price && $product->discount_price > 0)
                                     <span
-                                        class="absolute top-0 left-0 bg-red-600 text-white text-[10px] font-bold uppercase px-2 py-1 z-20">Sale</span>
+                                        class="absolute top-2 left-2 bg-white/20 backdrop-blur-md border border-white/30 text-black text-[10px] font-bold uppercase px-3 py-1 rounded-sm z-20 shadow-lg group-hover:bg-white/40 transition-colors">Sale</span>
                                 @endif
 
                                 <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
@@ -221,10 +214,15 @@
                                 </button>
 
                                 <!-- Quick View / Add -->
-                                <a href="{{ route('products.show', $product->slug) }}"
-                                    class="absolute bottom-0 left-0 w-full bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20 hover:bg-accent">
-                                    View Details
-                                </a>
+                                <div class="absolute bottom-0 left-0 w-full flex transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                                    <button class="w-1/2 bg-black text-white py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors border-r border-gray-800">
+                                        Add
+                                    </button>
+                                    <a href="{{ route('products.show', $product->slug) }}"
+                                        class="w-1/2 bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors">
+                                        View
+                                    </a>
+                                </div>
                             </div>
 
                             <!-- Info -->
