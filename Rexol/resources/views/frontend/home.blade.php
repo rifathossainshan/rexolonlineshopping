@@ -278,7 +278,8 @@
 
                     <div class="p-4">
                         <h3 class="text-sm font-bold uppercase truncate mb-1 group-hover:text-accent transition-colors">
-                            {{ $product->title }}</h3>
+                            {{ $product->title }}
+                        </h3>
                         <p class="text-sm text-gray-500">৳{{ number_format($product->price) }}</p>
                     </div>
                 </div>
