@@ -64,7 +64,8 @@
     </div>
 
     <!-- Brand Ticker -->
-    <div class="py-10 border-y border-gray-100 overflow-hidden relative backdrop-blur-md active-glass-effect">
+    <!-- Brand Ticker -->
+    <div class="py-10 border-y border-gray-100 overflow-hidden relative backdrop-blur-md active-glass-effect group">
         <!-- Glass Background Layer -->
         <div class="absolute inset-0 bg-white/70 z-0"></div>
         
@@ -72,27 +73,47 @@
         <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
         <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-        <div class="relative z-0 flex items-center space-x-24 animate-marquee hover:[animation-play-state:paused]">
-             <!-- Brand Logos Group 1 -->
-             <div class="flex items-center space-x-24 mx-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="{{ asset('frontend/images/logos/nike.svg') }}" alt="Nike" class="h-8 md:h-10 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/adidas.svg') }}" alt="Adidas" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/puma.svg') }}" alt="Puma" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/reebok.svg') }}" alt="Reebok" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/newbalance.svg') }}" alt="New Balance" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/converse.svg') }}" alt="Converse" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/vans.svg') }}" alt="Vans" class="h-8 md:h-10 w-auto object-contain">
-             </div>
-             <!-- Brand Logos Group 2 -->
-             <div class="flex items-center space-x-24 mx-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="{{ asset('frontend/images/logos/nike.svg') }}" alt="Nike" class="h-8 md:h-10 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/adidas.svg') }}" alt="Adidas" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/puma.svg') }}" alt="Puma" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/reebok.svg') }}" alt="Reebok" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/newbalance.svg') }}" alt="New Balance" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/converse.svg') }}" alt="Converse" class="h-10 md:h-12 w-auto object-contain">
-                <img src="{{ asset('frontend/images/logos/vans.svg') }}" alt="Vans" class="h-8 md:h-10 w-auto object-contain">
-             </div>
+        <style>
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            .animate-marquee-infinite {
+                animation: marquee 40s linear infinite;
+                width: max-content;
+            }
+            .group:hover .animate-marquee-infinite {
+                animation-play-state: paused;
+            }
+        </style>
+
+        <div class="relative z-0 flex items-center animate-marquee-infinite">
+            <!-- Logo Set 1 -->
+            <div class="flex items-center px-16" style="gap: 8rem;">
+                <!-- Logos (Repeated twice to ensure width) -->
+                @foreach(range(1, 2) as $i)
+                    <img src="{{ asset('frontend/images/logos/nike.svg') }}" alt="Nike" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/adidas.svg') }}" alt="Adidas" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/puma.svg') }}" alt="Puma" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/reebok.svg') }}" alt="Reebok" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/newbalance.svg') }}" alt="New Balance" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/converse.svg') }}" alt="Converse" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/vans.svg') }}" alt="Vans" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                @endforeach
+            </div>
+
+            <!-- Logo Set 2 (Identical Duplicate) -->
+            <div class="flex items-center px-16" style="gap: 8rem;">
+                 @foreach(range(1, 2) as $i)
+                    <img src="{{ asset('frontend/images/logos/nike.svg') }}" alt="Nike" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/adidas.svg') }}" alt="Adidas" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/puma.svg') }}" alt="Puma" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/reebok.svg') }}" alt="Reebok" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/newbalance.svg') }}" alt="New Balance" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/converse.svg') }}" alt="Converse" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <img src="{{ asset('frontend/images/logos/vans.svg') }}" alt="Vans" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500">
+                @endforeach
+            </div>
         </div>
     </div>
 
