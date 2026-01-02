@@ -6,7 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Rexol') }}</title>
+    <title>@yield('title', config('app.name', 'Rexol'))</title>
+    <meta name="description" content="@yield('meta_description', 'Rexol - Premium E-commerce Shopping Experience')">
+    <meta name="keywords" content="@yield('meta_keywords', 'ecommerce, shopping, fashion, electronics')">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', config('app.name', 'Rexol'))">
+    <meta property="og:description"
+        content="@yield('meta_description', 'Rexol - Premium E-commerce Shopping Experience')">
+    <meta property="og:image" content="@yield('og_image', asset('images/default-share.jpg'))">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', config('app.name', 'Rexol'))">
+    <meta property="twitter:description"
+        content="@yield('meta_description', 'Rexol - Premium E-commerce Shopping Experience')">
+    <meta property="twitter:image" content="@yield('og_image', asset('images/default-share.jpg'))">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">

@@ -91,6 +91,28 @@
                         <label>Description</label>
                         <textarea name="description" class="form-control" rows="3"></textarea>
                     </div>
+
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">SEO Settings</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Meta Title</label>
+                                <input type="text" name="meta_title" class="form-control" placeholder="SEO Title">
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Description</label>
+                                <textarea name="meta_description" class="form-control" rows="2"
+                                    placeholder="SEO Description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Keywords</label>
+                                <input type="text" name="meta_keywords" class="form-control"
+                                    placeholder="keyword1, keyword2">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Create Product</button>

@@ -1,5 +1,10 @@
 @extends('layouts.frontend')
 
+@section('title', $product->meta_title ?? $product->title . ' - Rexol')
+@section('meta_description', $product->meta_description ?? Str::limit(strip_tags($product->description), 160))
+@section('meta_keywords', $product->meta_keywords ?? 'rexol, ' . $product->title)
+@section('og_image', $product->images->first()->image ?? asset('images/default-share.jpg'))
+
 @section('content')
     <div class="container mx-auto px-4 py-12">
         <div class="flex flex-col lg:flex-row gap-12">
@@ -26,7 +31,8 @@
                     <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $product->category->name }}
                     </p>
                     <h1 class="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4 leading-none">
-                        {{ $product->title }}</h1>
+                        {{ $product->title }}
+                    </h1>
 
                     <div class="mb-6">
                         @if($product->discount_price && $product->discount_price > 0)

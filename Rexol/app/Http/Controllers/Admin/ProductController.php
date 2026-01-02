@@ -37,6 +37,9 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',
             'sizes.*' => 'exists:sizes,id',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
         ]);
 
         $product = Product::create([
@@ -50,6 +53,9 @@ class ProductController extends Controller
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
             'featured' => $request->has('featured'),
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
         ]);
 
         if ($request->has('sizes')) {
@@ -88,6 +94,9 @@ class ProductController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',
             'sizes.*' => 'exists:sizes,id',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
         ]);
 
         $product->update([
@@ -101,6 +110,9 @@ class ProductController extends Controller
             'stock' => $request->stock ?? 0,
             'status' => $request->has('status'),
             'featured' => $request->has('featured'),
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
         ]);
 
         if ($request->has('sizes')) {
