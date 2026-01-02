@@ -12,6 +12,14 @@ if (!function_exists('app_logo')) {
         });
     }
 
+    function app_favicon()
+    {
+        return Cache::rememberForever('site_favicon', function () {
+            $faviconPath = Setting::where('key', 'site_favicon')->value('value');
+            return $faviconPath ? asset($faviconPath) : asset('favicon.ico');
+        });
+    }
+
     function invoice_logo()
     {
         // Different cache key to avoid conflicts, but logic can check site_logo too
