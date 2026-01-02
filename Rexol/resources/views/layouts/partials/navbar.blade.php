@@ -3,8 +3,13 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
             <!-- Logo -->
-            <a class="text-2xl font-bold tracking-tighter hover:text-gray-300 transition" href="{{ url('/') }}">
-                {{ config('app.name', 'REXOL') }}
+            <a class="text-2xl font-bold tracking-tighter hover:text-gray-300 transition flex items-center"
+                href="{{ url('/') }}">
+                @if(app_logo())
+                    <img src="{{ app_logo() }}" alt="{{ config('app.name') }}" class="h-8 w-auto">
+                @else
+                    {{ config('app.name', 'REXOL') }}
+                @endif
             </a>
 
             <!-- Desktop Menu -->

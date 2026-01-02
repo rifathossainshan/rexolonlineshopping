@@ -6,6 +6,13 @@
 </head>
 
 <body style="font-family: sans-serif;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        @if(app_logo())
+            <img src="{{ app_logo() }}" alt="Rexol Logo" style="height: 40px; width: auto;">
+        @else
+            <h1>Rexol</h1>
+        @endif
+    </div>
     <h2>Thank you for your order, {{ $order->name }}!</h2>
     <p>Your order ID is <strong>#{{ $order->id }}</strong>.</p>
     <p>We are processing your order and will let you know once it's shipped.</p>
@@ -23,10 +30,12 @@
             @foreach($order->items as $item)
                 <tr>
                     <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ $item->product->title ?? 'Product' }}
-                        {{ $item->size ? '(' . $item->size . ')' : '' }}</td>
+                        {{ $item->size ? '(' . $item->size . ')' : '' }}
+                    </td>
                     <td style="padding: 8px; border-bottom: 1px solid #ddd;">{{ $item->quantity }}</td>
                     <td style="padding: 8px; border-bottom: 1px solid #ddd;">
-                        {{ number_format($item->price * $item->quantity) }}</td>
+                        {{ number_format($item->price * $item->quantity) }}
+                    </td>
                 </tr>
             @endforeach
         </tbody>

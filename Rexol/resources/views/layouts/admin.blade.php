@@ -41,8 +41,15 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ route('admin.dashboard') }}" class="brand-link">
-                <span class="brand-text font-weight-light">Rexol Admin</span>
+            <a href="{{ route('admin.dashboard') }}"
+                class="brand-link flex items-center justify-center py-4 bg-gray-900 border-b border-gray-700">
+                @if(app_logo())
+                    <img src="{{ app_logo() }}" alt="Admin Logo" class="brand-image img-circle elevation-3"
+                        style="opacity: .8; max-height: 40px; width: auto;">
+                    <span class="brand-text font-weight-light d-none">Rexol Admin</span>
+                @else
+                    <span class="brand-text font-weight-light">Rexol Admin</span>
+                @endif
             </a>
 
             <!-- Sidebar -->
@@ -106,6 +113,14 @@
                                 class="nav-link {{ request()->routeIs('admin.hero-slides.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>Hero Slides</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.settings.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>Settings</p>
                             </a>
                         </li>
 
