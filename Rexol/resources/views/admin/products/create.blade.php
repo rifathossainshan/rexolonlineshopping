@@ -30,12 +30,9 @@
                                 <label>Gender</label>
                                 <select name="gender" class="form-control">
                                     <option value="">Select Gender</option>
-                                    <option value="Men">Men</option>
-                                    <option value="Women">Women</option>
-                                    <option value="Boys">Boys</option>
-                                    <option value="Girls">Girls</option>
-                                    <option value="Kids">Kids</option>
-                                    <option value="Unisex">Unisex</option>
+                                    @foreach($genders as $gender)
+                                        <option value="{{ $gender->name }}">{{ $gender->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">

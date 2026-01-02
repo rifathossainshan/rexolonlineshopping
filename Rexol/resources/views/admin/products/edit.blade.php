@@ -33,8 +33,8 @@
                                 <label>Gender</label>
                                 <select name="gender" class="form-control">
                                     <option value="">Select Gender</option>
-                                    @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
-                                        <option value="{{ $g }}" {{ $product->gender == $g ? 'selected' : '' }}>{{ $g }}</option>
+                                    @foreach($genders as $gender)
+                                        <option value="{{ $gender->name }}" {{ $product->gender == $gender->name ? 'selected' : '' }}>{{ $gender->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -1,26 +1,37 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Category')
+@section('title', 'Create ' . (request('type') == 'gender' ? 'Gender' : 'Category'))
 
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Add New Category</h3>
+            <h3 class="card-title">Add New {{ request('type') == 'gender' ? 'Gender' : 'Category' }}</h3>
         </div>
         <form action="{{ route('admin.categories.store') }}" method="POST">
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label>Category Name</label>
+                    <label>Name</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter name" required>
                 </div>
                 <div class="form-group">
-                    <label>Type</label>
-                    <select name="type" class="form-control">
-                        <option value="standard">Standard Category</option>
-                        <option value="gender">Gender (for Shop By Gender)</option>
-                    </select>
+                    <label>Filter Name (Slug)</label>
+                    <input type="text" name="slug" class="form-control"
+                        placeholder="Enter filter name (optional - auto generated if empty)">
+                    <small class="text-muted">This will be used in the URL filter (e.g., ?gender=male).</small>
                 </div>
+
+                @if(request('type'))
+                    <input type="hidden" name="type" value="{{ request('type') }}">
+                @else
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select name="type" class="form-control">
+                            <option value="standard">Standard Category</option>
+                            <option value="gender">Gender (for Shop By Gender)</option>
+                        </select>
+                    </div>
+                @endif
                 <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="status" class="custom-control-input" id="status" checked>

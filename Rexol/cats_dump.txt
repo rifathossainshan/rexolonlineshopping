@@ -1,0 +1,9 @@
+ID: 1 | Name: Nike | Type: standard | Slug: nike
+ID: 2 | Name: Adidas | Type: standard | Slug: adidas
+ID: 3 | Name: Air Jordan | Type: standard | Slug: air-jordan
+ID: 4 | Name: Puma | Type: standard | Slug: puma
+ID: 5 | Name: Men | Type: gender | Slug: men
+ID: 6 | Name: Women | Type: gender | Slug: women
+ID: 7 | Name: Boys | Type: gender | Slug: boys
+ID: 8 | Name: Girls | Type: gender | Slug: girls
+ID: 10 | Name: TestGen | Type: gender | Slug: test-gen

@@ -21,10 +21,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::where('status', true)->get();
+        $categories = Category::where('type', 'standard')->where('status', true)->get();
+        $genders = Category::where('type', 'gender')->where('status', true)->get();
         $sizes = Size::all();
-        // dd($categories, $sizes); // Uncomment to debug
-        return view('admin.products.create', compact('categories', 'sizes'));
+        return view('admin.products.create', compact('categories', 'genders', 'sizes'));
     }
 
     public function store(Request $request, \App\Services\ImageService $imageService)
@@ -32,7 +32,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
-            'gender' => 'nullable|string|in:Men,Women,Boys,Girls,Kids,Unisex',
+            'gender' => 'nullable|string|exists:categories,name',
             'price' => 'required|numeric',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',
@@ -79,9 +79,10 @@ class ProductController extends Controller
     // Edit, Update, Destroy methods
     public function edit(Product $product)
     {
-        $categories = Category::where('status', true)->get();
+        $categories = Category::where('type', 'standard')->where('status', true)->get();
+        $genders = Category::where('type', 'gender')->where('status', true)->get();
         $sizes = Size::all();
-        return view('admin.products.edit', compact('product', 'categories', 'sizes'));
+        return view('admin.products.edit', compact('product', 'categories', 'genders', 'sizes'));
     }
 
     public function update(Request $request, Product $product, \App\Services\ImageService $imageService)
@@ -89,7 +90,7 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required',
             'category_id' => 'required',
-            'gender' => 'nullable|string|in:Men,Women,Boys,Girls,Kids,Unisex',
+            'gender' => 'nullable|string|exists:categories,name',
             'price' => 'required|numeric',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
             'sizes' => 'nullable|array',

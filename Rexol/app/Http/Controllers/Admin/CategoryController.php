@@ -11,13 +11,15 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::latest()->get();
-        return view('admin.categories.index', compact('categories'));
+        $type = request('type', 'standard');
+        $categories = Category::where('type', $type)->latest()->get();
+        return view('admin.categories.index', compact('categories', 'type'));
     }
 
     public function create()
     {
-        return view('admin.categories.create');
+        $type = request('type', 'standard');
+        return view('admin.categories.create', compact('type'));
     }
 
     public function store(Request $request)
@@ -25,16 +27,18 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|unique:categories',
             'type' => 'required|in:standard,gender',
+            'slug' => 'nullable|unique:categories,slug',
         ]);
 
         Category::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $request->slug ? Str::slug($request->slug) : Str::slug($request->name),
             'status' => $request->has('status'),
             'type' => $request->type,
         ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
+        return redirect()->route('admin.categories.index', ['type' => $request->type])
+            ->with('success', ucfirst($request->type) . ' created successfully');
     }
 
     public function edit(Category $category)
@@ -47,16 +51,18 @@ class CategoryController extends Controller
         $request->validate([
             'name' => 'required|unique:categories,name,' . $category->id,
             'type' => 'required|in:standard,gender',
+            'slug' => 'nullable|unique:categories,slug,' . $category->id,
         ]);
 
         $category->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $request->slug ? Str::slug($request->slug) : Str::slug($request->name),
             'status' => $request->has('status'),
             'type' => $request->type,
         ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully');
+        return redirect()->route('admin.categories.index', ['type' => $request->type])
+            ->with('success', ucfirst($request->type) . ' updated successfully');
     }
 
     public function destroy(Category $category)

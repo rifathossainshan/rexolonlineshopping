@@ -77,10 +77,17 @@
 
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.index') }}"
-                                class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.categories.index', ['type' => 'standard']) }}"
+                                class="nav-link {{ request('type') == 'standard' || (request()->routeIs('admin.categories.*') && !request('type') && !request()->routeIs('admin.categories.create') && !request()->routeIs('admin.categories.edit')) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tags"></i>
                                 <p>Categories</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.index', ['type' => 'gender']) }}"
+                                class="nav-link {{ request('type') == 'gender' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-venus-mars"></i>
+                                <p>Genders</p>
                             </a>
                         </li>
 

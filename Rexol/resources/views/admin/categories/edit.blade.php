@@ -1,20 +1,27 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Category')
+@section('title', 'Edit ' . ($category->type == 'gender' ? 'Gender' : 'Category'))
 
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Edit Category: {{ $category->name }}</h3>
+            <h3 class="card-title">Edit {{ $category->type == 'gender' ? 'Gender' : 'Category' }}: {{ $category->name }}
+            </h3>
         </div>
         <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
-                    <label>Category Name</label>
+                    <label>Name</label>
                     <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
                 </div>
+                <div class="form-group">
+                    <label>Filter Name (Slug)</label>
+                    <input type="text" name="slug" class="form-control" value="{{ $category->slug }}">
+                    <small class="text-muted">This will be used in the URL filter.</small>
+                </div>
+
                 <div class="form-group">
                     <label>Type</label>
                     <select name="type" class="form-control">

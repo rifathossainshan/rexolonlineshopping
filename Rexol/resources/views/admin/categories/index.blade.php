@@ -1,13 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'Categories')
+@section('title', ucfirst(request('type', 'Standard')) . (request('type') == 'gender' ? 's' : ' Categories'))
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">All Categories</h3>
+            <h3 class="card-title">All {{ request('type') == 'gender' ? 'Genders' : 'Categories' }}</h3>
             <div class="card-tools">
-                <a href="{{ route('admin.categories.create') }}" class="btn btn-primary btn-sm">
+                <a href="{{ route('admin.categories.create', ['type' => request('type', 'standard')]) }}"
+                    class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Add New
                 </a>
             </div>
@@ -18,7 +19,7 @@
                     <tr>
                         <th style="width: 1%">#</th>
                         <th style="width: 20%">Name</th>
-                        <th style="width: 20%">Slug</th>
+                        <th style="width: 20%">Filter Name</th>
                         <th style="width: 8%" class="text-center">Status</th>
                         <th style="width: 20%">Actions</th>
                     </tr>
