@@ -8,6 +8,9 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderPlaced;
+use App\Mail\AdminOrderNotification;
 
 class CheckoutController extends Controller
 {
@@ -29,9 +32,9 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'name' => 'required|string|max:255',
+            'phone' => ['required', 'regex:/^(?:\+88|88)?(01[3-9]\d{8})$/'], // Bangladesh Phone Format
+            'address' => 'required|string|min:10',
             'payment_method' => 'required',
             'stripeToken' => 'required_if:payment_method,stripe',
         ]);
@@ -99,6 +102,24 @@ class CheckoutController extends Controller
             if ($product) {
                 $product->decrementStock($details['quantity']);
             }
+        }
+
+        // 4. Send Emails (Queueable)
+        try {
+            if ($request->user()) {
+                Mail::to($request->user())->send(new OrderPlaced($order));
+            } elseif ($request->email) {
+                // If guest checkout was allowed, we'd use $request->email
+                // For now, only auth users are allowed via middleware, so $request->user() works
+                Mail::to($request->user())->send(new OrderPlaced($order));
+            }
+
+            // Admin Notification
+            Mail::to(config('mail.from.address'))->send(new AdminOrderNotification($order));
+
+        } catch (\Exception $e) {
+            // Log email failure but don't stop the order process
+            \Illuminate\Support\Facades\Log::error("Order Email Failed: " . $e->getMessage());
         }
 
         Session::forget('cart');

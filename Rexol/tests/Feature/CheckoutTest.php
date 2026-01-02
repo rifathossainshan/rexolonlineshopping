@@ -15,6 +15,9 @@ class CheckoutTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+    private $category;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -56,8 +59,8 @@ class CheckoutTest extends TestCase
         $response = $this->actingAs($this->user)
             ->post(route('checkout.store'), [
                 'name' => 'John Doe',
-                'phone' => '1234567890',
-                'address' => '123 Street',
+                'phone' => '01712345678', // Valid BD Phone to pass validation
+                'address' => '123 Street Address Check', // Valid Length
                 'payment_method' => 'cod', // COD to just test stock logic first
             ]);
 
@@ -100,8 +103,8 @@ class CheckoutTest extends TestCase
         $response = $this->actingAs($this->user)
             ->post(route('checkout.store'), [
                 'name' => 'John Doe',
-                'phone' => '1234567890',
-                'address' => '123 Street',
+                'phone' => '01712345678', // Valid BD Phone
+                'address' => '123 Street Address Check', // Valid Length > 10
                 'payment_method' => 'stripe',
                 'stripeToken' => 'tok_visa',
             ]);
@@ -119,5 +122,43 @@ class CheckoutTest extends TestCase
             'status' => 'processing', // Should be 'processing' for Stripe
             'payment_method' => 'stripe'
         ]);
+    }
+
+    public function test_it_validates_phone_number_format()
+    {
+        // 1. Create Product
+        $product = Product::create([
+            'category_id' => $this->category->id,
+            'title' => 'Product',
+            'slug' => 'p-1',
+            'price' => 100,
+            'stock' => 10,
+            'status' => true,
+        ]);
+
+        Session::put('cart', [$product->id => ['id' => $product->id, 'name' => 'P', 'quantity' => 1, 'price' => 100]]);
+
+        // 2. Submit Invalid Phone
+        $response = $this->actingAs($this->user)
+            ->post(route('checkout.store'), [
+                'name' => 'John',
+                'phone' => '12345', // Invalid
+                'address' => 'Valid Address Long Enough',
+                'payment_method' => 'cod',
+            ]);
+
+        $response->assertSessionHasErrors('phone');
+
+        // 3. Submit Valid Phone
+        $response = $this->actingAs($this->user)
+            ->post(route('checkout.store'), [
+                'name' => 'John',
+                'phone' => '01700000000', // Valid BD
+                'address' => 'Valid Address Long Enough',
+                'payment_method' => 'cod',
+            ]);
+
+        $response->assertRedirect();
+        $response->assertSessionDoesntHaveErrors();
     }
 }

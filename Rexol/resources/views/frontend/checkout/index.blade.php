@@ -4,6 +4,24 @@
     <div class="container mx-auto px-4 py-8 md:py-12">
         <h1 class="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-8 text-center md:text-left">Checkout</h1>
 
+        <!-- Global Errors -->
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 font-bold uppercase text-sm"
+                role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+        @if ($errors->any())
+            <div
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 font-bold uppercase text-sm">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('checkout.store') }}" method="POST">
             @csrf
             <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -17,22 +35,31 @@
                             <div>
                                 <label class="block text-sm font-bold uppercase text-gray-800 mb-2">Full Name</label>
                                 <input type="text" name="name"
-                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors"
-                                    value="{{ Auth::user()->name ?? '' }}" required>
+                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors @error('name') border-red-500 @enderror"
+                                    value="{{ old('name', Auth::user()->name ?? '') }}" required>
+                                @error('name')
+                                    <p class="text-red-500 text-xs mt-1 font-bold">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-bold uppercase text-gray-800 mb-2">Phone</label>
                                 <input type="text" name="phone"
-                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors"
-                                    value="{{ Auth::user()->phone ?? '' }}" required>
+                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors @error('phone') border-red-500 @enderror"
+                                    value="{{ old('phone', Auth::user()->phone ?? '') }}" required>
+                                @error('phone')
+                                    <p class="text-red-500 text-xs mt-1 font-bold">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div>
                                 <label class="block text-sm font-bold uppercase text-gray-800 mb-2">Delivery Address</label>
                                 <textarea name="address"
-                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors"
-                                    rows="3" required></textarea>
+                                    class="w-full bg-gray-50 border border-gray-200 px-4 py-3 font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors @error('address') border-red-500 @enderror"
+                                    rows="3" required>{{ old('address') }}</textarea>
+                                @error('address')
+                                    <p class="text-red-500 text-xs mt-1 font-bold">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
