@@ -104,4 +104,41 @@ class CartController extends Controller
         Session::forget('coupon');
         return redirect()->back()->with('success', 'Coupon removed successfully!');
     }
+
+    public function reorder(\App\Models\Order $order)
+    {
+        // Optional: Ensure the order belongs to the authenticated user
+        if ($order->user_id !== \Illuminate\Support\Facades\Auth::id()) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        $cart = Session::get('cart', []);
+
+        foreach ($order->items as $item) {
+            $product = $item->product;
+            if (!$product)
+                continue;
+
+            $size = $item->size;
+            $cartId = $product->id . '-' . ($size ?? 'default');
+
+            // Logic to add item
+            if (isset($cart[$cartId])) {
+                $cart[$cartId]['quantity'] += $item->quantity;
+            } else {
+                $cart[$cartId] = [
+                    'name' => $product->title,
+                    'price' => ($product->discount_price && $product->discount_price < $product->price) ? $product->discount_price : $product->price,
+                    'quantity' => $item->quantity,
+                    'image' => $product->images->first()->image ?? 'https://via.placeholder.com/100',
+                    'id' => $product->id,
+                    'size' => $size,
+                ];
+            }
+        }
+
+        Session::put('cart', $cart);
+
+        return redirect()->route('cart.index')->with('success', 'Items from Order #' . $order->id . ' added to cart!');
+    }
 }

@@ -27,7 +27,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories', 'sizes'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, \App\Services\ImageService $imageService)
     {
         $request->validate([
             'title' => 'required',
@@ -58,7 +58,8 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
+                // Use ImageService to optimize and store
+                $path = $imageService->upload($image, 'products');
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image' => '/uploads/' . $path,
@@ -77,7 +78,7 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories', 'sizes'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, \App\Services\ImageService $imageService)
     {
         $request->validate([
             'title' => 'required',
@@ -110,7 +111,8 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = $image->store('products', 'public');
+                // Use ImageService to optimize and store
+                $path = $imageService->upload($image, 'products');
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image' => '/uploads/' . $path,

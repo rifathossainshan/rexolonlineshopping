@@ -28,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         \Illuminate\Pagination\Paginator::useTailwind();
+        \App\Models\Product::observe(\App\Observers\ProductObserver::class);
     }
 }

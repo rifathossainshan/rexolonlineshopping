@@ -70,11 +70,12 @@
                                                     Order #{{ $order->id }}
                                                 </p>
                                                 <div class="ml-2 flex-shrink-0 flex">
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                        {{ $order->status == 'completed' ? 'bg-green-100 text-green-800' : '' }}
-                                                        {{ $order->status == 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                                        {{ $order->status == 'processing' ? 'bg-blue-100 text-blue-800' : '' }}
-                                                        {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
+                                                    <span
+                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                                    {{ $order->status == 'completed' ? 'bg-green-100 text-green-800' : '' }}
+                                                                    {{ $order->status == 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                                                    {{ $order->status == 'processing' ? 'bg-blue-100 text-blue-800' : '' }}
+                                                                    {{ $order->status == 'cancelled' ? 'bg-red-100 text-red-800' : '' }}">
                                                         {{ ucfirst($order->status) }}
                                                     </span>
                                                 </div>
@@ -100,11 +101,21 @@
                                                         Total: ৳{{ number_format($order->total_amount, 2) }}
                                                     </p>
                                                 </div>
-                                                <div class="mt-2 flex items-center text-sm sm:mt-0">
+                                                <div class="mt-2 flex items-center space-x-3 text-sm sm:mt-0">
+                                                    <!-- Buy Again Button -->
+                                                    <form action="{{ route('cart.reorder', $order->id) }}" method="POST"
+                                                        class="inline">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="text-indigo-600 hover:text-indigo-900 font-medium hover:underline">
+                                                            Buy Again
+                                                        </button>
+                                                    </form>
+
                                                     @if(Route::has('invoice.download'))
+                                                        <span class="text-gray-300">|</span>
                                                         <a href="{{ route('invoice.download', $order->id) }}"
-                                                            class="text-indigo-600 hover:text-indigo-900 font-medium">Download
-                                                            Invoice</a>
+                                                            class="text-indigo-600 hover:text-indigo-900 font-medium">Invoice</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -112,6 +123,10 @@
                                     </li>
                                 @endforeach
                             </ul>
+                            <!-- Pagination -->
+                            <div class="bg-gray-50 px-4 py-3 border-t border-gray-200 sm:px-6">
+                                {{ $orders->links() }}
+                            </div>
                         @else
                             <div class="p-8 text-center text-gray-500">
                                 No orders found. <a href="{{ route('products.index') }}"

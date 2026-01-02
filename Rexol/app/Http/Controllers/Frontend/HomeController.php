@@ -26,11 +26,15 @@ class HomeController extends Controller
         // Shop All Products (simulating the main grid)
         $shopAllProducts = Product::where('status', true)->inRandomOrder()->take(12)->get();
 
-        // Fresh Drops
-        $newArrivals = Product::where('status', true)->latest()->take(4)->get();
+        // Fresh Drops (Cached)
+        $newArrivals = \Illuminate\Support\Facades\Cache::remember('new_arrivals', 3600, function () {
+            return Product::where('status', true)->latest()->take(4)->get();
+        });
 
-        // Active Hero Slides
-        $heroSlides = HeroSlide::where('status', true)->latest()->get();
+        // Active Hero Slides (Cached)
+        $heroSlides = \Illuminate\Support\Facades\Cache::remember('hero_slides', 3600, function () {
+            return HeroSlide::where('status', true)->latest()->get();
+        });
 
         return view('frontend.home', compact('categories', 'genderCategories', 'brandCategories', 'shopAllProducts', 'newArrivals', 'heroSlides'));
     }
