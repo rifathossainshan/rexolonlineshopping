@@ -69,7 +69,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <span class="logo">Rexol</span>
+            @if(invoice_logo())
+                <img src="{{ invoice_logo() }}" alt="Rexol" style="max-height: 60px; width: auto;">
+            @else
+                <span class="logo">Rexol</span>
+            @endif
             <div class="invoice-info">
                 <strong>Invoice #{{ $order->id }}</strong><br>
                 Date: {{ $order->created_at->format('M d, Y') }}<br>

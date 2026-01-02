@@ -12,38 +12,54 @@ class SettingController extends Controller
     public function index()
     {
         $logo = Setting::where('key', 'site_logo')->value('value');
-        return view('admin.settings.index', compact('logo'));
+        $invoiceLogo = Setting::where('key', 'invoice_logo')->value('value');
+        return view('admin.settings.index', compact('logo', 'invoiceLogo'));
     }
 
     public function update(Request $request)
     {
         $request->validate([
-            'site_logo' => 'required|file|mimes:svg|max:2048', // 2MB max, SVG only
+            'site_logo' => 'nullable|file|mimes:svg,png,jpg,jpeg|max:2048',
+            'invoice_logo' => 'nullable|file|mimes:svg,png,jpg,jpeg|max:2048',
         ]);
 
         if ($request->hasFile('site_logo')) {
             $file = $request->file('site_logo');
-            $filename = 'site_logo.svg';
-            // We'll store it in storage/app/public/settings/ or just public/images/
-            // Storing in standard public path for easy access
+            // Keep extension to avoid corruption if not SVG
+            $filename = 'site_logo.' . $file->getClientOriginalExtension();
+
             $path = public_path('images');
 
             if (!File::exists($path)) {
                 File::makeDirectory($path, 0755, true);
             }
 
-            // Move the file
             $file->move($path, $filename);
 
-            // Update DB
             Setting::updateOrCreate(
                 ['key' => 'site_logo'],
-                ['value' => 'images/site_logo.svg']
+                ['value' => 'images/' . $filename]
             );
-
-            return redirect()->back()->with('success', 'Logo updated successfully.');
         }
 
-        return redirect()->back()->with('error', 'No file uploaded.');
+        if ($request->hasFile('invoice_logo')) {
+            $file = $request->file('invoice_logo');
+            $filename = 'invoice_logo.' . $file->getClientOriginalExtension();
+
+            $path = public_path('images');
+
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0755, true);
+            }
+
+            $file->move($path, $filename);
+
+            Setting::updateOrCreate(
+                ['key' => 'invoice_logo'],
+                ['value' => 'images/' . $filename]
+            );
+        }
+
+        return redirect()->back()->with('success', 'Settings updated successfully.');
     }
 }

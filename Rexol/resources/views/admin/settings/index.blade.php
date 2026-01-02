@@ -14,22 +14,32 @@
                     @method('PUT')
 
                     <div class="grid grid-cols-1 gap-6 mt-4">
-                        <!-- Current Logo Preview -->
-                        @if($logo)
-                            <div>
-                                <label class="text-gray-700">Current Logo</label>
-                                <div class="mt-2 bg-gray-100 p-4 rounded items-center flex justify-center">
+                        <!-- Site Logo Upload -->
+                        <div>
+                            <label class="text-gray-700" for="site_logo">Site Logo (Navbar)</label>
+                            @if($logo)
+                                <div class="mt-2 mb-2 bg-gray-100 p-4 rounded items-center flex justify-center">
                                     <img src="{{ asset($logo) }}?v={{ time() }}" alt="Site Logo" class="h-16">
                                 </div>
-                            </div>
-                        @endif
-
-                        <!-- Upload Input -->
-                        <div>
-                            <label class="text-gray-700" for="site_logo">Upload New Logo (SVG only)</label>
-                            <input type="file" name="site_logo" id="site_logo" accept=".svg"
+                            @endif
+                            <input type="file" name="site_logo" id="site_logo" accept=".svg,.png,.jpg"
                                 class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @error('site_logo')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Invoice Logo Upload -->
+                        <div>
+                            <label class="text-gray-700" for="invoice_logo">Invoice Logo (PDF)</label>
+                            @if(isset($invoiceLogo) && $invoiceLogo)
+                                <div class="mt-2 mb-2 bg-gray-100 p-4 rounded items-center flex justify-center">
+                                    <img src="{{ asset($invoiceLogo) }}?v={{ time() }}" alt="Invoice Logo" class="h-16">
+                                </div>
+                            @endif
+                            <input type="file" name="invoice_logo" id="invoice_logo" accept=".svg,.png,.jpg"
+                                class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                            @error('invoice_logo')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
