@@ -15,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ProductRepositoryInterface::class,
             \App\Repositories\ProductRepository::class
         );
+
+        $this->app->bind(
+            \App\Services\Payment\PaymentGatewayInterface::class,
+            \App\Services\Payment\StripePaymentGateway::class
+        );
     }
 
     /**

@@ -35,4 +35,16 @@ class Product extends Model
     {
         return $this->belongsToMany(Size::class, 'product_size');
     }
+    public function hasStock(int $quantity): bool
+    {
+        return $this->stock >= $quantity;
+    }
+
+    public function decrementStock(int $quantity)
+    {
+        if ($this->hasStock($quantity)) {
+            $this->stock -= $quantity;
+            $this->save();
+        }
+    }
 }

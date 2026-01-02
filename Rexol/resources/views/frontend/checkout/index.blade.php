@@ -47,12 +47,24 @@
                                     <span class="font-bold uppercase group-hover:text-black">Cash on Delivery</span>
                                 </label>
 
-                                <label
-                                    class="flex items-center space-x-3 cursor-not-allowed p-4 border border-gray-200 opacity-60">
-                                    <input type="radio" name="payment_method" value="sslcommerz" class="text-gray-400"
-                                        disabled>
-                                    <span class="font-bold uppercase text-gray-400">Online Payment (Coming Soon)</span>
+                                <span class="font-bold uppercase group-hover:text-black">Cash on Delivery</span>
                                 </label>
+
+                                <label class="flex items-center space-x-3 cursor-pointer group p-4 border border-gray-200">
+                                    <input type="radio" name="payment_method" value="stripe"
+                                        class="text-black focus:ring-black" id="payment_stripe">
+                                    <span class="font-bold uppercase group-hover:text-black">Credit Card (Stripe)</span>
+                                </label>
+
+                                <!-- Stripe Elements Placeholder -->
+                                <div id="stripe-card-element" class="hidden p-4 border border-gray-200 bg-gray-50 mt-4">
+                                    <label class="block text-sm font-bold uppercase text-gray-800 mb-2">Card Details</label>
+                                    <div id="card-element" class="p-3 bg-white border border-gray-200">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+                                    <div id="card-errors" role="alert" class="text-red-500 text-xs mt-2 font-bold"></div>
+                                    <input type="hidden" name="stripeToken" id="stripeToken">
+                                </div>
                             </div>
                         </div>
 
@@ -136,4 +148,67 @@
             </div>
         </form>
     </div>
+
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stripe = Stripe('{{ config('services.stripe.key') }}');
+            const elements = stripe.elements();
+            const card = elements.create('card', {
+                style: {
+                    base: {
+                        color: '#32325d',
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '16px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
+                }
+            });
+
+            // Handle Payment Method Toggle
+            const stripeRadio = document.getElementById('payment_stripe');
+            const stripeContainer = document.getElementById('stripe-card-element');
+            const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+
+            function toggleStripe() {
+                if (stripeRadio.checked) {
+                    stripeContainer.classList.remove('hidden');
+                    card.mount('#card-element');
+                } else {
+                    stripeContainer.classList.add('hidden');
+                    card.unmount();
+                }
+            }
+
+            paymentRadios.forEach(radio => radio.addEventListener('change', toggleStripe));
+
+            // Handle Form Submission
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                if (stripeRadio.checked) {
+                    event.preventDefault();
+
+                    stripe.createToken(card).then(function (result) {
+                        if (result.error) {
+                            // Inform the user if there was an error.
+                            const errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+                        } else {
+                            // Send the token to your server.
+                            document.getElementById('stripeToken').value = result.token.id;
+                            form.submit();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

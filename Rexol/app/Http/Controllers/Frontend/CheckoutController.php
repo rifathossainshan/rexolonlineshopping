@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
+    protected $paymentGateway;
+
+    public function __construct(\App\Services\Payment\PaymentGatewayInterface $paymentGateway)
+    {
+        $this->paymentGateway = $paymentGateway;
+    }
     public function index()
     {
         $cart = Session::get('cart', []);
@@ -27,6 +33,7 @@ class CheckoutController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'payment_method' => 'required',
+            'stripeToken' => 'required_if:payment_method,stripe',
         ]);
 
         $cart = Session::get('cart', []);
@@ -46,6 +53,28 @@ class CheckoutController extends Controller
         }
         $totalAmount = max(0, $totalAmount);
 
+        // 1. Validate Stock
+        foreach ($cart as $details) {
+            $product = \App\Models\Product::find($details['id']);
+            if (!$product || !$product->hasStock($details['quantity'])) {
+                return redirect()->back()->with('error', "Product {$details['name']} is out of stock or requested quantity unavailable.");
+            }
+        }
+
+        // 2. Process Payment
+        if ($request->payment_method === 'stripe') {
+            try {
+                $charge = $this->paymentGateway->charge($totalAmount, [
+                    'source' => $request->stripeToken,
+                    'description' => "Order from " . $request->name,
+                    'currency' => 'usd', // Should be dynamic
+                ]);
+                // Payment Successful
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage());
+            }
+        }
+
         $order = Order::create([
             'user_id' => Auth::id(), // Nullable allowed in schema
             'name' => $request->name,
@@ -53,7 +82,7 @@ class CheckoutController extends Controller
             'address' => $request->address,
             'total_amount' => $totalAmount,
             'payment_method' => $request->payment_method,
-            'status' => 'pending',
+            'status' => ($request->payment_method === 'stripe') ? 'processing' : 'pending',
         ]);
 
         foreach ($cart as $cartKey => $details) {
@@ -64,6 +93,12 @@ class CheckoutController extends Controller
                 'quantity' => $details['quantity'],
                 'size' => $details['size'] ?? null,
             ]);
+
+            // 3. Decrement Stock
+            $product = \App\Models\Product::find($details['id']);
+            if ($product) {
+                $product->decrementStock($details['quantity']);
+            }
         }
 
         Session::forget('cart');
