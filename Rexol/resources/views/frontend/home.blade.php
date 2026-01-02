@@ -191,7 +191,7 @@
                             <label class="block text-xs font-bold uppercase text-gray-400 mb-4 tracking-widest">Category</label>
                             <div class="space-y-3">
                                 <label class="flex items-center space-x-3 cursor-pointer group">
-                                    <input type="radio" name="category" value="" class="hidden"
+                                    <input type="radio" name="category" value="" class="sr-only"
                                         onchange="this.form.submit()" {{ request('category') == '' ? 'checked' : '' }}>
                                     <span
                                         class="w-4 h-4 border-2 border-gray-200 flex items-center justify-center group-hover:border-black transition-colors">
@@ -205,7 +205,7 @@
                                 </label>
                                 @foreach($brandCategories as $cat)
                                     <label class="flex items-center space-x-3 cursor-pointer group">
-                                        <input type="radio" name="category" value="{{ $cat->slug }}" class="hidden"
+                                        <input type="radio" name="category" value="{{ $cat->slug }}" class="sr-only"
                                             {{ request('category') == $cat->slug ? 'checked' : '' }}>
                                         <span
                                             class="w-4 h-4 border-2 border-gray-200 flex items-center justify-center group-hover:border-black transition-colors">
@@ -409,7 +409,7 @@
 
         function setGender(gender) {
             document.getElementById('genderInput').value = gender;
-            // Removed direct submission for homepage -> apply button does it
+            document.getElementById('genderInput').form.submit();
         }
 
         function toggleFilters() {
