@@ -226,9 +226,9 @@
                             <div class="flex flex-wrap gap-2">
                                 <button type="button" onclick="setGender('')"
                                     class="px-4 py-2 text-xs font-bold uppercase border-2 {{ request('gender') == '' ? 'bg-black text-white border-black' : 'bg-transparent text-gray-600 border-gray-200 hover:border-black hover:text-black' }} transition-all">All</button>
-                                @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
-                                    <button type="button" onclick="setGender('{{ $g }}')"
-                                        class="px-4 py-2 text-xs font-bold uppercase border-2 {{ request('gender') == $g ? 'bg-black text-white border-black' : 'bg-transparent text-gray-600 border-gray-200 hover:border-black hover:text-black' }} transition-all">{{ $g }}</button>
+                                @foreach($genderCategories as $g)
+                                    <button type="button" onclick="setGender('{{ $g->name }}')"
+                                        class="px-4 py-2 text-xs font-bold uppercase border-2 {{ request('gender') == $g->name ? 'bg-black text-white border-black' : 'bg-transparent text-gray-600 border-gray-200 hover:border-black hover:text-black' }} transition-all">{{ $g->name }}</button>
                                 @endforeach
                                 <input type="hidden" name="gender" id="genderInput" value="{{ request('gender') }}">
                             </div>
