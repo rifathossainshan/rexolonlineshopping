@@ -203,7 +203,7 @@
                                         class="text-sm font-bold uppercase text-gray-600 group-hover:text-black transition-colors">All
                                         Categories</span>
                                 </label>
-                                @foreach($categories as $cat)
+                                @foreach($brandCategories as $cat)
                                     <label class="flex items-center space-x-3 cursor-pointer group">
                                         <input type="radio" name="category" value="{{ $cat->slug }}" class="hidden"
                                             {{ request('category') == $cat->slug ? 'checked' : '' }}>
