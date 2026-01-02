@@ -158,9 +158,31 @@
     <!-- Main Content Area (Sidebar + Shop All) -->
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
-            <!-- Sidebar Filters (Visible on Desktop) -->
-            <div class="hidden md:block w-1/4 space-y-10 sticky top-24 h-fit pl-4">
-                <div>
+            <!-- Mobile Filter Toggle -->
+            <button class="md:hidden w-full bg-black text-white py-3 font-bold uppercase mb-4 sticky top-20 z-30 shadow-md"
+                onclick="toggleFilters()">
+                Show Filters <i class="fas fa-filter ml-2"></i>
+            </button>
+
+            <!-- Mobile Filter Overlay -->
+            <div id="filter-overlay"
+                class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300 md:hidden"
+                onclick="toggleFilters()"></div>
+
+            <!-- Sidebar Filters (Drawer on Mobile, Sidebar on Desktop) -->
+            <div id="filter-sidebar" 
+                class="fixed inset-y-0 left-0 w-[85%] max-w-sm bg-white z-50 transform -translate-x-full transition-transform duration-300 md:relative md:inset-auto md:w-1/4 md:translate-x-0 md:block md:bg-transparent md:z-auto shadow-2xl md:shadow-none overflow-y-auto md:overflow-visible h-full md:h-fit pl-0 md:pl-4">
+                
+                <div class="p-6 md:p-0 md:sticky md:top-24">
+                     <!-- Mobile Header -->
+                     <div class="flex justify-between items-center mb-6 md:hidden">
+                        <h3 class="text-xl font-black uppercase tracking-tight">Filters</h3>
+                        <button onclick="toggleFilters()"
+                            class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-500 hover:text-black hover:bg-gray-200 transition">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
                     <h3 class="text-xl font-black uppercase tracking-tighter mb-6 pb-2 border-b border-gray-100">Filters</h3>
 
                     <!-- Category -->
@@ -358,6 +380,22 @@
                 let next = (currentSlide + 1) % totalSlides;
                 goToSlide(next);
             }, 5000);
+        }
+
+        function toggleFilters() {
+            const sidebar = document.getElementById('filter-sidebar');
+            const overlay = document.getElementById('filter-overlay');
+            const body = document.body;
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                body.style.overflow = '';
+            }
         }
     </script>
 @endsection
