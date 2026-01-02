@@ -159,19 +159,21 @@
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Sidebar Filters (Visible on Desktop) -->
-            <div class="hidden md:block w-1/4 space-y-8">
+            <div class="hidden md:block w-1/4 space-y-10 sticky top-24 h-fit">
                 <div>
-                    <h3 class="text-sm font-bold uppercase mb-4">Filter Products</h3>
+                    <h3 class="text-xl font-black uppercase tracking-tighter mb-6 pb-2 border-b border-gray-100">Filters</h3>
 
                     <!-- Category -->
-                    <div class="mb-6">
-                        <p class="text-xs font-bold text-gray-400 uppercase mb-2">Category</p>
-                        <ul class="space-y-2">
+                    <div class="mb-8">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Category</p>
+                        <ul class="space-y-3">
                             @foreach($categories->take(5) as $cat)
                                 <li>
                                     <a href="{{ route('products.index', ['category' => $cat->slug]) }}"
-                                        class="text-sm text-gray-600 hover:text-black flex items-center">
-                                        <span class="w-3 h-3 border border-gray-300 mr-2"></span>
+                                        class="group flex items-center text-sm font-bold text-gray-600 hover:text-black uppercase transition-colors">
+                                        <span class="w-4 h-4 border-2 border-gray-200 mr-3 flex items-center justify-center group-hover:border-black transition-colors">
+                                            @if(request('category') == $cat->slug) <div class="w-2 h-2 bg-black"></div> @endif
+                                        </span>
                                         {{ $cat->name }}
                                     </a>
                                 </li>
@@ -180,14 +182,16 @@
                     </div>
 
                     <!-- Gender -->
-                    <div class="mb-6">
-                        <p class="text-xs font-bold text-gray-400 uppercase mb-2">Gender</p>
-                        <ul class="space-y-2">
+                    <div class="mb-8">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Gender</p>
+                        <ul class="space-y-3">
                             @foreach(['Men', 'Women', 'Juniors'] as $g)
                                 <li>
                                     <a href="{{ route('products.index', ['gender' => $g]) }}"
-                                        class="text-sm text-gray-600 hover:text-black flex items-center">
-                                        <span class="w-3 h-3 border border-gray-300 mr-2"></span>
+                                        class="group flex items-center text-sm font-bold text-gray-600 hover:text-black uppercase transition-colors">
+                                         <span class="w-4 h-4 border-2 border-gray-200 mr-3 flex items-center justify-center group-hover:border-black transition-colors">
+                                             @if(request('gender') == $g) <div class="w-2 h-2 bg-black"></div> @endif
+                                         </span>
                                         {{ $g }}
                                     </a>
                                 </li>
@@ -195,10 +199,11 @@
                         </ul>
                     </div>
 
-                    <div class="mt-8">
+                    <div class="mt-10">
                         <a href="{{ route('products.index') }}"
-                            class="block w-full bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors">Apply
-                            Filters</a>
+                            class="block w-full bg-black text-white text-center py-4 font-black uppercase text-xs tracking-[0.2em] hover:bg-zinc-800 hover:scale-[1.02] transition-all duration-300">
+                            Apply Filters
+                        </a>
                     </div>
                 </div>
             </div>
@@ -206,62 +211,66 @@
             <!-- Main Shop Area -->
             <div class="w-full md:w-3/4">
                 <!-- Header -->
-                <div class="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
-                    <h2 class="text-2xl font-black uppercase tracking-tight">Shop All</h2>
+                <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-4 border-b border-black">
+                    <h2 class="text-5xl font-black uppercase tracking-tighter leading-none mb-4 md:mb-0">Shop All</h2>
                     <div class="flex items-center space-x-4">
                         <a href="{{ route('products.index') }}"
-                            class="text-xs font-bold uppercase text-gray-500 hover:text-black">Sort By: <span
-                                class="text-black">Newest Drops</span></a>
+                            class="text-xs font-bold uppercase text-gray-500 hover:text-black tracking-widest transition-colors">
+                            Sort By: <span class="text-black border-b border-black pb-0.5">Newest Drops</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Product Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
                     @foreach($shopAllProducts as $product)
-                        <div
-                            class="group relative bg-white border border-transparent hover:border-black transition-colors duration-300">
+                        <div class="group relative flex flex-col">
                             <!-- Image Container -->
-                            <div class="relative h-[300px] bg-gray-50 overflow-hidden flex items-center justify-center p-4">
+                            <div class="relative bg-gray-50 aspect-[4/5] overflow-hidden mb-4">
                                 @if($product->discount_price && $product->discount_price > 0)
-                                    <span
-                                        class="absolute top-2 left-2 bg-white/20 backdrop-blur-md border border-white/30 text-black text-[10px] font-bold uppercase px-3 py-1 rounded-sm z-20 shadow-lg group-hover:bg-white/40 transition-colors">Sale</span>
+                                    <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-black uppercase px-2 py-1 z-20 tracking-widest">Sale</span>
                                 @endif
 
                                 <img src="{{ $product->images->first()->image ?? 'https://via.placeholder.com/300' }}"
                                     alt="{{ $product->title }}"
-                                    class="max-w-[90%] max-h-[90%] object-contain transition-transform duration-500 group-hover:rotate-[-5deg] group-hover:scale-110 mix-blend-multiply">
-
-                                <!-- Wishlist Button -->
-                                <button
-                                    class="absolute top-2 right-2 z-20 text-gray-400 hover:text-black transition transform hover:scale-110"
-                                    onclick="event.preventDefault(); /* Add wishlist logic here if needed */">
-                                    <i class="far fa-heart"></i>
+                                    class="w-full h-full object-contain p-6 transition-transform duration-700 group-hover:scale-105 mix-blend-multiply">
+                                
+                                <!-- Wishlist -->
+                                <button class="absolute top-3 right-3 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black hover:text-white"
+                                    onclick="event.preventDefault(); toggleWishlist(event, {{ $product->id }});">
+                                    <i class="far fa-heart text-xs"></i>
                                 </button>
 
-                                <!-- Quick View / Add -->
-                                <div class="absolute bottom-0 left-0 w-full flex transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                                    <button class="w-1/2 bg-black text-white py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors border-r border-gray-800">
-                                        Add
-                                    </button>
-                                    <a href="{{ route('products.show', $product->slug) }}"
-                                        class="w-1/2 bg-black text-white text-center py-3 font-bold uppercase text-xs tracking-widest hover:bg-gray-800 transition-colors">
-                                        View
-                                    </a>
+                                <!-- Bottom Quick Add (Slide Up) -->
+                                <div class="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                                    <div class="flex h-12">
+                                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-1/2 h-full">
+                                            @csrf
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="w-full h-full bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-zinc-800 transition-colors">
+                                                Add To Cart
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('products.show', $product->slug) }}"
+                                            class="w-1/2 h-full bg-white text-black font-black uppercase text-[10px] tracking-widest border-t border-black flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                            View
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Info -->
-                            <div class="p-4">
-                                <p class="text-[10px] font-bold text-gray-400 uppercase mb-1">
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">
                                     {{ $product->category->name ?? 'Sneakers' }}
                                 </p>
-                                <h3 class="text-sm font-bold uppercase truncate mb-1 group-hover:text-accent transition-colors">
+                                <h3 class="text-lg font-black uppercase leading-tight mb-2 group-hover:text-gray-600 transition-colors">
                                     <a href="{{ route('products.show', $product->slug) }}">{{ $product->title }}</a>
                                 </h3>
-                                <div class="flex items-center space-x-2 text-sm font-bold">
+                                <div class="flex items-center space-x-3 font-bold">
                                     @if($product->discount_price && $product->discount_price > 0)
                                         <span class="text-red-600">৳{{ number_format($product->discount_price) }}</span>
-                                        <span class="text-gray-300 line-through">৳{{ number_format($product->price) }}</span>
+                                        <span class="text-gray-300 line-through text-sm">৳{{ number_format($product->price) }}</span>
                                     @else
                                         <span>৳{{ number_format($product->price) }}</span>
                                     @endif
