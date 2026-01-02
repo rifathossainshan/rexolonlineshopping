@@ -15,6 +15,15 @@
                     <label>Category Name</label>
                     <input type="text" name="name" class="form-control" value="{{ $category->name }}" required>
                 </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select name="type" class="form-control">
+                        <option value="standard" {{ $category->type == 'standard' ? 'selected' : '' }}>Standard Category
+                        </option>
+                        <option value="gender" {{ $category->type == 'gender' ? 'selected' : '' }}>Gender (for Shop By Gender)
+                        </option>
+                    </select>
+                </div>
                 <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="status" class="custom-control-input" id="status" {{ $category->status ? 'checked' : '' }}>

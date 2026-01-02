@@ -14,6 +14,13 @@
                     <label>Category Name</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter name" required>
                 </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select name="type" class="form-control">
+                        <option value="standard">Standard Category</option>
+                        <option value="gender">Gender (for Shop By Gender)</option>
+                    </select>
+                </div>
                 <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="status" class="custom-control-input" id="status" checked>

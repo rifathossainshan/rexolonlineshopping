@@ -17,11 +17,11 @@ class HomeController extends Controller
         $categories = Category::where('status', true)->get();
 
         // Separate Gender Categories for "Shop By Gender" section
-        $genderNames = ['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'];
-        $genderCategories = $categories->whereIn('name', $genderNames);
+        // Fetched dynamically where type is 'gender'
+        $genderCategories = $categories->where('type', 'gender');
 
-        // Brand Categories (if needed for ticker)
-        $brandCategories = $categories->whereNotIn('name', $genderNames);
+        // Brand Categories (standard categories)
+        $brandCategories = $categories->where('type', '!=', 'gender');
 
         // Shop All Products (simulating the main grid)
         $shopAllProducts = Product::where('status', true)->inRandomOrder()->take(12)->get();

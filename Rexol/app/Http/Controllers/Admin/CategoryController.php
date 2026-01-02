@@ -24,12 +24,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories',
+            'type' => 'required|in:standard,gender',
         ]);
 
         Category::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'status' => $request->has('status'),
+            'type' => $request->type,
         ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully');
@@ -44,12 +46,14 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:categories,name,' . $category->id,
+            'type' => 'required|in:standard,gender',
         ]);
 
         $category->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'status' => $request->has('status'),
+            'type' => $request->type,
         ]);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully');
