@@ -159,7 +159,7 @@
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Sidebar Filters (Visible on Desktop) -->
-            <div class="hidden md:block w-1/4 space-y-10 sticky top-24 h-fit">
+            <div class="hidden md:block w-1/4 space-y-10 sticky top-24 h-fit pl-4">
                 <div>
                     <h3 class="text-xl font-black uppercase tracking-tighter mb-6 pb-2 border-b border-gray-100">Filters</h3>
 
@@ -247,12 +247,12 @@
                                         <form action="{{ route('cart.add', $product->id) }}" method="POST" class="w-1/2 h-full">
                                             @csrf
                                             <input type="hidden" name="quantity" value="1">
-                                            <button type="submit" class="w-full h-full bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-zinc-800 transition-colors">
+                                            <button type="submit" class="w-full h-full bg-black text-white font-black uppercase text-[10px] tracking-widest hover:bg-zinc-800 transition-colors border border-black">
                                                 Add To Cart
                                             </button>
                                         </form>
                                         <a href="{{ route('products.show', $product->slug) }}"
-                                            class="w-1/2 h-full bg-white text-black font-black uppercase text-[10px] tracking-widest border-t border-black flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                            class="w-1/2 h-full bg-white text-black font-black uppercase text-[10px] tracking-widest border border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors">
                                             View
                                         </a>
                                     </div>
