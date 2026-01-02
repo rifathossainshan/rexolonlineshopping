@@ -183,50 +183,75 @@
                         </button>
                     </div>
 
-                    <h3 class="text-xl font-black uppercase tracking-tighter mb-6 pb-2 border-b border-gray-100">Filters</h3>
+                    <h3 class="text-xl font-black uppercase tracking-tighter mb-6 pb-2 border-b border-gray-100 hidden md:block">Filters</h3>
 
-                    <!-- Category -->
-                    <div class="mb-8">
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Category</p>
-                        <ul class="space-y-3">
-                            @foreach($categories->take(5) as $cat)
-                                <li>
-                                    <a href="{{ route('products.index', ['category' => $cat->slug]) }}"
-                                        class="group flex items-center text-sm font-bold text-gray-600 hover:text-black uppercase transition-colors">
-                                        <span class="w-4 h-4 border-2 border-gray-200 mr-3 flex items-center justify-center group-hover:border-black transition-colors">
-                                            @if(request('category') == $cat->slug) <div class="w-2 h-2 bg-black"></div> @endif
+                    <form action="{{ route('products.index') }}" method="GET">
+                        <!-- Category -->
+                        <div class="mb-8">
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-4 tracking-widest">Category</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3 cursor-pointer group">
+                                    <input type="radio" name="category" value="" class="hidden"
+                                        onchange="this.form.submit()" {{ request('category') == '' ? 'checked' : '' }}>
+                                    <span
+                                        class="w-4 h-4 border-2 border-gray-200 flex items-center justify-center group-hover:border-black transition-colors">
+                                        @if(request('category') == '')
+                                            <div class="w-2 h-2 bg-black"></div>
+                                        @endif
+                                    </span>
+                                    <span
+                                        class="text-sm font-bold uppercase text-gray-600 group-hover:text-black transition-colors">All
+                                        Categories</span>
+                                </label>
+                                @foreach($categories as $cat)
+                                    <label class="flex items-center space-x-3 cursor-pointer group">
+                                        <input type="radio" name="category" value="{{ $cat->slug }}" class="hidden"
+                                            {{ request('category') == $cat->slug ? 'checked' : '' }}>
+                                        <span
+                                            class="w-4 h-4 border-2 border-gray-200 flex items-center justify-center group-hover:border-black transition-colors">
+                                            @if(request('category') == $cat->slug)
+                                                <div class="w-2 h-2 bg-black"></div>
+                                            @endif
                                         </span>
-                                        {{ $cat->name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                                        <span
+                                            class="text-sm font-bold uppercase text-gray-600 group-hover:text-black transition-colors">{{ $cat->name }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
 
-                    <!-- Gender -->
-                    <div class="mb-8">
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Gender</p>
-                        <ul class="space-y-3">
-                            @foreach(['Men', 'Women', 'Juniors'] as $g)
-                                <li>
-                                    <a href="{{ route('products.index', ['gender' => $g]) }}"
-                                        class="group flex items-center text-sm font-bold text-gray-600 hover:text-black uppercase transition-colors">
-                                         <span class="w-4 h-4 border-2 border-gray-200 mr-3 flex items-center justify-center group-hover:border-black transition-colors">
-                                             @if(request('gender') == $g) <div class="w-2 h-2 bg-black"></div> @endif
-                                         </span>
-                                        {{ $g }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                        <!-- Gender -->
+                        <div class="mb-8">
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-4 tracking-widest">Gender</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="setGender('')"
+                                    class="px-4 py-2 text-xs font-bold uppercase border-2 {{ request('gender') == '' ? 'bg-black text-white border-black' : 'bg-transparent text-gray-600 border-gray-200 hover:border-black hover:text-black' }} transition-all">All</button>
+                                @foreach(['Men', 'Women', 'Boys', 'Girls', 'Kids', 'Unisex'] as $g)
+                                    <button type="button" onclick="setGender('{{ $g }}')"
+                                        class="px-4 py-2 text-xs font-bold uppercase border-2 {{ request('gender') == $g ? 'bg-black text-white border-black' : 'bg-transparent text-gray-600 border-gray-200 hover:border-black hover:text-black' }} transition-all">{{ $g }}</button>
+                                @endforeach
+                                <input type="hidden" name="gender" id="genderInput" value="{{ request('gender') }}">
+                            </div>
+                        </div>
 
-                    <div class="mt-10">
-                        <a href="{{ route('products.index') }}"
-                            class="block w-full bg-black text-white text-center py-4 font-black uppercase text-xs tracking-[0.2em] hover:bg-zinc-800 hover:scale-[1.02] transition-all duration-300">
-                            Apply Filters
-                        </a>
-                    </div>
+                        <!-- Price Range -->
+                        <div class="mb-8">
+                            <label class="block text-xs font-bold uppercase text-gray-400 mb-4 tracking-widest">Price
+                                Range</label>
+                            <div class="flex items-center gap-3">
+                                <input type="number" name="min_price" placeholder="Min"
+                                    value="{{ request('min_price') }}"
+                                    class="w-1/2 px-3 py-2 bg-gray-50 border border-gray-200 text-sm font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors placeholder-gray-400">
+                                <span class="text-gray-400 font-bold">-</span>
+                                <input type="number" name="max_price" placeholder="Max"
+                                    value="{{ request('max_price') }}"
+                                    class="w-1/2 px-3 py-2 bg-gray-50 border border-gray-200 text-sm font-bold focus:outline-none focus:border-black focus:ring-0 transition-colors placeholder-gray-400">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-black text-white font-black uppercase text-xs tracking-[0.2em] py-4 hover:bg-zinc-800 hover:scale-[1.02] transition-all duration-300 shadow-lg">Apply Filters</button>
+                    </form>
                 </div>
             </div>
 
@@ -380,6 +405,11 @@
                 let next = (currentSlide + 1) % totalSlides;
                 goToSlide(next);
             }, 5000);
+        }
+
+        function setGender(gender) {
+            document.getElementById('genderInput').value = gender;
+            // Removed direct submission for homepage -> apply button does it
         }
 
         function toggleFilters() {
