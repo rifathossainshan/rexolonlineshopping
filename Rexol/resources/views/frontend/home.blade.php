@@ -159,7 +159,7 @@
     <div class="container mx-auto px-4 py-8">
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Mobile Filter Toggle -->
-            <button class="md:hidden w-full bg-black text-white py-3 font-bold uppercase mb-4 sticky top-20 z-30 shadow-md"
+            <button class="md:hidden w-full bg-black text-white py-3 font-bold uppercase mb-4 shadow-md"
                 onclick="toggleFilters()">
                 Show Filters <i class="fas fa-filter ml-2"></i>
             </button>
